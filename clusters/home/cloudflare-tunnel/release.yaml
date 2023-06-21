@@ -16,7 +16,7 @@ spec:
       interval: 1m
   values:
     cloudflare:
-      account:
+      account: "a99a7bae7e5fbfeaa77a8ea985edc4df"
       tunnelName: home-k3s-cluster
       tunnelId: 03ca802e-43ae-419b-b4ca-2eeb20597dc2
       secret: KxjorqhE2UXOFU9F/yeTsHyof5inn8q3hnlXauP+qwY=
