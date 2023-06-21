@@ -11,6 +11,6 @@ spec:
       version: "4.x"
       sourceRef:
         kind: HelmRepository
-        name: podinfo
+        name: ingress-nginx
         namespace: ingress-nginx
       interval: 1m
