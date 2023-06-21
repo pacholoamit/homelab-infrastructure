@@ -2,7 +2,7 @@
 
 # Make sure to add secret first
 # kubectl create secret  generic tunnel-credentials \
-#  -n cloudflare --from-file=credentials.json=/Users/pacholoamit/.cloudflared/03ca802e-43ae-419b-b4ca-2eeb20597dc2.json
+#  -n cloudflare --from-file=credentials.json=/Users/pacholoamit/.cloudflared/d0a7216a-3354-4a5d-9f0d-9a63be7b8934.json
 ---
 apiVersion: apps/v1
 kind: Deployment

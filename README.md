@@ -18,6 +18,8 @@ brew install cloudflared
 Create a tunnel
 
 ```
+cloudflared tunnel login
+
 cloudflared tunnel create homelab
 
 # Create kubernetes secret
