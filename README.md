@@ -16,5 +16,7 @@ Create a tunnel
 
 ```
 cloudflared tunnel create homelab
-# Copy the secrets at /Users/<USER>/.cloudflared/<UUID>.json
+
+# Create kubernetes secret
+kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json
 ```
