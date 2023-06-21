@@ -1,4 +1,8 @@
 # From: https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/cloudflared.yaml
+
+# Make sure to add secret first
+# kubectl create secret  generic tunnel-credentials \
+#  -n cloudflare --from-file=credentials.json=/Users/pacholoamit/.cloudflared/03ca802e-43ae-419b-b4ca-2eeb20597dc2.json
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -74,4 +78,3 @@ data:
 
     ingress:
     - service: https://ingress-nginx-controller.ingress-nginx.svc.cluster.local:443
-
