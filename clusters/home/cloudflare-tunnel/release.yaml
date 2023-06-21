@@ -14,3 +14,8 @@ spec:
         name: cloudflare
         namespace: cloudflare
       interval: 1m
+  values:
+    cloudflare:
+      ingress:
+        # We point cloudflare to our nginx ingress to receive all requests
+        - service: https://ingress-nginx-controller.ingress-nginx.svc.cluster.local:443
