@@ -9,7 +9,6 @@ kubectl create namespace cloudflare
 Install CLI Deps
 
 ```
-brew install kubeseal
 brew install cloudflared
 ```
 
