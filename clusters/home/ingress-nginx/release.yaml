@@ -8,6 +8,7 @@ spec:
   chart:
     spec:
       chart: ingress-nginx
+      interval: 1m
       version: "4.*"
       sourceRef:
         kind: HelmRepository
