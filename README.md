@@ -23,3 +23,9 @@ cloudflared tunnel create homelab
 # Create kubernetes secret
 kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json
 ```
+
+## Creating a new route
+
+```
+cloudflared tunnel route dns home-k3s-cluster longhorn.pacholoamit.com
+```
