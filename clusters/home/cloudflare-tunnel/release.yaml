@@ -7,7 +7,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: cloudflare-tunnel
+      chart: charts/cloudflare-tunnel
       version: "0.2.x"
       sourceRef:
         kind: HelmRepository
