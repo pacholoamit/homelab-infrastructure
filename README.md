@@ -3,7 +3,7 @@
 On the nodes ensure to install open-iscsi:
 
 ```
-apt install open-iscsi
+apt install open-iscsi # on all nodes with longhorn
 ```
 
 Create namespaces
@@ -15,6 +15,13 @@ kubectl create namespace cloudflare
 
 # Fixes volume errors
 kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+```
+
+Create longhorn secret
+
+```
+USER=<USERNAME_HERE>; PASSWORD=<PASSWORD_HERE>; echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth
+kubectl -n longhorn-system create secret generic basic-auth --from-file=auth
 ```
 
 Install CLI Deps
