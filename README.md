@@ -47,16 +47,17 @@ Create a tunnel
 ```
 cloudflared tunnel login
 
-cloudflared tunnel create homelab
+cloudflared tunnel create home-k3s-cluster
 
 # Create kubernetes secret
 kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json
 ```
 
-## Creating a new route
+Create the routes
 
 ```
 cloudflared tunnel route dns home-k3s-cluster longhorn.pacholoamit.com
+cloudflared tunnel route dns home-k3s-cluster vaultwarden.pacholoamit.com
 ```
 
 ## Reprovisioning new cluster
