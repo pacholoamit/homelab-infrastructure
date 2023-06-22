@@ -8,8 +8,6 @@ apt install open-iscsi
 apt install nfs-common
 ```
 
-```
-
 Create namespaces
 
 ```
@@ -26,16 +24,6 @@ Fixes volume errors
 ```
 
 kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
-
-```
-
-Set up K10
-
-```
-
-kubectl annotate volumesnapshotclass \
-(kubectl get volumesnapshotclass -o=jsonpath='{.items[?(@.metadata.annotations.snapshot\.storage\.kubernetes\.io\/is-default-class=="true")].metadata.name}') \
- k10.kasten.io/is-snapshot-class=true
 
 ```
 
@@ -91,7 +79,5 @@ flux bootstrap github \
  --path=clusters/home \
  --personal \
  --token-auth
-
-```
 
 ```
