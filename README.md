@@ -31,3 +31,16 @@ kubectl create secret generic tunnel-credentials --from-file=credentials.json=/U
 ```
 cloudflared tunnel route dns home-k3s-cluster longhorn.pacholoamit.com
 ```
+
+## Reprovisioning new cluster
+
+```
+flux bootstrap github \
+  --components-extra=image-reflector-controller,image-automation-controller \
+  --owner=pacholoamit \
+  --repository=homelab-infra \
+  --branch=master \
+  --path=clusters/home \
+  --personal \
+  --token-auth
+```
