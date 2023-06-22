@@ -10,7 +10,7 @@ apt install nfs-common
 
 Create namespaces
 
-```
+```sh
 
 kubectl create namespace ingress-nginx
 kubectl create namespace longhorn-system
@@ -22,7 +22,7 @@ kubectl create namespace monitoring
 
 MUST DO FOR ALL DEPLOYMENTS
 
-```
+```sh
 
 # Fix longhorn volume errors
 kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
@@ -44,7 +44,7 @@ kubectl create secret generic tunnel-credentials --from-file=credentials.json=/U
 
 Install CLI Deps
 
-```
+```sh
 
 brew install cloudflared
 
@@ -52,7 +52,7 @@ brew install cloudflared
 
 Create a tunnel
 
-```
+```sh
 
 cloudflared tunnel login
 
@@ -60,16 +60,9 @@ cloudflared tunnel create home-k3s-cluster
 
 ```
 
-Create kubernetes secret\*
-
-```
-kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json
-
-```
-
 Create the routes
 
-```
+```sh
 
 cloudflared tunnel route dns home-k3s-cluster longhorn.pacholoamit.com
 cloudflared tunnel route dns home-k3s-cluster vaultwarden.pacholoamit.com
@@ -78,7 +71,7 @@ cloudflared tunnel route dns home-k3s-cluster vaultwarden.pacholoamit.com
 
 ## Reprovisioning new cluster
 
-```
+```sh
 
 flux bootstrap github \
  --components-extra=image-reflector-controller,image-automation-controller \
