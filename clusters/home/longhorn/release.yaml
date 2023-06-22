@@ -1,16 +1,16 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: longhorn
-  namespace: longhorn-system
-spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: longhorn
-      version: "1.4.x"
-      sourceRef:
-        kind: HelmRepository
-        name: longhorn
-        namespace: longhorn-system
-      interval: 1m
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: longhorn
+#   namespace: longhorn-system
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       chart: longhorn
+#       version: "1.4.x"
+#       sourceRef:
+#         kind: HelmRepository
+#         name: longhorn
+#         namespace: longhorn-system
+#       interval: 1m
