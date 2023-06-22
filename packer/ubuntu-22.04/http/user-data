@@ -1,0 +1,33 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US
+  keyboard:
+    layout: de
+  ssh:
+    install-server: true
+    allow-pw: true
+    disable_root: true
+    ssh_quiet_keygen: true
+    allow_public_ssh_keys: true
+  packages:
+    - qemu-guest-agent
+    - sudo
+  storage:
+    layout:
+      name: direct
+    swap:
+      size: 0
+  user-data:
+    package_upgrade: false
+    timezone: Asia/Manila
+    users:
+      - name: ubuntu
+        groups: [adm, sudo]
+        lock-passwd: false
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        passwd: coldsnake123
+        # - or -
+        ssh_authorized_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDISpCxIIwqh+BSEFS89QBigDq7BChCZldNS2/4CUPHeb6IPw86Z2LGp3A53sb4xzCZLb32QdGVgsIL7zil34atX6DH5GzItGr/zR7ZtBSv5wbLwhVpMMwwe6FiEn0ZeGhXNF8T6aUlKoKj1dnJPIMix3WSH+sSWvSqarKnNSfU6hOQpOiJFK4wYXN4MYLNcwZLBfzlmy0PHo6+loyQQ7UThJEQ7TsSpMdPSfHu3DF0aetYryLc7csDVucCq3pZmRXMv+SCoMOlEK0Jcf5rxAwmHuoj1k0AulAHGWN02A9S9g4cx8I5HRphHQ05z/oCy87E6S8ONWUC727sK6EDHDAKOYhMO0fm1uM0x3qrcI9W0JWJPx1LKMGl/sr2yPDDYIsihfd83i8XTZHzKaYwmoJS1t/LQp5dpSfyaWFZAG8AKoje0Zp9cDpRIUWeQN2S2wwJ6qLHhZGQIw0gVnuMcf0LxT0Jn9Co+7J45G4NN0Ouyf+DjytoY8fg71BG5iUMB20= pacholoamit@pacholoamits-iMac.local
