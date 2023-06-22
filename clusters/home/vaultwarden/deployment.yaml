@@ -1,34 +1,34 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: vaultwarden-deployment
-  namespace: default
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: vaultwarden
-  template:
-    metadata:
-      labels:
-        app: vaultwarden
-    spec:
-      containers:
-        - name: vaultwarden
-          image: vaultwarden/server
-          volumeMounts:
-            - name: vaultwarden-volume
-              mountPath: /data
-          env:
-            - name: LOG_FILE
-              value: /data/vaultwarden.log
-            - name: LOG_LEVEL
-              value: warn
-            - name: SIGNUPS_ALLOWED
-              value: "true"
-            - name: SHOW_PASSWORD_HINT
-              value: "true"
-      volumes:
-        - name: vaultwarden-volume
-          persistentVolumeClaim:
-            claimName: vaultwarden-pvc
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: vaultwarden-deployment
+#   namespace: default
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: vaultwarden
+#   template:
+#     metadata:
+#       labels:
+#         app: vaultwarden
+#     spec:
+#       containers:
+#         - name: vaultwarden
+#           image: vaultwarden/server
+#           volumeMounts:
+#             - name: vaultwarden-volume
+#               mountPath: /data
+#           env:
+#             - name: LOG_FILE
+#               value: /data/vaultwarden.log
+#             - name: LOG_LEVEL
+#               value: warn
+#             - name: SIGNUPS_ALLOWED
+#               value: "true"
+#             - name: SHOW_PASSWORD_HINT
+#               value: "true"
+#       volumes:
+#         - name: vaultwarden-volume
+#           persistentVolumeClaim:
+#             claimName: vaultwarden-pvc
