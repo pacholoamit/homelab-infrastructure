@@ -8,7 +8,6 @@ spec:
   chart:
     spec:
       chart: kasten-io
-      version: "4.x"
       sourceRef:
         kind: HelmRepository
         name: kasten/k10
