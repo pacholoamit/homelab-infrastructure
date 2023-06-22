@@ -15,23 +15,30 @@ Create namespaces
 kubectl create namespace ingress-nginx
 kubectl create namespace longhorn-system
 kubectl create namespace cloudflare
+kubectl create namespace monitoring
+
 
 ```
 
-Fixes volume errors
+MUST DO FOR ALL DEPLOYMENTS
 
 ```
 
+# Fix longhorn volume errors
 kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 
-```
+# Create credentials for Longhorn and Grafana
 
-Create longhorn secret
+USER=<USERNAME_HERE>; PASSWORD=<PASSWORD_HERE>;
+echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth &&
+echo -n ${USER} > ./admin-user &&
+echo -n ${PASSWORD} > ./admin-password &&
+kubectl -n longhorn-system create secret generic basic-auth --from-file=auth &&
+kubectl create secret generic grafana-admin-credentials --from-file=./admin-user --from-file=admin-password -n monitoring &&
+rm -rf ./admin-user ./admin-password auth
 
-```
-
-USER=<USERNAME_HERE>; PASSWORD=<PASSWORD_HERE>; echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth &&
-kubectl -n longhorn-system create secret generic basic-auth --from-file=auth
+# Create Cloudflare secret
+kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json
 
 ```
 
@@ -51,8 +58,11 @@ cloudflared tunnel login
 
 cloudflared tunnel create home-k3s-cluster
 
-# Create kubernetes secret
+```
 
+Create kubernetes secret\*
+
+```
 kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json
 
 ```
@@ -78,5 +88,9 @@ flux bootstrap github \
  --path=clusters/home \
  --personal \
  --token-auth
+
+```
+
+```
 
 ```
