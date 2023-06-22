@@ -1,5 +1,13 @@
 ## Pre-requisites
 
+On the nodes ensure to install open-iscsi:
+
+```
+apt install open-iscsi
+```
+
+Create namespaces
+
 ```
 kubectl create namespace ingress-nginx
 kubectl create namespace longhorn-system

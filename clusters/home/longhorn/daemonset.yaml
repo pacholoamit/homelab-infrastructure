@@ -1,4 +1,5 @@
 # From: https://longhorn.io/docs/1.4.2/deploy/install/#installing-nfsv4-client
+# Ensure to install open-iscsi on the nodes
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
