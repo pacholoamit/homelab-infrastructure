@@ -12,9 +12,21 @@ Create namespaces
 kubectl create namespace ingress-nginx
 kubectl create namespace longhorn-system
 kubectl create namespace cloudflare
+kubectl create namespace kasten-io
+```
 
-# Fixes volume errors
+Fixes volume errors
+
+```
 kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+```
+
+Set up K10
+
+```
+kubectl annotate volumesnapshotclass \
+(kubectl get volumesnapshotclass -o=jsonpath='{.items[?(@.metadata.annotations.snapshot\.storage\.kubernetes\.io\/is-default-class=="true")].metadata.name}') \
+    k10.kasten.io/is-snapshot-class=true
 ```
 
 Create longhorn secret
