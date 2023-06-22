@@ -83,7 +83,3 @@ flux bootstrap github \
  --token-auth
 
 ```
-
-```
-
-```
