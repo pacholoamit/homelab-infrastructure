@@ -1,0 +1,17 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: monitoring
+  namespace: monitoring
+spec:
+  dependsOn:
+    - name: sealed-secrets
+  interval: 1h
+  retryInterval: 1m
+  timeout: 5m
+  wait: true
+  path: ./clusters/home/sealed-secrets
+  sourceRef:
+    kind: GitRepository
+    name: sealed-secrets
+    namespace: flux-system
