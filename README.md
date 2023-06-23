@@ -21,13 +21,6 @@ kubectl create namespace velero
 ```
 
 MUST DO FOR ALL DEPLOYMENTS
-
-```sh
-
-# Fix longhorn volume errors
-kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
-```
-
 Reapplying secrets, if `shared-secrets-backup.key` (yaml) file is present
 
 ```sh
