@@ -8,16 +8,17 @@ resources:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cloudflare-provisioner
+  name: cloudflare
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
+  retryInterval: 1m
   timeout: 5m
-  path: ./clusters/home/cloudflare
+  prune: true
   wait: true
+  path: ./clusters/home/cloudflare
   dependsOn:
     - name: sealed-secrets
   sourceRef:
     kind: GitRepository
-    name: sealed-secrets
-    namespace: flux-system
+    name: flux-system
