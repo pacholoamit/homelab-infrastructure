@@ -62,6 +62,25 @@ kubectl create secret generic tunnel-credentials --from-file=credentials.json=/U
 # Seal secret
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < cloudflare-credentials.yaml > tunnel-credentials.yaml
+
+rm -rf cloudflare-credentials.yaml
+
+# Create secret for grafana
+
+kubectl -n default create secret generic grafana-admin-credentials \
+--from-literal=admin-user=${USER} \
+--from-literal=admin-password=${PASSWORD} \
+--dry-run=client \
+-o yaml > grafana-credentials.yaml
+
+# Seal secret
+
+kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
+< grafana-credentials.yaml > grafana-credentials-sealed.yaml
+
+rm -rf grafana-credentials.yaml
+
+
 ```
 
 Install CLI Deps
