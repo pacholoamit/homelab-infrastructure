@@ -106,7 +106,7 @@ cloudflared tunnel route dns home-k3s-cluster grafana.pacholoamit.com
 ```sh
 
 flux bootstrap github \
- --components=kustomize-controller \
+ --components=source-controller,kustomize-controller \
  --components-extra=image-reflector-controller,image-automation-controller \
  --owner=pacholoamit \
  --repository=homelab-infra \
