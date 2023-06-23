@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: sealed-secrets
   interval: 1m
+  targetNamespace: monitoring
   prune: true
   wait: true
   path: ./infrastructure/prometheus-stack
