@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - secret.yaml
-
+  - namespace.yaml
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

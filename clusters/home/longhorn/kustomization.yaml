@@ -5,6 +5,7 @@ resources:
   - repository.yaml
   - secret.yaml
   - service.yaml
+  - namespace.yaml
 patches:
   - path: release.yaml
     target:
