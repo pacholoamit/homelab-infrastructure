@@ -7,13 +7,10 @@ metadata:
 spec:
   dependsOn:
     - name: sealed-secrets
-  interval: 1h
-  retryInterval: 1m
-  timeout: 5m
-  wait: true
+  interval: 1m
   prune: true
+  wait: true
   path: ./infrastructure/longhorn
   sourceRef:
     kind: GitRepository
-    name: sealed-secrets
-    namespace: flux-system
+    name: flux-system
