@@ -45,7 +45,7 @@ kubectl create secret generic tunnel-credentials --from-file=credentials.json=/U
 Creating sealed secrets
 
 ```sh
-# Create secret
+# Create secret for longhorn
 USER=<USERNAME_HERE>; PASSWORD=<PASSWORD_HERE>;
 echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth &&
 kubectl -n longhorn-system create secret generic basic-auth --from-file=auth --dry-run=client -o yaml > auth.yaml &&
@@ -53,6 +53,15 @@ kubectl -n longhorn-system create secret generic basic-auth --from-file=auth --d
 # Seal secret
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < auth.yaml > secret.yaml
+
+rm -rf auth.yaml auth
+
+# Create secret for cloudflared
+kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json --dry-run -o yaml > cloudflare-credentials.yaml
+
+# Seal secret
+kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
+< cloudflare-credentials.yaml > tunnel-credentials.yaml
 ```
 
 Install CLI Deps
