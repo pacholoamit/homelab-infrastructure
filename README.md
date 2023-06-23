@@ -21,10 +21,10 @@ kubectl create namespace velero
 ```
 
 MUST DO FOR ALL DEPLOYMENTS
-Reapplying secrets, if `shared-secrets-backup.key` (yaml) file is present
+Reapplying secrets, if `sealed-secret-backup.key` (yaml) file is present
 
 ```sh
-kubectl apply -f shared-secrets-backup.key # After this restart the sealed-secrets-controller pod
+kubectl apply -f sealed-secret-backup.key # After this restart the sealed-secrets-controller pod
 ```
 
 Creating sealed secrets, only if starting from scratch
