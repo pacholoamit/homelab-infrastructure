@@ -3,6 +3,10 @@ kind: Kustomization
 resources:
   - release.yaml
   - repository.yaml
+patches:
+  - path: release.yaml
+    target:
+      kind: HelmRelease
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
