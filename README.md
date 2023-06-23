@@ -26,23 +26,15 @@ MUST DO FOR ALL DEPLOYMENTS
 
 # Fix longhorn volume errors
 kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
-
-# Create credentials for Longhorn and Grafana
-
-USER=<USERNAME_HERE>; PASSWORD=<PASSWORD_HERE>;
-echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth &&
-echo -n ${USER} > ./admin-user &&
-echo -n ${PASSWORD} > ./admin-password &&
-kubectl -n longhorn-system create secret generic basic-auth --from-file=auth &&
-kubectl create secret generic grafana-admin-credentials --from-file=./admin-user --from-file=admin-password -n monitoring &&
-rm -rf ./admin-user ./admin-password auth
-
-# Create Cloudflare secret
-kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/<USER>/.cloudflared/<UUID>.json
-
 ```
 
-Creating sealed secrets
+Reapplying secrets, if `shared-secrets-backup.key` (yaml) file is present
+
+```sh
+kubectl apply -f shared-secrets-backup.key # After this restart the sealed-secrets-controller pod
+```
+
+Creating sealed secrets, only if starting from scratch
 
 ```sh
 # Create secret for longhorn
