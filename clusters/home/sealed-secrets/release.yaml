@@ -18,3 +18,5 @@ spec:
     crds: Create
   upgrade:
     crds: CreateReplace
+  values:
+    keyrenewperiod: "0" # Disable key rotation
