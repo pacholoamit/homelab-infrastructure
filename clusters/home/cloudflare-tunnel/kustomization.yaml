@@ -12,9 +12,8 @@ metadata:
   namespace: cloudflare
 spec:
   interval: 10m
-  path: ./clusters/home/sealed-secrets
-  retryInterval: 1m
   timeout: 5m
+  path: ./clusters/home/cloudflare
   wait: true
   dependsOn:
     - name: sealed-secrets
