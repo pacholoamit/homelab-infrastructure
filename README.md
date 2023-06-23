@@ -32,6 +32,7 @@ Reprovisioning new cluster
 ```sh
 
 flux bootstrap github \
+ --components=source-controller,kustomize-controller \
  --components-extra=image-reflector-controller,image-automation-controller \
  --owner=pacholoamit \
  --repository=homelab-infra \
