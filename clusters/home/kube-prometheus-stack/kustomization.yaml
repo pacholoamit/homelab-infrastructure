@@ -23,8 +23,8 @@ spec:
   retryInterval: 1m
   timeout: 5m
   wait: true
+  prune: true
   path: ./clusters/home/sealed-secrets
   sourceRef:
     kind: GitRepository
-    name: sealed-secrets
-    namespace: flux-system
+    name: flux-system
