@@ -27,6 +27,22 @@ Reapplying secrets, if `sealed-secret-backup.key` (yaml) file is present
 kubectl apply -f sealed-secret-backup.key # After this restart the sealed-secrets-controller pod
 ```
 
+Reprovisioning new cluster
+
+```sh
+
+flux bootstrap github \
+ --components=source-controller,kustomize-controller \
+ --components-extra=image-reflector-controller,image-automation-controller \
+ --owner=pacholoamit \
+ --repository=homelab-infra \
+ --branch=master \
+ --path=clusters/home \
+ --personal \
+ --token-auth
+
+```
+
 Creating sealed secrets, only if starting from scratch
 
 ```sh
@@ -99,20 +115,4 @@ Create the routes
 cloudflared tunnel route dns home-k3s-cluster longhorn.pacholoamit.com
 cloudflared tunnel route dns home-k3s-cluster vaultwarden.pacholoamit.com
 cloudflared tunnel route dns home-k3s-cluster grafana.pacholoamit.com
-```
-
-## Reprovisioning new cluster
-
-```sh
-
-flux bootstrap github \
- --components=source-controller,kustomize-controller \
- --components-extra=image-reflector-controller,image-automation-controller \
- --owner=pacholoamit \
- --repository=homelab-infra \
- --branch=master \
- --path=clusters/home \
- --personal \
- --token-auth
-
 ```
