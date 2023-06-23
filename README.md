@@ -54,6 +54,8 @@ kubectl -n longhorn-system create secret generic basic-auth --from-file=auth --d
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < auth.yaml > secret.yaml
 
+mv secret.yaml ./longhorn/secret.yaml
+
 rm -rf auth.yaml auth
 
 # Create secret for cloudflared
@@ -62,6 +64,8 @@ kubectl create secret generic tunnel-credentials --from-file=credentials.json=/U
 # Seal secret
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < cloudflare-credentials.yaml > tunnel-credentials.yaml
+
+mv tunnel-credentials.yaml ./cloudflare/secret.yaml
 
 rm -rf cloudflare-credentials.yaml
 
@@ -77,6 +81,8 @@ kubectl -n default create secret generic grafana-admin-credentials \
 
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < grafana-credentials.yaml > grafana-credentials-sealed.yaml
+
+mv grafana-credentials-sealed.yaml ./kube-prometeheus-stack/secret.yaml
 
 rm -rf grafana-credentials.yaml
 
