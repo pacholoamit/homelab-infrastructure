@@ -42,6 +42,21 @@ kubectl create secret generic tunnel-credentials --from-file=credentials.json=/U
 
 ```
 
+Creating sealed secrets
+
+```
+# Create secret
+kubectl -n longhorn-system create secret generic basic-auth \
+--from-literal=user=admin \
+--from-literal=password=change-me \
+--dry-run=client \
+-o yaml > basic-auth.yaml
+
+# Seal secret
+kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
+< basic-auth.yaml > basic-auth-sealed.yaml
+```
+
 Install CLI Deps
 
 ```sh
