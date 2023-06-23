@@ -14,3 +14,6 @@ spec:
         name: longhorn
         namespace: longhorn-system
       interval: 1m
+  values:
+    persistence:
+      defaultClass: false
