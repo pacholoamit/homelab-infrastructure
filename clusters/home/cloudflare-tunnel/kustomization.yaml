@@ -15,7 +15,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: cloudflare
-  path: ./clusters/home/cloudflare
+  path: ./clusters/home/cloudflare-tunnel
   prune: true
   wait: true
   interval: 1m
