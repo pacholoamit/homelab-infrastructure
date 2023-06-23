@@ -12,10 +12,12 @@ metadata:
 spec:
   dependsOn:
     - name: sealed-secrets
+  interval: 1h
+  retryInterval: 1m
+  timeout: 5m
+  wait: true
+  path: ./clusters/home/sealed-secrets
   sourceRef:
     kind: GitRepository
-    name: cloudflare
-  path: ./clusters/home/cloudflare-tunnel
-  prune: true
-  wait: true
-  interval: 1m
+    name: sealed-secrets
+    namespace: flux-system
