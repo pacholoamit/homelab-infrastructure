@@ -16,7 +16,7 @@ spec:
   timeout: 5m
   prune: true
   wait: true
-  path: ./clusters/home/cloudflare
+  path: ./clusters/home/cloudflare-tunnel
   dependsOn:
     - name: sealed-secrets
   sourceRef:
