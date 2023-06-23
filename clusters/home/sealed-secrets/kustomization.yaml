@@ -3,3 +3,18 @@ kind: Kustomization
 resources:
   - release.yaml
   - repository.yaml
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: sealed-secrets
+  namespace: flux-system
+spec:
+  interval: 1m
+  prune: true
+  wait: true
+  path: ./clusters/home/sealed-secrets
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
