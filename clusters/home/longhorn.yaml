@@ -8,7 +8,6 @@ spec:
   dependsOn:
     - name: sealed-secrets
   interval: 1m
-  targetNamespace: longhorn-system
   prune: true
   wait: true
   path: ./infrastructure/longhorn

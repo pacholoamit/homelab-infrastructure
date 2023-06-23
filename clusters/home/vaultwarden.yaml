@@ -9,7 +9,6 @@ spec:
     - name: sealed-secrets
     - name: longhorn
   interval: 1m
-  targetNamespace: default
   prune: true
   wait: true
   path: ./apps/vaultwarden
