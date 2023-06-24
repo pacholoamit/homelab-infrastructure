@@ -18,6 +18,16 @@ flux bootstrap github \
  --token-auth
 ```
 
+## Preparing Longhorn RWX compatibility,
+
+ensure to install open-iscsi on all nodes
+
+```sh
+# on all nodes with longhorn
+apt install open-iscsi
+apt install nfs-common
+```
+
 ## Preparing cloudflare tunnels
 
 We are using Cloudflare tunnels to route traffic to our cluster. Install the cloudflared CLI tool and run the following commands.
