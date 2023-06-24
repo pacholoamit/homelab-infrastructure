@@ -7,12 +7,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: velero
+      chart: vmware-tanzu/velero
       version: "4.0.x"
       sourceRef:
         kind: HelmRepository
         name: vmware-tanzu
-        namespace: velero
       interval: 1m
   values:
     initContainers:
