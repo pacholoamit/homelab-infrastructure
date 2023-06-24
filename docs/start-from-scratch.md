@@ -1,16 +1,16 @@
 # Documentation on starting from scratch (WIP)
 
-Below are the required commands to start from scratch.
+Below are the required commands to start from scratch. Make sure you fork the repo and change the paths accordingly.
 
 ## Bootstrapping with flux
 
-Install the flux CLI tool and run the following command.
+Install the flux CLI tool and run the following command. You will need to generate a GitHub token with repo access.
 
 ```sh
 
 flux bootstrap github \
  --components-extra=image-reflector-controller,image-automation-controller \
- --owner=pacholoamit \
+ --owner=<YOUR_GITHUB_USERNAME> \
  --repository=homelab-infra \
  --branch=master \
  --path=clusters/home \
@@ -20,22 +20,23 @@ flux bootstrap github \
 
 ## Preparing Longhorn RWX compatibility,
 
-ensure to install open-iscsi on all nodes
+ensure to install open-iscsi on all nodes worker nodes with longhorn installed.
 
 ```sh
-# on all nodes with longhorn
 apt install open-iscsi
 apt install nfs-common
 ```
 
 ## Preparing cloudflare tunnels
 
-We are using Cloudflare tunnels to route traffic to our cluster. Install the cloudflared CLI tool and run the following commands.
+We are using [Cloudflared](https://github.com/cloudflare/cloudflared) to route traffic to our cluster. Install the cloudflared CLI tool and run the following commands.
 
 ```sh
 cloudflared tunnel login
 
+# Keep in mind the filepath after this command, we will be generating a sealed secret with it and mounting it to the cloudflared pod
 cloudflared tunnel create home-k3s-cluster
+
 ```
 
 Then create the routes:
