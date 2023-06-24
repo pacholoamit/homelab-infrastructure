@@ -45,12 +45,12 @@ spec:
       backupStorageLocation:
         - name: default
           provider: aws
-          bucket: velero-k3s-cluster-backups
+          bucket: backup
           default: true
           config:
             region: ap-southeast-1
             s3ForcePathStyle: "true"
-            s3Url: https://s3.ap-southeast-1.velero-k3s-cluster-backups.com
+            s3Url: https://velero-k3s-cluster-backups.s3.amazonaws.com/
           credential:
             name: aws
             key: aws-credentials
