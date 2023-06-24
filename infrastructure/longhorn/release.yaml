@@ -17,3 +17,4 @@ spec:
   values:
     persistence:
       defaultClass: false
+      defaultDataLocality: best-effort
