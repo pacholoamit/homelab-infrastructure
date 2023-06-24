@@ -22,18 +22,18 @@ spec:
         - mountPath: /target
           name: plugins
     configuration:
-      - volumeSnapshotLocation:
-        name: default
-        provider: aws
-        config:
-          region: ap-southeast-1
-      - backupStorageLocation:
-        name: default
-        provider: aws
-        bucket: velero-k3s-cluster-backups
-        prefix: backups
-        config:
-          region: ap-southeast-1
-        credential:
-          name: aws
-          key: aws-credentials
+      volumeSnapshotLocation:
+        - name: default
+          provider: aws
+          config:
+            region: ap-southeast-1
+      backupStorageLocation:
+        - name: default
+          provider: aws
+          bucket: velero-k3s-cluster-backups
+          prefix: backups
+          config:
+            region: ap-southeast-1
+          credential:
+            name: aws
+            key: aws-credentials
