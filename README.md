@@ -1,6 +1,8 @@
 # Homelab Infrastructure
 
+<p align="center>
 <img src="https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png" width="150px" alt=""><img src="https://avatars.githubusercontent.com/u/52158677?s=200&v=4" width="150px" alt=""><img src="https://cncf-branding.netlify.app/img/projects/k3s/stacked/color/k3s-stacked-color.png"  height="150" alt="">
+</p>
 
 > Warning: Documentation is a work in progress
 
