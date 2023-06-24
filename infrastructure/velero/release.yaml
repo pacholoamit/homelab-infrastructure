@@ -7,7 +7,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: velero
+      chart: vmware-tanzu/velero
       version: "4.0.x"
       sourceRef:
         kind: HelmRepository
