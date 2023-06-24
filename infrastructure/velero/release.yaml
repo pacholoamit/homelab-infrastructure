@@ -12,7 +12,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: velero
-        namespace: velero
       interval: 1m
   values:
     initContainers:
