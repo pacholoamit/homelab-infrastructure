@@ -8,7 +8,6 @@ spec:
   template:
     hooks: {}
     includedNamespaces:
-      - longhorn-system
       - default
 
     snapshotVolumes: true
