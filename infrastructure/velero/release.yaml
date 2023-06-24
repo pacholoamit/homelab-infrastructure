@@ -22,12 +22,12 @@ spec:
         - mountPath: /target
           name: plugins
     configuration:
-      volumeSnapshotLocation:
+      - volumeSnapshotLocation:
         name: default
         provider: aws
         config:
           region: ap-southeast-1
-      backupStorageLocation:
+      - backupStorageLocation:
         name: default
         provider: aws
         bucket: velero-k3s-cluster-backups
