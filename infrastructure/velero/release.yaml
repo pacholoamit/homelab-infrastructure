@@ -1,0 +1,39 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: velero
+  namespace: velero
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: "4.0.x"
+      sourceRef:
+        kind: HelmRepository
+        name: velero
+        namespace: velero
+      interval: 1m
+  values:
+    initContainers:
+      name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-aws:v1.7.0
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+    configuration:
+      volumeSnapshotLocation:
+        name: default
+        provider: aws
+        config:
+          region: ap-southeast-1
+      backupStorageLocation:
+        name: default
+        provider: aws
+        bucket: velero-k3s-cluster-backups
+        prefix: backups
+        config:
+          region: ap-southeast-1
+        credential:
+          name: aws
+          key: aws-credentials

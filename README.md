@@ -8,18 +8,6 @@ apt install open-iscsi
 apt install nfs-common
 ```
 
-Create namespaces
-
-```sh
-
-kubectl create namespace ingress-nginx
-kubectl create namespace longhorn-system
-kubectl create namespace cloudflare
-kubectl create namespace monitoring
-kubectl create namespace velero
-
-```
-
 MUST DO FOR ALL DEPLOYMENTS
 Reapplying secrets, if `sealed-secret-backup.key` (yaml) file is present
 
@@ -54,7 +42,7 @@ kubectl -n longhorn-system create secret generic basic-auth --from-file=auth --d
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < auth.yaml > secret.yaml
 
-mv secret.yaml ./longhorn/secret.yaml
+mv secret.yaml infrastructure/longhorn/secret.yaml
 
 rm -rf auth.yaml auth
 
@@ -65,7 +53,7 @@ kubectl create secret generic tunnel-credentials --from-file=credentials.json=/U
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < cloudflare-credentials.yaml > tunnel-credentials.yaml
 
-mv tunnel-credentials.yaml ./cloudflare/secret.yaml
+mv tunnel-credentials.yaml infrastructure/cloudflared/secret.yaml
 
 rm -rf cloudflare-credentials.yaml
 
@@ -82,11 +70,32 @@ kubectl -n default create secret generic grafana-admin-credentials \
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 < grafana-credentials.yaml > grafana-credentials-sealed.yaml
 
-mv grafana-credentials-sealed.yaml ./kube-prometeheus-stack/secret.yaml
+mv grafana-credentials-sealed.yaml infrastructure/prometheus-stack/secret.yaml
 
 rm -rf grafana-credentials.yaml
 
+```
 
+Velero AWS Credentials
+
+```aw
+#  create an `aws-credentials` file in the root of the project with the following contents
+[default]
+aws_access_key_id=<AWS_ACCESS_KEY_ID>
+aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
+```
+
+```sh
+# create a secret from the file
+kubectl -n velero create secret generic aws --from-file=aws-credentials --dry-run=client -o yaml > aws-credentials.yaml
+
+# Seal secret
+kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
+< aws-credentials.yaml > aws-credentials-sealed.yaml
+
+mv aws-credentials-sealed.yaml infrastructure/velero/secret.yaml
+
+rm -rf aws-credentials.yaml
 ```
 
 Install CLI Deps
