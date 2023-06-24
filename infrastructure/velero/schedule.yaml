@@ -1,0 +1,16 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: general
+  namespace: velero
+spec:
+  schedule: "00 18 * * *"
+  template:
+    hooks: {}
+    includedNamespaces:
+      - longhorn-system
+      - vaultwarden
+
+    snapshotVolumes: true
+    ttl: 168h0m0s
+  useOwnerReferencesInBackup: false
