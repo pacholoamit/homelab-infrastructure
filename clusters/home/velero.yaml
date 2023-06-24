@@ -7,6 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: sealed-secrets
+    - name: longhorn
   interval: 1m
   prune: true
   wait: true
