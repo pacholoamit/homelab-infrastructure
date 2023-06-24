@@ -5,6 +5,15 @@ metadata:
   namespace: velero
 spec:
   interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: velero
@@ -15,12 +24,18 @@ spec:
         namespace: velero
       interval: 1m
   values:
+    upgradeCRDs: true
     initContainers:
-      name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:v1.7.0
-      volumeMounts:
-        - mountPath: /target
-          name: plugins
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.7.0
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+    metrics:
+      enabled: true
+      scrapeInterval: 120s
+      scrapeTimeout: 30s
+    deployNodeAgent: true
     configuration:
       volumeSnapshotLocation:
         - name: default
@@ -31,7 +46,7 @@ spec:
         - name: default
           provider: aws
           bucket: velero-k3s-cluster-backups
-          prefix: backups
+          default: true
           config:
             region: ap-southeast-1
           credential:
