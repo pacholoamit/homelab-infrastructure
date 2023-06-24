@@ -13,12 +13,13 @@ This repository contains the infrastructure used for my homelab. It mainly conta
 # Main tools used
 
 1. **FluxCD 2** - GitOps for my HomeLab.
-2. **Cloudfare** - Cloudflare tunnel for accessing my services.
+2. **Cloudfared** - Cloudflare tunnel for accessing my services.
 3. **ingress-nginx** - Kubernetes ingress. Cloudflare forwards all requests to the ingress-nginx controller which then routes the requests to the correct service.
 4. **Longhorn** - K8S distributed & replicated block storage.
 5. **SealedSecerts** - Kubernetes secret manager.
 6. **Kube-Prometheus-Stack** - Kubernetes monitoring stack.
 7. **Velero** - K8S and PVC backup. Free and open source by VMware
+8. **Descheduler** - Kubernetes descheduler. Monitors node resource usage and reassigns workloads to other nodes based on rules.
 
 # GitOps :construction:
 
