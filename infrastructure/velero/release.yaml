@@ -52,7 +52,6 @@ spec:
       backupStorageLocation:
         - name: default
           provider: aws
-          bucket: backups
           default: true
           config:
             region: ap-southeast-1
