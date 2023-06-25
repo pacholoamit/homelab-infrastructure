@@ -1,5 +1,5 @@
 # Creating backups
 
 ```
-velero backup create --from-schedule default
+velero backup create --from-schedule velero-default
 ```
