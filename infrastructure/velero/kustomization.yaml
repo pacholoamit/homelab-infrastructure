@@ -6,4 +6,4 @@ resources:
   - repository.yaml
   - release.yaml
   - secret.yaml
-  - schedule.yaml
+  # - schedule.yaml
