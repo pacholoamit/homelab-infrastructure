@@ -41,6 +41,8 @@ spec:
       scrapeInterval: 120s
       scrapeTimeout: 30s
     deployNodeAgent: true
+    credentials:
+      existingSecret: aws
     configuration:
       volumeSnapshotLocation:
         - name: default
@@ -54,6 +56,3 @@ spec:
           default: true
           config:
             region: ap-southeast-1
-          credential:
-            name: aws
-            key: aws-credentials
