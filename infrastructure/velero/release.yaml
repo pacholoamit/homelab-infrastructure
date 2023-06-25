@@ -52,7 +52,7 @@ spec:
       backupStorageLocation:
         - name: default
           provider: aws
-          bucket: velero-k3s-cluster-backups
+          bucket: backups
           default: true
           config:
             region: ap-southeast-1
