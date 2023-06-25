@@ -14,3 +14,6 @@ spec:
         name: piraeus-charts
         namespace: kube-system
       interval: 1m
+  values:
+    image:
+      tag: v5.0.1 # Do not change, this is for longhorn compatibility
