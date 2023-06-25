@@ -59,3 +59,12 @@ spec:
           credential:
             name: aws
             key: cloud
+      schedules:
+        default:
+          schedule: "00 03 * * *"
+          template:
+            includedNamespaces:
+              - "default"
+            snapshotVolumes: true
+            ttl: 168h0m0s
+          useOwnerReferencesInBackup: false
