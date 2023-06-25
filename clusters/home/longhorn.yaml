@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: sealed-secrets
-    # - name: snapshot-controller # additional CRDs
+    - name: snapshot-controller # additional CRDs
   interval: 1m
   prune: true
   wait: true
