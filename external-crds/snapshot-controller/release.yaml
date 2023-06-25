@@ -14,3 +14,7 @@ spec:
         name: piraeus-charts
         namespace: kube-system
       interval: 1m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
