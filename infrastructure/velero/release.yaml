@@ -61,7 +61,7 @@ spec:
             key: cloud
       schedules:
         default:
-          schedule: "00 03 * * *"
+          schedule: "00 15 * * *"
           template:
             includedNamespaces:
               - "default"
