@@ -7,7 +7,6 @@ metadata:
 spec:
   dependsOn:
     - name: sealed-secrets
-    - name: velero-config
   interval: 1m
   prune: true
   wait: true
