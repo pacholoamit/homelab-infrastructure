@@ -97,7 +97,7 @@ rm -rf grafana-credentials.yaml
 
 ## Preparing Velero credentials
 
-create an `aws-credentials` file in the root of the project with the following contents
+create a `cloud` file in the root of the project with the following contents
 
 ```aw
 [default]
@@ -109,13 +109,13 @@ Then run the following commands
 
 ```sh
 # create a secret from the file
-kubectl -n velero create secret generic aws --from-file=aws-credentials --dry-run=client -o yaml > aws-credentials.yaml
+kubectl -n velero create secret generic aws --from-file=cloud --dry-run=client -o yaml > cloud.yaml
 
 # Seal secret
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
-< aws-credentials.yaml > aws-credentials-sealed.yaml
+< cloud.yaml > aws-credentials-sealed.yaml
 
 mv aws-credentials-sealed.yaml infrastructure/velero/secret.yaml
 
-rm -rf aws-credentials.yaml
+rm -rf cloud.yaml
 ```
