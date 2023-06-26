@@ -1,7 +1,7 @@
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Alert
 metadata:
-  name: on-call-webapp
+  name: cluster-alert
   namespace: flux-system
 spec:
   summary: "Home K3s Cluster"
