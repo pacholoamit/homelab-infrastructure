@@ -4,5 +4,5 @@ metadata:
   name: vmware-tanzu
   namespace: velero
 spec:
-  interval: 1m
+  interval: 30m
   url: https://vmware-tanzu.github.io/helm-charts
