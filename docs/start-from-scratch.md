@@ -105,7 +105,10 @@ rm -rf grafana-credentials.yaml
 ```sh
 
 # Create a secret for the slack webhook
-kubectl create secret generic slack-url --from-literal=address=<SLACK_WEBHOOK> --dry-run=client -o yaml > slack-webhook-url.yaml
+kubectl -n flux-system create secret generic slack-url \
+--from-literal=address=<SLACK_WEBHOOK> \
+--dry-run=client \
+-o yaml > slack-webhook-url.yaml
 
 # Seal secret
 
