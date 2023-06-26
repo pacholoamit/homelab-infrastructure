@@ -27,6 +27,13 @@ apt install open-iscsi
 apt install nfs-common
 ```
 
+## Installing the Weaveworks dashboard
+
+```
+brew tap weaveworks/tap
+brew install weaveworks/tap/gitops
+```
+
 ## Preparing cloudflare tunnels
 
 We are using [Cloudflared](https://github.com/cloudflare/cloudflared) to route traffic to our cluster. Install the cloudflared CLI tool and run the following commands.
@@ -92,6 +99,21 @@ kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 mv grafana-credentials-sealed.yaml infrastructure/prometheus-stack/secret.yaml
 
 rm -rf grafana-credentials.yaml
+
+# Generating weaveworks dashboard admin
+echo -n $PASSWORD | gitops get bcrypt-hash # Copy the output of this
+
+# Create secret for weave cloud
+kubectl -n weave create secret generic weave-user-auth --from-literal=password=<GENERATED_PASSWORD> --from-literal=username=$USER --dry-run=client -o yaml > weave-cloud-password.yaml
+
+# Seal secrets
+kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
+< weave-cloud-password.yaml > weave-cloud-password-sealed.yaml
+
+
+mv weave-cloud-password-sealed.yaml infrastructure/weave-works-dashboard/secret.yaml
+
+rm -rf weave-cloud-password.yaml
 
 ```
 
