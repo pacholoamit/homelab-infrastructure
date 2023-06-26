@@ -4,6 +4,6 @@ namespace: monitoring
 resources:
   - namespace.yaml
   - repository.yaml
-  - prometheus.kuztomization.yaml
-  - loki.kuztomization.yaml
-  - config.kuztomization.yaml
+  - prometheus.kustomization.yaml
+  - loki.kustomization.yaml
+  - config.kustomization.yaml
