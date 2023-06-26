@@ -5,8 +5,6 @@ metadata:
   name: weave-works-dashboard
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: sealed-secrets
   interval: 1m
   prune: true
   wait: true
