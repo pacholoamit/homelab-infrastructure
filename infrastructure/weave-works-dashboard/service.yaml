@@ -18,7 +18,8 @@ kind: Ingress
 metadata:
   name: weave-gitops-ingress
   namespace: flux-system
-
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
     - host: weave.pacholoamit.com
