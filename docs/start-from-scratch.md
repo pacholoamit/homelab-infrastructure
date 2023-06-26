@@ -100,6 +100,24 @@ rm -rf grafana-credentials.yaml
 
 ```
 
+## Configuring Flux Alerts
+
+```sh
+
+# Create a secret for the slack webhook
+kubectl create secret generic slack-url --from-literal=address=<SLACK_WEBHOOK> --dry-run=client -o yaml > slack-webhook-url.yaml
+
+# Seal secret
+
+kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
+< slack-webhook-url.yaml > slack-webhook-url-sealed.yaml
+
+mv slack-webhook-url-sealed.yaml infrastructure/flux-alerts/secret.yaml
+
+rm -rf slack-webhook-url.yaml
+
+```
+
 ## Preparing Velero credentials
 
 create a `cloud` file in the root of the project with the following contents
