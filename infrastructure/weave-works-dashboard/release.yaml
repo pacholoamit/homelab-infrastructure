@@ -17,4 +17,6 @@ spec:
   interval: 1h0m0s
   values:
     adminUser:
-      create: false
+      create: true
+      passwordHash: $2a$10$zcPdpLbmlKz/BgZKTqSWXeQbgu8dekiwI1VROxSfo5GeMK7/iW7oa
+      username: admin
