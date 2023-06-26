@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - namespace.yaml
+  - repository.yaml
+  - prometheus.kuztomization.yaml
+  - loki.kuztomization.yaml
+  - config.kuztomization.yaml
