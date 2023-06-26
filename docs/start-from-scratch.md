@@ -49,10 +49,7 @@ cloudflared tunnel create home-k3s-cluster
 Then create the routes:
 
 ```sh
-cloudflared tunnel route dns home-k3s-cluster longhorn.pacholoamit.com
-cloudflared tunnel route dns home-k3s-cluster vaultwarden.pacholoamit.com
-cloudflared tunnel route dns home-k3s-cluster grafana.pacholoamit.com
-cloudflared tunnel route dns home-k3s-cluster weave.pacholoamit.com
+cloudflared tunnel route dns home-k3s-cluster <route>.pacholoamit.com
 ```
 
 ## Preparing secrets
@@ -100,21 +97,6 @@ kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 mv grafana-credentials-sealed.yaml infrastructure/prometheus-stack/secret.yaml
 
 rm -rf grafana-credentials.yaml
-
-# Generating weaveworks dashboard admin
-echo -n $PASSWORD | gitops get bcrypt-hash # Copy the output of this
-
-# Create secret for weave cloud
-kubectl -n weave create secret generic weave-user-auth --from-literal=password=<GENERATED_PASSWORD> --from-literal=username=$USER --dry-run=client -o yaml > weave-cloud-password.yaml
-
-# Seal secrets
-kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
-< weave-cloud-password.yaml > weave-cloud-password-sealed.yaml
-
-
-mv weave-cloud-password-sealed.yaml infrastructure/weave-works-dashboard/secret.yaml
-
-rm -rf weave-cloud-password.yaml
 
 ```
 
