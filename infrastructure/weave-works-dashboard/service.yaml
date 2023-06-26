@@ -6,7 +6,6 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app.kubernetes.io/instance: ww-gitops
     app.kubernetes.io/name: weave-gitops
   ports:
     - port: 9001
