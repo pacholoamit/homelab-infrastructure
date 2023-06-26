@@ -52,6 +52,7 @@ Then create the routes:
 cloudflared tunnel route dns home-k3s-cluster longhorn.pacholoamit.com
 cloudflared tunnel route dns home-k3s-cluster vaultwarden.pacholoamit.com
 cloudflared tunnel route dns home-k3s-cluster grafana.pacholoamit.com
+cloudflared tunnel route dns home-k3s-cluster weave.pacholoamit.com
 ```
 
 ## Preparing secrets
