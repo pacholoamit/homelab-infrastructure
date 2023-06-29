@@ -4,8 +4,6 @@ metadata:
   name: kube-prometheus-stack
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: kube-prometheus-stack
   interval: 30m
   prune: true
   wait: true
