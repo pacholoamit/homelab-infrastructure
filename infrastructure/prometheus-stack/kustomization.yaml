@@ -5,8 +5,6 @@ resources:
   - namespace.yaml
   - flux.repository.yaml
   - prometheus.repository.yaml
-  - loki.kustomization.yaml
-  - config.kustomization.yaml
   - release.yaml
   - secret.yaml
   - service.yaml
