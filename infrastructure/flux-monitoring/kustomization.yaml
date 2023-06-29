@@ -5,4 +5,4 @@ resources:
   - flux.repository.yaml
   - loki.kustomization.yaml
   - config.kustomization.yaml
-  - ./prometheus
+  - prometheus.kustomization.yaml
