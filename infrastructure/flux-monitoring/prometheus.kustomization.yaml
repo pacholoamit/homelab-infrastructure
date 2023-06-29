@@ -10,4 +10,4 @@ spec:
   path: ./infrastructure/flux-monitoring/prometheus
   sourceRef:
     kind: GitRepository
-    name: flux-monitoring
+    name: flux-system
