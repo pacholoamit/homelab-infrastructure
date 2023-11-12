@@ -19,9 +19,6 @@ spec:
           volumeMounts:
             - name: focalboard-volume
               mountPath: /opt/focalboard/data
-          env:
-            - name: VIRTUAL_PORT
-              value: "80"
 
       volumes:
         - name: focalboard-volume
