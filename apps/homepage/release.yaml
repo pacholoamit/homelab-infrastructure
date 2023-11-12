@@ -84,21 +84,24 @@ spec:
                   url: https://pve.pacholoamit.com
                   username: api@pam!api
                   password: ***REMOVED*** # TODO: Make this into a sealed-secret
-            - Longhorn:
-                href: https://longhorn.pacholoamit.com/
-                description: Cloud native distributed block storage
-                icon: longhorn.png
-                ping: https://longhorn.pacholoamit.com/
+                
             - Weaveworks Dashboard:
                 href: https://weave.pacholoamit.com/
                 description: Weave K8s Flux Dashboard
                 icon: https://avatars.githubusercontent.com/u/9976052?s=200&v=4
                 ping: https://weave.pacholoamit.com/
 
+            - Longhorn:
+                href: https://longhorn.pacholoamit.com/
+                description: Cloud native distributed block storage
+                icon: longhorn.png
+
         - Apps/Services:
-            - My Second Service:
-                href: http://localhost/
-                description: Homepage is the best
+            - Vaultwarden:
+                href: https://vaultwarden.pacholoamit.com/
+                description: Self-hosted password manager
+                ping: https://vaultwarden.pacholoamit.com/
+                icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
 
       widgets:
         # show the kubernetes widget, with the cluster summary and individual nodes
