@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: focalboard-svc
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: focalboard
+  ports:
+    - port: 80
+      targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: focalboard-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: focalboard.pacholoamit.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: focalboard-svc
+                port:
+                  number: 80

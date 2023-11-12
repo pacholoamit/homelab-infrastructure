@@ -5,6 +5,8 @@ metadata:
   name: focalboard
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: longhorn
   interval: 1m
   prune: true
   wait: true
