@@ -83,7 +83,7 @@ spec:
                   type: proxmox
                   url: https://pve.pacholoamit.com
                   username: api@pam!api
-                  password: e5265d58-1c8b-45b2-9637-746c027df8fa
+                  password: e5265d58-1c8b-45b2-9637-746c027df8fa # TODO: Make this into a sealed-secret
             - Longhorn:
                 href: https://longhorn.pacholoamit.com/
                 description: Cloud native distributed block storage
@@ -123,6 +123,13 @@ spec:
             labels: true
             # Show the nodes
             nodes: true        
+        - openmeteo:
+            label: Cebu # optional
+            latitude: 10.31672
+            longitude: 123.89071
+            timezone: Asia/Manila # optional
+            units: metric # or imperial
+            cache: 5 # Time in minutes to cache API responses, to stay within limits
         - search:
             provider: google
             target: _blank
