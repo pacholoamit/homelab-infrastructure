@@ -76,7 +76,7 @@ spec:
           gethomepage.dev/group: "Dynamic"
           gethomepage.dev/icon: "homepage.png"
         hosts:
-          - host: homelab.example.com
+          - host: homelab.pacholoamit.com
             paths:
               - path: /
                 pathType: Prefix
