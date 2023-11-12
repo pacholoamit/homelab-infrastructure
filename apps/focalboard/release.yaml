@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: focalboard
-      version: "1.x.x"
+      version: "0.x.x"
       sourceRef:
         kind: HelmRepository
         name: mattermost
@@ -23,7 +23,7 @@ spec:
       repository: mattermost/focalboard
       tag: 0.9.2
       pullPolicy: IfNotPresent
-      
+
     persistence:      
       enabled: true
       accessMode: ReadWriteMany
