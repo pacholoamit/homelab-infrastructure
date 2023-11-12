@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: vaultwarden
+        app: focalboard
     spec:
       containers:
         - name: focalboard
