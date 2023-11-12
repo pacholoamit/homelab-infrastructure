@@ -61,13 +61,13 @@ spec:
                 href: https://www.reddit.com/r/selfhosted/top/?t=week
         - Programming & trends:
             - NodeJS Weekly:
-                - icon: node.js
+                - icon: https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png
                   href: https://nodeweekly.com
             - Javascript Weekly:
                 - icon: javascript
                   href: https://javascriptweekly.com
             - Golang Weekly:
-                - icon: golang
+                - icon: https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Aqua.png
                   href: https://golangweekly.com
             - Rust Weekly:
                 - icon: rust
