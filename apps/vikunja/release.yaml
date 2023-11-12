@@ -51,15 +51,14 @@ spec:
       enabled: true
       env:
         VIKUNJA_API_URL: "https://vikunja.pacholoamit.com/api/v1"
-      ingress:
-        main:
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: "nginx"
-            # proxy-body-size is set to 0 to remove the body limit on file uploads
-            nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          hosts:
-            - host: vikunja.pacholoamit.com
-              paths:
-                - "/"
+      # ingress:
+      #   main:
+      #     enabled: true
+      #     annotations:
+      #       kubernetes.io/ingress.class: "nginx"
+      #       nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      #     hosts:
+      #       - host: vikunja.pacholoamit.com
+      #         paths:
+      #           - "/"
       
