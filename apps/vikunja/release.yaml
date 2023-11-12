@@ -38,8 +38,9 @@ spec:
         config:
           enabled: true
           data:
-            config.yml:
+            config.yml: |
               service:
+                frontendUrl: http://vikunja.local
                 enableregistration: false
     # frontend:
     #   enabled: true
