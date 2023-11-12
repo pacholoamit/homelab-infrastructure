@@ -54,6 +54,4 @@ spec:
             - host: vikunja.pacholoamit.com
               paths:
                 - "/"
-      # env:
-      #   VIKUNJA_API_URL: https://vikunja.pacholoamit.com/api/v1
       
