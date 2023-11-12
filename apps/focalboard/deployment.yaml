@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: focalboard
-          image: mattermost/focalboard:latest
+          image: mattermost/focalboard
           volumeMounts:
             - name: focalboard-volume
               mountPath: /opt/focalboard/data
