@@ -17,7 +17,7 @@ spec:
   values:
     config:
       bookmarks:
-        - Developer:
+        - Bookmarks:
           - Github Code Search:
               - icon: github-light
                 href: https://cs.github.com/
@@ -30,24 +30,18 @@ spec:
           - Javascript Patterns:
               - icon: javascript
                 href: https://javascriptpatterns.vercel.app/patterns
-          - Patterns.dev:
-              - icon: javascript
-                href: https://patterns.dev/resources
           - Uiverse:
               - abbr: UI
                 href: https://uiverse.io/all
           - Advanced JS Functions:
               - abbr: AF
                 href: https://www.paulsblog.dev/advanced-javascript-functions-to-improve-code-quality/
-          - Go libraries:
-              - abbr: GL
-                href: https://threedots.tech/post/list-of-recommended-libraries/
         - Software News:
           - Dev (Top of the week):
               - icon: https://d2fltix0v2e0sb.cloudfront.net/dev-black.png
                 href: https://dev.to/top/week
           - Daily Dev:
-              - icon: https://lh3.googleusercontent.com/fife/AAbDypAX47N_QCvjWYecSYaNxRvo6BhdRTeRbDKPPplQ6qfmfd5gWDLRm-VVuUtGocT5T9-sQX8N-HqA9QtH4MvOb4VIgXjmFD-vx_x6UNnAJmadxRtBRH3-Py2krqRa2X--lI9ALIwvnQnoFFazhS2NiV9w7OojWr1iXlzwUsl68djYXcpPJXCa1ymxu4p4ZUyaS7kFEyDcoYlYX8zn6ABMGwAfIlb8wLnD03g-M5H2pjT88IHDq_cnU_bCB4eBCI-HirG0lf_YfcAn4GSg1rGPOJAx5FRWeDZTOEgHNR8-zKxQNY-IoHDeZSnPLGSf5P_xCHBxBzsWPeW7gdFOH7BI1onuMvOsALVng6qlB0qj6DLmCXoT3lguQPi2xF5oLhxP9yMCN8zU0v_A74HtUUzbf6ol8abX7NOPikloka5XoHM9v7IqNoxvdTX2XTLB94Wgxxf5YtULHtTND_eI3Uf7craPQOO-f8tfHyalvZj_v4X7uYMysMfujxoczabwkGWo7merkWBUIMJB3U-spyKq9eevKJ2UlPBZp1ytcx5Nuo1pKtMmx7YvOLbl9kloUfNVJNsrzVWfW-hzmdGSHkziSkE0nzVsGGtIj_EZJpV0_8Zg9ueIuQa7K8_4d53A0suCHm5VpJf5Q7D9qpp-_RaY68sc41cVLj1R7_s9pOwL0YMXsePOwonxT77JqTo3sY_VhwvtDjmNY-43-ZQUmPT1jXk5uDR5tUBWvpg3R1-hhuVysqzctu5phDrBuEnOm5VDf3OXjSVZ_qEgeu4dYKgIsRNRHaLyqVAHobFFfWWeaPP_DC8pBC2WWtKUyJRQ24PPjFCBQBgKZR40Dov2osRPATs-KZMNd2Zq8pP1JY6VpFL0hlGVivUxJEAFXlIysw2igWGAiASNWia-iJ8cl9rEtZAQ0Kex-RIp0m9-Id-wKcPQ3qUIvBSs6hKpWlWwxN9ecZvhAmPkMTccYkW7WCcOuSapYEkfHqendwhygJEAubbDf6Rz94G5lvDRGxXmvBjtujG5UdfF2cPcfzLmyAKxTPW5uuOftjOuyqIu1jBtyCJBmyDlPQnCLP-znIHd8ObP1jhHUymldciugKkE4OFovFsJupw74MoyBZCim57WeeBjDIYfh3RUIXCG3MSOFtwRZwoqtnSFqhga1Umkl-BeiuqPfZr82JQwwuj0kg7juXfZ4cYtJu_EewCBkGZoUbB2aPZyciEqt9weup3Ea2vR0AqSH2Sze5xbvPEoeEa98xVdpW8D99u_fwMsiutFQi-oLVmFZOvEmflxrFz_cOrbU9PFkqSbFZGejcA2IH6ST9dDeHexFqiRf9_VimJqWb7ehUjw4etaTAOLvGimMMxIqQBjuAU0GcBlYk4-zLJmJ_Z-e6x2F8GiTsbXBi6qkTfsqNusj4Pz5hxkZOy7AMp2rallyXSxC6L4dTcqeOpXC3JusvNopI36Cuk_1jZuEKcbQR2KN7R-K7Kj2zwqtbM349DGHJWvgFKmaMrDq2OYibU4rpMq-cKkEEITdgYpYOKVrT8TUIOuD4luAMr-8isRvYZJIOzotWE1VCfgntnb9bJr0XB9F741leKOVL6Eh8EenL6OQznyjOhwzQ10hljyr7b3MJ6TfPn7RDj4E3xeo21Y8yDna_ReXCrhRQVXCbgJxCJrCP8_=w400-h380-p-k-nu
+              - abbr: DD
                 href: https://app.daily.dev/
           - Github Trending:
               - icon: github-light
@@ -80,9 +74,21 @@ spec:
                   href: https://unzip.dev/archive/
       services:
         - Infrastructure:
-            - My First Service:
-                href: http://localhost/
-                description: Homepage is awesome
+            - Proxmox:
+                href: https://pve.pacholoamit.com/
+                description: Server management
+                icon: proxmox.png
+                ping: https://pve.pacholoamit.com/
+                widget:
+                  type: proxmox
+                  url: https://pve.pacholoamit.com
+                  username: api@pam!api
+                  password: ***REMOVED***
+            - Longhorn:
+                href: https://longhorn.pacholoamit.com/
+                description: Cloud native distributed block storage
+                icon: longhorn.png
+                ping: https://longhorn.pacholoamit.com/
 
         - Apps/Services:
             - My Second Service:
@@ -103,8 +109,17 @@ spec:
               cpu: true
               memory: true
               showLabel: true
+        - longhorn:
+            # Show the expanded view
+            expanded: true
+            # Shows a node representing the aggregate values
+            total: true
+            # Shows the node names as labels
+            labels: true
+            # Show the nodes
+            nodes: true        
         - search:
-            provider: duckduckgo
+            provider: google
             target: _blank
       kubernetes:
         mode: cluster
@@ -123,8 +138,8 @@ spec:
         enabled: true
         annotations:
           # Example annotations to add Homepage to your Homepage!
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Homepage"
+          gethomepage.dev/enabled: "false"
+          gethomepage.dev/name: "Pach's Homepage"
           gethomepage.dev/description: "Dynamically Detected Homepage"
           gethomepage.dev/group: "Dynamic"
           gethomepage.dev/icon: "homepage.png"
