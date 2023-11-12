@@ -49,8 +49,6 @@ spec:
         VIKUNJA_DATABASE_NAME: "vikunja"
     frontend:
       enabled: true
-      env:
-        VIKUNJA_API_URL: "https://vikunja.pacholoamit.com/api/v1"
       # ingress:
       #   main:
       #     enabled: true
