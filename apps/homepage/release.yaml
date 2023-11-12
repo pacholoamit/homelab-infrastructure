@@ -145,7 +145,7 @@ spec:
           longhorn:
             url: https://longhorn.pacholoamit.com
             username: pacholoamit
-            password: ***REMOVED***
+            password: ***REMOVED*** # TODO: MAKE THIS INTO A SECRET
 
     # The service account is necessary to allow discovery of other services
     serviceAccount:
