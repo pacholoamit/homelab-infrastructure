@@ -133,9 +133,16 @@ spec:
         - search:
             provider: google
             target: _blank
+
       kubernetes:
         mode: cluster
+
       settings:
+        providers:
+          longhorn:
+            url: https://longhorn.pacholoamit.com
+            username: pacholoamit
+            password: ***REMOVED***
 
     # The service account is necessary to allow discovery of other services
     serviceAccount:
