@@ -79,20 +79,16 @@ spec:
                 - abbr: UZ
                   href: https://unzip.dev/archive/
       services:
-        - My First Group:
+        - Infrastructure:
             - My First Service:
                 href: http://localhost/
                 description: Homepage is awesome
 
-        - My Second Group:
+        - Apps/Services:
             - My Second Service:
                 href: http://localhost/
                 description: Homepage is the best
 
-        - My Third Group:
-            - My Third Service:
-                href: http://localhost/
-                description: Homepage is 😎
       widgets:
         # show the kubernetes widget, with the cluster summary and individual nodes
         - kubernetes:
