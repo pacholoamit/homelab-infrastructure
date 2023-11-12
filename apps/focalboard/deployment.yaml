@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: focalboard
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: focalboard
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+        - name: focalboard
+          image: mattermost/focalboard:latest
+          volumeMounts:
+            - name: focalboard-volume
+              mountPath: /opt/focalboard/data
+          env:
+            - name: VIRTUAL_PORT
+              value: 80
+
+      volumes:
+        - name: focalboard-volume
+          persistentVolumeClaim:
+            claimName: focalboard-pvc

@@ -1,8 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: mattermost
-  namespace: default
-spec:
-  interval: 30m
-  url: https://helm.mattermost.com
