@@ -89,6 +89,11 @@ spec:
                 description: Cloud native distributed block storage
                 icon: longhorn.png
                 ping: https://longhorn.pacholoamit.com/
+            - Weaveworks Dashboard:
+                href: https://weave.pacholoamit.com/
+                description: Weave K8s Flux Dashboard
+                icon: https://avatars.githubusercontent.com/u/9976052?s=200&v=4
+                ping: https://weave.pacholoamit.com/
 
         - Apps/Services:
             - My Second Service:
