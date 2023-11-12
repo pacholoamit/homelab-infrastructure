@@ -5,4 +5,4 @@ metadata:
   namespace: default
 spec:
   interval: 30m
-  url: https://kolaente.dev/vikunja/helm-chart
+  url: https://kolaente.dev/vikunja/helm-chart/
