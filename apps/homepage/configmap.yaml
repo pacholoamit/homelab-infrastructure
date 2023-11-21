@@ -5,8 +5,7 @@ metadata:
   namespace: default
 data:
   bookmarks.yaml: |
-    bookmarks:
-      - Bookmarks:
-        - Github Code Search:
-            - icon: github-light
-              href: https://cs.github.com/
+    - Bookmarks:
+      - Github Code Search:
+          - icon: github-light
+            href: https://cs.github.com/
