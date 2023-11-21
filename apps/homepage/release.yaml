@@ -38,7 +38,7 @@ spec:
     # This enables the service account to access the necessary resources
     enableRbac: true
     config:
-      useExistingCOnfigMap: homepage-config
+      useExistingConfigMap: homepage-config
       # bookmarks:
       #   - Bookmarks:
       #     - Github Code Search:
