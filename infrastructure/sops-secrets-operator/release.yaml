@@ -4,20 +4,15 @@ metadata:
   name: sops
   namespace: flux-system
 spec:
+  interval: 5m
   chart:
     spec:
       chart: sops
       sourceRef:
         kind: HelmRepository
         name: sops
-      version: "0.x.x"
-  interval: 1h0m0s
-  releaseName: sops-controller
-  targetNamespace: flux-system
-  install:
-    crds: CreateReplace
-  upgrade:
-    crds: CreateReplace
+      version: "0.x"
+      interval: 1m
   values:
     secretsAsEnvVars:
       - name: SOPS_AGE_KEY_FILE
