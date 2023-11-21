@@ -8,6 +8,15 @@ metadata:
   namespace: default
 spec:
   interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
   chart:
     spec:
       chart: homepage
@@ -18,6 +27,9 @@ spec:
         namespace: default
       interval: 1m
   values:
+    image:
+      repository: ghcr.io/gethomepage/homepage
+      tag: v0.8.0
     config:
       bookmarks:
         - Bookmarks:
