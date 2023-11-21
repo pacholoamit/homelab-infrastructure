@@ -9,7 +9,7 @@ spec:
       chart: sops
       sourceRef:
         kind: HelmRepository
-        name: sealed-secrets
+        name: sops
       version: "0.x.x"
   interval: 1h0m0s
   releaseName: sops-controller
