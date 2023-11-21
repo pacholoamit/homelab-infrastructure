@@ -11,6 +11,10 @@ spec:
   # dependsOn:
   #   - name: sops
   #   - name: sealed-secrets
+  decryption:
+    provider: sops
+    secretRef:
+      name: age
   path: ./apps/homepage
   sourceRef:
     kind: GitRepository
