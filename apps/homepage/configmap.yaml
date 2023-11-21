@@ -60,7 +60,44 @@ data:
         - Unzip:
             - abbr: UZ
               href: https://unzip.dev/archive/
-  services.yaml: ""
+  services.yaml: |
+    - Infrastructure:
+        - Proxmox:
+            href: https://pve.pacholoamit.com/
+            description: Server management
+            icon: proxmox.png
+            ping: https://pve.pacholoamit.com/
+            widget:
+              type: proxmox
+              url: https://pve.pacholoamit.com
+              username: api@pam!api
+              password: ***REMOVED*** # TODO: Make this into a sealed-secret
+            
+        - Weaveworks Dashboard:
+            href: https://weave.pacholoamit.com/
+            description: Weave K8s Flux Dashboard
+            icon: https://avatars.githubusercontent.com/u/9976052?s=200&v=4
+            ping: https://weave.pacholoamit.com/
+
+        - Longhorn:
+            href: https://longhorn.pacholoamit.com/
+            description: Cloud native distributed block storage
+            icon: longhorn.png
+
+    - Apps/Services:
+        - Vaultwarden:
+            href: https://vaultwarden.pacholoamit.com/
+            description: Self-hosted password manager
+            ping: https://vaultwarden.pacholoamit.com/
+            icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
+
+        - Focalboard:
+            href: https://focalboard.pacholoamit.com/
+            description: Open source project management
+            ping: https://focalboard.pacholoamit.com/
+            icon: focalboard.png
+
   widgets.yaml: ""
   settings.yaml: ""
+  kubernetes.yaml: ""
   docker.yaml: ""
