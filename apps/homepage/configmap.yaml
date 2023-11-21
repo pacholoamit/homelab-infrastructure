@@ -10,3 +10,54 @@ data:
         - Github Code Search:
             - icon: github-light
               href: https://cs.github.com/
+        - Dev Resources:
+            - abbr: DR
+              href: https://resource.fyi
+        - Dev Shirts:
+            - abbr: DS
+              href: https://www.devshirt.club/
+        - Javascript Patterns:
+            - icon: javascript
+              href: https://javascriptpatterns.vercel.app/patterns
+        - Uiverse:
+            - abbr: UI
+              href: https://uiverse.io/all
+        - Advanced JS Functions:
+            - abbr: AF
+              href: https://www.paulsblog.dev/advanced-javascript-functions-to-improve-code-quality/
+      - Software News:
+        - Dev (Top of the week):
+            - icon: https://d2fltix0v2e0sb.cloudfront.net/dev-black.png
+              href: https://dev.to/top/week
+        - Daily Dev:
+            - abbr: DD
+              href: https://app.daily.dev/
+        - Github Trending:
+            - icon: github-light
+              href: https://github.com/trending?since=weekly
+      - Reddit Threads:
+        - r/ProgrammerHumour:
+            - icon: reddit
+              href: https://www.reddit.com/r/ProgrammerHumor/top/?t=week
+        - r/unixporn:
+            - icon: https://styles.redditmedia.com/t5_2sx2i/styles/communityIcon_7fixeonxbxd41.png?width=256&v=enabled&s=09e1c0d643c91e5dada2c7f73adb4effdb0bdf7d
+              href: https://www.reddit.com/r/unixporn/top/?t=week
+        - r/selfhosted:
+            - icon: https://styles.redditmedia.com/t5_32hch/styles/communityIcon_b2t5inv46z331.png?width=256&v=enabled&s=5049c971d4eaf5f8c05ee019586381828d5ef56e
+              href: https://www.reddit.com/r/selfhosted/top/?t=week
+      - Programming & trends:
+          - NodeJS Weekly:
+              - icon: https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png
+                href: https://nodeweekly.com
+          - Javascript Weekly:
+              - icon: javascript
+                href: https://javascriptweekly.com
+          - Golang Weekly:
+              - icon: https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Aqua.png
+                href: https://golangweekly.com
+          - Rust Weekly:
+              - icon: rust
+                href: https://this-week-in-rust.org/
+          - Unzip:
+              - abbr: UZ
+                href: https://unzip.dev/archive/
