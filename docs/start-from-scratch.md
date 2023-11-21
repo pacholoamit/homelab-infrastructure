@@ -145,3 +145,13 @@ mv aws-credentials-sealed.yaml infrastructure/velero/secret.yaml
 
 rm -rf cloud.yaml
 ```
+
+## Configuring Homepage Secrets
+
+```sh
+# Required to create age key in root dir first and set up .zshrc with
+# age key path
+kubectl create secret generic age --from-file=age-key.txt --dry-run=client -o yaml > secret.yaml   
+
+mv secret.yaml ./infrastructure/sops-secrets-operator/ 
+``````
