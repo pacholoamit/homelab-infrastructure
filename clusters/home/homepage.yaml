@@ -8,9 +8,9 @@ spec:
   interval: 1m
   prune: true
   wait: true
-  dependsOn:
-    - name: sops
-    - name: sealed-secrets
+  # dependsOn:
+  #   - name: sops
+  #   - name: sealed-secrets
   path: ./apps/homepage
   sourceRef:
     kind: GitRepository
