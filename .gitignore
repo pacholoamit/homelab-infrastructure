@@ -3,5 +3,5 @@
 aws-credentials
 cloud
 homepage-secret.yaml
-age-key.txt
+age.agekey
 *.decrypted~*
