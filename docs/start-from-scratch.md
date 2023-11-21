@@ -151,7 +151,13 @@ rm -rf cloud.yaml
 ```sh
 # Required to create age key in root dir first and set up .zshrc with
 # age key path
-kubectl create secret generic age --from-file=age-key.txt --dry-run=client -o yaml > secret.yaml   
+age-keygen -o age.agekey
 
-mv secret.yaml ./infrastructure/sops-secrets-operator/ 
+cat age.agekey |
+kubectl create secret generic sops-age \
+--namespace=flux-system \
+--from-file=age.agekey=/dev/stdin
+
+sops --age=age1helqcqsh9464r8chnwc2fzj8uv7vr5ntnsft0tn45v2xtz0hpfwq98cmsg \
+--encrypt --encrypted-regex '^(data|stringData)$' --in-place homepage-configmap.yaml
 ``````
