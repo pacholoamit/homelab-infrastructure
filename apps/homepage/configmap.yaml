@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
     name: homepage-config
     namespace: default
-stringData:
+data:
     docker.yaml: ""
     settings.yaml: ENC[AES256_GCM,data:c8L07FGC8J4opUM5nZ+O7wftxKSVcmrAxFRLyfzzpn50CLmT+ZhDlym7JX4xMjqZFIuhtb3PFswMRVv+fySoM1Xxo2MboPH7y4RTWNrH+V6YPpWk7MSek9zE3oich+Bl6K8qhyzzNsBfpv5ZC3fNxlLhKQi7I9Gzu0RwSuUpmHvdbIstDarXNtCKz/LI/sKi+nEMdZ/e4GhfPKfpAGFpJWx+N7fvU8e3,iv:cqsiJXEPPhVGUwDOw+5KSrCMLOytjglDgNu0eGeg6HA=,tag:J/eTAHBY0ad2PnKOitFEFA==,type:str]
     kubernetes.yaml: ENC[AES256_GCM,data:rDxAFon/2/Oy259aBDQ=,iv:w4ILZHXy2GTNyh202VnJ6eFcch5BapIYUMIYod/DIEE=,tag:euYFTiOsStflVFKiENTUVA==,type:str]
@@ -28,5 +28,5 @@ sops:
     lastmodified: "2023-11-21T12:10:10Z"
     mac: ENC[AES256_GCM,data:JbiuFHNOuzQQYCHQ8bBq8H9PIykHUHrhUYVgR5drJ7jNVQFgbyNjCa6DY00ETL9qbqmnOxZTFDfRElGohAjSsSG0irmmkOR8i7Ga351YK/MRIPiHkKDgq8SiizYt8VYoPQYzVzC0X3Kme5YyGycWzLIa7tFh2U2utdnlLSSN7JE=,iv:vCGaNPgScFSZkrxSjxXFwIHIpVCj5ZsRFfT388Hdjv8=,tag:RCIuXBSKKH0mGEh3eZdpew==,type:str]
     pgp: []
-    encrypted_regex: ^(data|stringData)$
+    encrypted_regex: ^(data|stringData|annotations|host)$
     version: 3.8.1
