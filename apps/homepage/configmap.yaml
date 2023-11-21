@@ -1,135 +1,20 @@
-apiVersion: v1
-kind: ConfigMap
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
 metadata:
-  name: homepage-config
+  creationTimestamp: null
+  name: homepage-configmap
   namespace: default
-data:
-  bookmarks.yaml: |
-    - Bookmarks:
-      - Github Code Search:
-          - icon: github-light
-            href: https://cs.github.com/
-      - Dev Resources:
-          - abbr: DR
-            href: https://resource.fyi
-      - Dev Shirts:
-          - abbr: DS
-            href: https://www.devshirt.club/
-      - Javascript Patterns:
-          - icon: javascript
-            href: https://javascriptpatterns.vercel.app/patterns
-      - Uiverse:
-          - abbr: UI
-            href: https://uiverse.io/all
-      - Advanced JS Functions:
-          - abbr: AF
-            href: https://www.paulsblog.dev/advanced-javascript-functions-to-improve-code-quality/
-    - Software News:
-      - Dev (Top of the week):
-          - icon: https://d2fltix0v2e0sb.cloudfront.net/dev-black.png
-            href: https://dev.to/top/week
-      - Daily Dev:
-          - abbr: DD
-            href: https://app.daily.dev/
-      - Github Trending:
-          - icon: github-light
-            href: https://github.com/trending?since=weekly
-    - Reddit Threads:
-      - r/ProgrammerHumour:
-          - icon: reddit
-            href: https://www.reddit.com/r/ProgrammerHumor/top/?t=week
-      - r/unixporn:
-          - icon: https://styles.redditmedia.com/t5_2sx2i/styles/communityIcon_7fixeonxbxd41.png?width=256&v=enabled&s=09e1c0d643c91e5dada2c7f73adb4effdb0bdf7d
-            href: https://www.reddit.com/r/unixporn/top/?t=week
-      - r/selfhosted:
-          - icon: https://styles.redditmedia.com/t5_32hch/styles/communityIcon_b2t5inv46z331.png?width=256&v=enabled&s=5049c971d4eaf5f8c05ee019586381828d5ef56e
-            href: https://www.reddit.com/r/selfhosted/top/?t=week
-    - Programming & trends:
-        - NodeJS Weekly:
-            - icon: https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png
-              href: https://nodeweekly.com
-        - Javascript Weekly:
-            - icon: javascript
-              href: https://javascriptweekly.com
-        - Golang Weekly:
-            - icon: https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Aqua.png
-              href: https://golangweekly.com
-        - Rust Weekly:
-            - icon: rust
-              href: https://this-week-in-rust.org/
-        - Unzip:
-            - abbr: UZ
-              href: https://unzip.dev/archive/
-  services.yaml: |
-    - Infrastructure:
-        - Proxmox:
-            href: https://pve.pacholoamit.com/
-            description: Server management
-            icon: proxmox.png
-            ping: https://pve.pacholoamit.com/
-            widget:
-              type: proxmox
-              url: https://pve.pacholoamit.com
-              username: api@pam!api
-              password: ***REMOVED*** # TODO: Make this into a sealed-secret
-            
-        - Weaveworks Dashboard:
-            href: https://weave.pacholoamit.com/
-            description: Weave K8s Flux Dashboard
-            icon: https://avatars.githubusercontent.com/u/9976052?s=200&v=4
-            ping: https://weave.pacholoamit.com/
-
-        - Longhorn:
-            href: https://longhorn.pacholoamit.com/
-            description: Cloud native distributed block storage
-            icon: longhorn.png
-
-    - Apps/Services:
-        - Vaultwarden:
-            href: https://vaultwarden.pacholoamit.com/
-            description: Self-hosted password manager
-            ping: https://vaultwarden.pacholoamit.com/
-            icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
-
-        - Focalboard:
-            href: https://focalboard.pacholoamit.com/
-            description: Open source project management
-            ping: https://focalboard.pacholoamit.com/
-            icon: focalboard.png
-
-  widgets.yaml: |
-    - kubernetes:
-        cluster:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-          label: "cluster"
-        nodes:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-    - longhorn:
-        # Show the expanded view
-        expanded: true
-        # Shows a node representing the aggregate values
-        total: true
-        # Shows the node names as labels
-        labels: true
-        # Show the nodes
-        nodes: true        
-    - openmeteo:
-        label: Cebu # optional
-        latitude: 10.31672
-        longitude: 123.89071
-        timezone: Asia/Manila # optional
-        units: metric # or imperial
-        cache: 5 # Time in minutes to cache API responses, to stay within limits
-    - search:
-        provider: google
-        target: _blank
-  kubernetes.yaml: |
-    mode: cluster
-  settings.yaml: ""
-  docker.yaml: ""
+spec:
+  encryptedData:
+    bookmarks.yaml: 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
+    docker.yaml: AgAStbPbYRDj9ilgFhPGBPO1EPFQwpUREuhMc+3ecvycze+BP3AH7nWRh10Td4Dmcxnh9xGqZe1/bIBZmuUn/AfxWU3EnDIsaIl3DqSa9uNhlhkM9MHMoPYTlVEh7LpQiI/J53P5g84lGsH+7orzd8pcNFwJ8UEt9AthxjgjeJufL4JoLG7UcfYVu9tYzQ9JxjiMiZM5ecDCcCL7Z4td4odhM68+gJV57O/BhB8AuUIuYVsGDwx1W74qAwBuI5oG6IC3AAZWGsZgTkhlRs5kqV56Dh0OUrmkLk7nyGSyhNv4kBUR0o42Km4p6W+QOTVyif3CgFjd7eqinW62zgOUUgYlodJ4oQyTe/wuolVvP1iYOr2yLe/ph0ulWVsncNL2DOFSaHmvDmgBySiTtjjdHu0tTxlq/45s6loOlFoeoAPSyba69SpT4veJqFCdWviD4XkYcZppn5abmum5uACyeo7sYfFGBMk4xrvoHQz9JEDwsTy5ZzyB3JyaMQZegAATAPBqtbjeHB4woT7RQwg5AGJhlfoyQzBoWdQZp04tp9oGeH2V21KDStDyqD3GRyoYDMqTbpFfFHSV1RsgGzvZcESI5q+SR7nTnceEXP+CacpsglSlIYykiEh4NDQxc6b5aPapXkJmH1NLbato7h8CIbUTkuFZViwd1X7ScNkQgduSqTaqCwcIMj/D0ia8O883rds=
+    kubernetes.yaml: AgA2C+8uFUcXlNLASVcKnWmhaXJiylEyTWp2ZStUAU1YbD2IttOVZalRGQ/qyftVnEvv7m2a0XFcdtHC/tKQdLthLAxSQLa9WZ2KKgCFP3zbojAK+/zTaRfcNP6iWtEIAv7QgME8ok47rprVMo7N3mCPM1Oy+Dh2JOL46Dd5eLIAdVmTYrHVTQItPYi7oLAfXX212MgjE+gkisVmzej7UXhZa8GLrffdI/rsnYtQPZrZs+uMALhojweDFRq6x0P6neSlWcrkFmnQypMyuxxPuK+zhm7/DgycDlMTfX6uKjy+O+Gtc2SnWXHrfN7q1QT3UsdiRXyQiAzmhRaa16FxfhVFiZeKAbrq7qGIzhs9Pql+RoGaiFUKt2HZctTGaJYEjnaNYCErt3EQnfujw3tObO372cAwT/I+SQTDY3Gf8hcXR7YOhQsH5yElX2/78BNDQbHcN/3FC4iriCycvkRMi0hu/klNsNA/lx3/RvouaK2t1GTrmx2pOc6wt2fEZwsc8lMgssxrkO9nWxDmmqjdtbG2TwJ4vuNmGAWgjya0TFaSEAiie3LMAN5Mlb6NRb1s78+a5IBkndt8xZS56wd3pURkClTrIRCfB4ncY50tExuShhk2tYGrPGh7w6TnZeBhmQb3ahWAJrNJXTe7MheworUS1gr9qgM6WjeeUxzr1IFNjJC52u5TzTtJ8akb072inu05khMqr7p3udG76cxkPXN9TxT5mQ==
+    services.yaml: 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
+    settings.yaml: AgCPLlwLfT/MYyMtGCaH4Zo759v1nJvnx9V0zH0pTcjKvhLFtdMewglgOnnn7OIgqOfzvMWduDD8ESqnoZ7Tw2dxJ69zTgnSpEWJcmf6ZgWSBdSDKSuZxEXcMXFqJsZL9oIF8F3S21giSWk8M33I4otUefDJ1CmQlFK/Dx2B7F9rCQ4xFUl0NOVOVxZGlJVIekjG/hr2GQ4owMDPVCvPuAG9xXAZnjuPM4Wb/xMSAAVVOYtq9BZgqsKpeWcYsQ1xdqaBfxVP3odEIceZZjS/kQvuVdMfD2KhjhkuMVE//m9Lbd12AwkXQEXqAbPLfce6Q2nkkqv10ZgNLwhg/ngqfBf3g7+rx1XmbTFsSxLLFIsfn13j2srLa8Krijj6T2lxWg5uruEYtU7rjF3pBKrdeJbOqa/9MqOM0JG6Rkzzc9B1v9oSOX8/tqm88oQ3qnJ3eRTT6KKYPbUYs02PS+AYVLjDsPZflpQBHoFJhh0quQG4MJ5ezUrEDqCAH48QJyqwT6Al7owZI/rQ3Im81Ba9N6Lmkv7NkSmkd1vuYsKZ4sNfn7X8S5HnwlGl9871sTBNhxVkOgGsm7pN2/Ov10Y+luvJFFKGYhVJB1MTSDNeP2L+8k1MyyFmOH8fNSeu5d6CdB4I2dZMilH2MVUXw1ffwx6QBnbYYncjGwdpzYWBCY7PMABpHymRhTYJsfUiwdr2+2GAz28jZHasoJkOEkLWzQ1HCAaHkFwP3QUKto3oLBzPMyKpIe1qqosPbylcCRAQnlfd9SpmlcsldvdjFCufxgL9Rkx/bOvQi7mhhR1rBliNmDan8D2ihiPwSKPK53qlcg464gwM4csXSEmucrbomJVEoypagQingn3hecQhrS+xnOj3Jpjd5DxpPBdVbPfrqDxGbKIt0bnmyoxYu94sdYRfTV0waW89r7CpRuvB8X2MUMWlBDt/rddxqOyeDzF+
+    widgets.yaml: AgCaIm8iCmvXd++9ooTmlrQdRGD3gD85odGBDsKrpfqRKpTS7eln6FAWVZPShMl89sjhT6qL05OkqKJplnBkOmUCXOCn9wNsUzV3iHiyguy0lrJLq5x+DvEX8VdR1z0bXO3Y825EEh+NNayOZkyhB7AzARMM2Uoi4YmZvPdFM/enAnhoiR6j7N5Jplj+X3xjTlRFPpxQRMB41CQBIDDQTmkC4SQlsx3varqmXqz1pGOE2ApvkfbvF52lAn0YHN5v25eDiUx7XNWo5vJP0arKc+7/FqGO+TeKbG0hOPe7uG2t3J5yhqSKrvBWRBu/1y5rdCPwHJVWNsg+tQTOWbk0kFSUcqN9tQB2Vu8hif9U55UNtCiAZEgYfs02UEMdcnLZGRmCUj16q7nmCy3ZP+8l8JHBH70vdq6n9e9fCEcYsqFqkG1+NlM6aBWI28Ag+oRHTXYpGB/M+BLarTwJB2hKCj3aMOxYVGHV+VY5scRRONYrhtItynYjfiq3NQ4k7SWDO4DICAT9AMO2TlpWReyPgqY0e4vOnj4OXXcclHgT4LF9DhMx4obxrL2uAoc877BXRjphFxwrjOFT+Y2Mm8+mCLCEYu0AZ3oTVsjjW48SoL+CoQc6QG313Wx2Ovk8ByityVIx18s9vZZ7giLrr6Y526CjKFOIxc8XriT+WMo6LKVspF31EaLQi3Vbb5MMAf9y5P5Om4vr8/PXVPa0Tw8lgZj8fwtSAauhazhE9RD1L2LzwGvI2wLGE+x/ZI9Lo4xleZ0eQ9nTeEwPQy8WS2/mABTkp2SmU8On39lLGpmUO4/Oi02X/CQqvjRLIDcGqEWpB3jdcJKZva2bJIMgCpC7gSO9Dqw3gyC32YzZ1dzhsgIcggfYYyBe10ROcEUMaO4LasuU1uyYLvqwn7v/dt6vG5/EbVof37nL4DMAo7Hvpg+n/+sdDC5ptdChhbUfVpApdF6aSLMFWWhQuf0+Pe8Kk7sjIaCPzikiZZbOXW9ZFxLhXtdSL6fgRnZSuXzrQsksBA8qt6Ppw2v3CIAVz8ZmlGAWgTdJAkseASqDI7F61KNbREoBUnmErkkMcNaIX50jdR8t+amjbpkkscJ4+Q/XmkfAuaDeKbjmOXiKyoPnW4thysHdh7jwuYFANs8trvmhAOlVcePShpHGun2j+3jr4Oa0Ad16+xUxzv0/4EKVrVW3i+iaE4Wu0I57JJqTLJpe7DiunYVu64SgkLpsmNM2cAXYqZZ0962rTppKARDxDuVl2gcD0L/2dggvyommwJQAjN1RKFbb+aLfiwgw+Lqoa5EIBtTA9VIGE6cnt1X+DDS6yNRhAnpbNhnlWF9mjRLoUfacVKQpk/fphYrwaWojmOQOUKtB+2DC1vnJspNqOWnoPUUrytXupcKj+d6d61Rotfy3o3S1szUittQrrkRVJpdHwktdv46ERK3W9WQtt1lhUF6AFLmQ6G3GhekWiZ4bKJEX0/Ga00TTZnprzDKF+qPsAPQc4FntgiuousPCJbaGpxELE0gV58LHJf2Hbq7jsP+U5kgaGT8TN6wiqKZ74ppzrbE3/yU0zhG617LBzbzo/IPFTMXeLH87VJtEbWrPIfCqvUkadWF/sXgBW6UhSus/lassALFAJdWbRYShwk+puObM0Tdsz5DkdEkVzfqiy+XoySr/D+p6qBmVabk4vPCH4j+UYti+7j2O21s4p+gSlQDDG7ceOaop7hHizLLtiJDAkjXAPp2kxaK+r4OvlhXFz+ZboKEsJsw1hfPsf8sech383etGt4qaG8851Ml8jAjKPOJPO4hOyWKZmSXMKU5bT2t+Ryfy5c/427FMj4NT
+  template:
+    metadata:
+      creationTimestamp: null
+      name: homepage-configmap
+      namespace: default
