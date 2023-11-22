@@ -29,7 +29,11 @@ spec:
       tag: 1.18.0
       pullPolicy: IfNotPresent
     config:
+      generic:
+        timezone: Asia/Manila
       host: n8n.pacholoamit.com
+      protocol: https
+      port: 443
       database:
         type: sqlite
     persistence:
