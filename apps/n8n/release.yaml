@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: n8n
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: n8n
+      version: "0.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: n8n
+        namespace: default
+      interval: 1m
+  values:
+    config:
+      database:
+        type: sqlite
+    persistence:
+      type: dynamic
+      storageClassName: longhorn
+      accessModes:
+        - ReadWriteMany
+      size: 3Gi
+    extraEnv:
+      WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+      hosts:
+        - host: n8n.pacholoamit.com
+          paths:
+            - /
