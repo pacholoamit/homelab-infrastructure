@@ -29,6 +29,7 @@ spec:
       tag: 1.18.0
       pullPolicy: IfNotPresent
     config:
+      host: n8n.pacholoamit.com
       database:
         type: sqlite
     persistence:
