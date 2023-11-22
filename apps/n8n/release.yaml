@@ -20,7 +20,7 @@ spec:
       version: "0.x.x"
       sourceRef:
         kind: HelmRepository
-        name: n8n
+        name: open-8gears
         namespace: default
       interval: 1m
   values:

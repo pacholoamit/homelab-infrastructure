@@ -1,8 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: n8n
+  name: open-8gears
   namespace: default
 spec:
   interval: 30m
-  url: https://github.com/8gears/n8n-helm-chart
+  url: https://8gears.container-registry.com/chartrepo/library/
