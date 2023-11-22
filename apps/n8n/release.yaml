@@ -24,6 +24,10 @@ spec:
         namespace: default
       interval: 1m
   values:
+    image:
+      repository: 8gears/n8n
+      tag: 1.18.0
+      pullPolicy: IfNotPresent
     config:
       database:
         type: sqlite
