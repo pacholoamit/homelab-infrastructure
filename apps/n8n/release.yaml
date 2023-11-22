@@ -40,13 +40,12 @@ spec:
     extraEnv:
       WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
     ingress:
-
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "nginx"
-        gethomepage.dev/enabled: true
-        gethomepage.dev/description: "Open source workflow automation tool"
-        gethomepage.dev/group: "Apps/Services"
+        kubernetes.io/ingress.class: nginx
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Open source workflow automation tool
+        gethomepage.dev/group: Apps/Services
         gethomepage.dev/icon: n8n.png
         gethomepage.dev/name: n8n
       hosts:
