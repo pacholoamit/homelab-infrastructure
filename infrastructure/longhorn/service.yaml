@@ -32,6 +32,11 @@ metadata:
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required "
     # custom max body size for file uploading like backing image uploading
     nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Cloud native distributed block storage
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/icon: longhorn.png
+    gethomepage.dev/name: Longhorn
 spec:
   rules:
     - host: longhorn.pacholoamit.com
