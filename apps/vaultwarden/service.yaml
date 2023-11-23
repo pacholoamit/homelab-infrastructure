@@ -9,7 +9,7 @@ metadata:
     gethomepage.dev/description: Self-hosted password manager
     gethomepage.dev/group: Apps/Services
     gethomepage.dev/icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
-    gethomepage.dev/name: Vaultwarden
+    gethomepage.dev/name: vaultwarden
 spec:
   rules:
     - host: vaultwarden.pacholoamit.com
