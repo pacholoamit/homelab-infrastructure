@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: mysql
+  name: mariadb
   namespace: default
 spec:
   interval: 5m
@@ -16,8 +16,8 @@ spec:
           retries: 3
   chart:
     spec:
-      chart: mysql
-      version: "9.x.x"
+      chart: mariadb
+      version: "14.x.x"
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -28,8 +28,8 @@ spec:
       debug: true
     auth:
       username: pacholoamit
-      database: mysql
-      existingSecret: mysql
+      database: mariadb
+      existingSecret: mariadb
     primary:
       startupProbe:
         enabled: false
