@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: vaultwarden
   namespace: default
-  labels:
-    app.kubernetes.io/name: vaultwarden
 spec:
   replicas: 1
   selector:

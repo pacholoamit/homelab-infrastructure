@@ -10,6 +10,8 @@ metadata:
     gethomepage.dev/group: Apps/Services
     gethomepage.dev/icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
     gethomepage.dev/name: Vaultwarden
+    gethomepage.dev/app: vaultwarden
+    gethomepage.dev/pod-selector: app=vaultwarden
 spec:
   rules:
     - host: vaultwarden.pacholoamit.com
