@@ -15,7 +15,7 @@ spec:
         namespace: kube-system
       interval: 1m
   values:
-    schedule: "0 * * * *"
+    schedule: "0 0 * * *"
     deschedulerPolicy:
       strategies:
         RemoveDuplicates:
