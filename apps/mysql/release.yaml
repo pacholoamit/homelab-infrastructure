@@ -24,6 +24,8 @@ spec:
         namespace: default
       interval: 1m
   values:
+    image:
+      debug: true
     auth:
       username: pacholoamit
       database: mysql
