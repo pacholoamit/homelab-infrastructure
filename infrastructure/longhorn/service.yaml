@@ -37,6 +37,7 @@ metadata:
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/icon: longhorn.png
     gethomepage.dev/name: Longhorn
+    gethomepage.dev/ping: https://longhorn.pacholoamit.com/
 spec:
   rules:
     - host: longhorn.pacholoamit.com
