@@ -20,16 +20,16 @@ spec:
       create: true
       passwordHash: $2a$10$zcPdpLbmlKz/BgZKTqSWXeQbgu8dekiwI1VROxSfo5GeMK7/iW7oa
       username: admin
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/description: Weave K8s Flux Dashboard
-        gethomepage.dev/group: Infrastructure
-        gethomepage.dev/icon: https://avatars.githubusercontent.com/u/9976052?s=200&v=4
-        gethomepage.dev/name: Weaveworks Dashboard
-      hosts:
-        - host: weave.pacholoamit.com
-          paths:
-            - /
+    # ingress:
+    #   enabled: true
+    #   annotations:
+    #     kubernetes.io/ingress.class: "nginx"
+    #     gethomepage.dev/enabled: "true"
+    #     gethomepage.dev/description: Weave K8s Flux Dashboard
+    #     gethomepage.dev/group: Infrastructure
+    #     gethomepage.dev/icon: https://avatars.githubusercontent.com/u/9976052?s=200&v=4
+    #     gethomepage.dev/name: Weaveworks Dashboard
+    #   hosts:
+    #     - host: weave.pacholoamit.com
+    #       paths:
+    #         - /
