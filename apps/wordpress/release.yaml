@@ -42,6 +42,7 @@ spec:
       port: 3306
       user: pacholoamit
       database: mysql
+      existingSecret: wordpress
     ingress:
       enabled: true
       annotations:
