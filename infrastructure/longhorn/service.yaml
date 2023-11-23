@@ -37,7 +37,7 @@ metadata:
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/icon: longhorn.png
     gethomepage.dev/name: Longhorn
-    gethomepage.dev/ping: https://longhorn.pacholoamit.com/
+    gethomepage.dev/pod-selector: app=longhorn-ui
 spec:
   rules:
     - host: longhorn.pacholoamit.com
