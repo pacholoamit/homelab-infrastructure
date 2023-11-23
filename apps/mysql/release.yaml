@@ -25,3 +25,10 @@ spec:
       interval: 1m
   values:
     auth:
+      username: pacholoamit
+    persistence: 
+      enabled: true
+      storageClass: longhorn
+      accessModes:
+        - ReadWriteMany
+      size: 8Gi
