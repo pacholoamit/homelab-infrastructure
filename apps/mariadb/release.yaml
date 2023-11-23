@@ -30,13 +30,13 @@ spec:
       username: pacholoamit
       database: mariadb
       existingSecret: mariadb
-    primary:
-      startupProbe:
-        enabled: false
-      readinessProbe:
-        enabled: false
-      livenessProbe:
-        enabled: false
+    # primary:
+    #   startupProbe:
+    #     enabled: false
+    #   readinessProbe:
+    #     enabled: false
+    #   livenessProbe:
+    #     enabled: false
     persistence: 
       enabled: true
       storageClass: longhorn
