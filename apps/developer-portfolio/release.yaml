@@ -27,4 +27,5 @@ spec:
                 - host: www.pacholoamit.com
                   paths:
                       - path: /
+                        pathType: Prefix
 
