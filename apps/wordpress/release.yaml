@@ -40,7 +40,7 @@ spec:
     externalDatabase:
       host: mysql.default.svc.cluster.local
       port: 3306
-      user: pacholoamit
+      user: root
       database: mysql
       existingSecret: wordpress
     ingress:
