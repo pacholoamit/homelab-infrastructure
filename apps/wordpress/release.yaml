@@ -20,7 +20,7 @@ spec:
       version: "18.x.x"
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: bitnami # Repo location in mysql
         namespace: default
       interval: 1m
   values:
@@ -34,8 +34,10 @@ spec:
       storageClass: longhorn
       accessModes:
         - ReadWriteMany
-      size: 5Gi
-
+      size: 8Gi
+    mariadb:
+      enabled: false
+    
     ingress:
       enabled: true
       annotations:
