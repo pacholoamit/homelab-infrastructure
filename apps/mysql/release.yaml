@@ -26,6 +26,7 @@ spec:
   values:
     auth:
       username: pacholoamit
+      existingSecret: mysql
     persistence: 
       enabled: true
       storageClass: longhorn
