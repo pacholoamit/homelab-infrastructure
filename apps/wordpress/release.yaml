@@ -37,7 +37,11 @@ spec:
       size: 8Gi
     mariadb:
       enabled: false
-    
+    externalDatabase:
+      host: mysql.default.svc.cluster.local
+      port: 3306
+      user: pacholoamit
+      database: wordpress
     ingress:
       enabled: true
       annotations:
