@@ -5,6 +5,10 @@ metadata:
   name: mysql
   namespace: flux-system
 spec:
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   dependsOn:
     - name: longhorn
   interval: 1m
