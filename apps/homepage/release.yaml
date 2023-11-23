@@ -34,11 +34,6 @@ spec:
     serviceAccount:
       create: true
       name: homepage
-      service:
-        main:
-          ports:
-            http:
-              port: 3000
 
     # This enables the service account to access the necessary resources
     enableRbac: true
