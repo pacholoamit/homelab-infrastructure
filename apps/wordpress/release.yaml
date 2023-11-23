@@ -36,13 +36,19 @@ spec:
         - ReadWriteMany
       size: 8Gi
     mariadb:
-      enabled: false
-    externalDatabase:
-      host: mariadb.default.svc.cluster.local
-      port: 3306
-      user: root
-      database: mariadb
-      existingSecret: wordpress
+      enabled: true
+      primary:
+        enabled: true
+        storageClass: longhorn
+        accessModes:
+          - ReadWriteMany
+        size: 8Gi
+    # externalDatabase:
+    #   host: mariadb.default.svc.cluster.local
+    #   port: 3306
+    #   user: root
+    #   database: mariadb
+    #   existingSecret: wordpress
     ingress:
       enabled: true
       annotations:

@@ -11,7 +11,6 @@ spec:
       name: sops-age
   dependsOn:
     - name: longhorn
-    - name: mariadb
   interval: 1m
   prune: true
   wait: true
