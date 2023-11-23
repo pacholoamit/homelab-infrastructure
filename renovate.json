@@ -1,8 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    ":enableRenovate",
+    "config:recommended",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":separatePatchReleases",
+    "docker:enableMajor"
   ],
+  "platform": "github",
+  "repositories": [
+    "pacholoamit/homelab-infrastructure"
+  ],
+  "enabled": true,
+  "semanticCommits": "enabled",
+  "rebaseWhen": "conflicted",
   "ignoreDeps": [
     "ghcr.io/fluxcd/helm-controller",
     "ghcr.io/fluxcd/image-automation-controller",
@@ -14,10 +27,34 @@
   "pre-commit": {
     "enabled": true
   },
+  "flux": {
+    "fileMatch": [
+      "\\.yaml$",
+      "\\.yml$"
+    ]
+  },
+  "helm-values": {
+    "fileMatch": [
+      "\\.yaml$",
+      "\\.yml$"
+    ]
+  },
   "kubernetes": {
     "fileMatch": [
       "\\.yaml$",
       "\\.yml$"
     ]
-  }
+  },
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "\\.yaml$",
+        "\\.yml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    }
+  ]
 }
