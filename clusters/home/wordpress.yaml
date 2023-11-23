@@ -1,21 +1,21 @@
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: wordpress
-  namespace: flux-system
-spec:
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
-  dependsOn:
-    - name: longhorn
-    - name: mariadb
-  interval: 1m
-  prune: true
-  wait: true
-  path: ./apps/wordpress
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: wordpress
+#   namespace: flux-system
+# spec:
+#   decryption:
+#     provider: sops
+#     secretRef:
+#       name: sops-age
+#   dependsOn:
+#     - name: longhorn
+#     - name: mariadb
+#   interval: 1m
+#   prune: true
+#   wait: true
+#   path: ./apps/wordpress
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
