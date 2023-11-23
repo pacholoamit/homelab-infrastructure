@@ -37,10 +37,6 @@ spec:
     #     enabled: false
     #   livenessProbe:
     #     enabled: false
-    persistence: 
+    persistence:
       enabled: true
-      storageClass: longhorn
-      storageClassName: longhorn
-      accessModes:
-        - ReadWriteMany
-      size: 8Gi
+      existingClaim: mariadb
