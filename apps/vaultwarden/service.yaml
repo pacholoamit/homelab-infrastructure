@@ -1,24 +1,24 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: vaultwarden
-  namespace: default
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/description: Self-hosted password manager
-    gethomepage.dev/group: Apps/Services
-    gethomepage.dev/icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
-    gethomepage.dev/name: Vaultwarden
-spec:
-  rules:
-    - host: vaultwarden.pacholoamit.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: vaultwarden
-                port:
-                  number: 80
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: vaultwarden
+#   namespace: default
+#   annotations:
+#     kubernetes.io/ingress.class: "nginx"
+#     gethomepage.dev/enabled: "true"
+#     gethomepage.dev/description: Self-hosted password manager
+#     gethomepage.dev/group: Apps/Services
+#     gethomepage.dev/icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
+#     gethomepage.dev/name: Vaultwarden
+# spec:
+#   rules:
+#     - host: vaultwarden.pacholoamit.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: vaultwarden
+#                 port:
+#                   number: 80
