@@ -4,5 +4,6 @@ resources:
   - configmap.yaml
   - release.yaml
   - repository.yaml
+  - service.yaml
 
   
