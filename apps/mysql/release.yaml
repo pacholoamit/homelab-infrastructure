@@ -28,6 +28,13 @@ spec:
       username: pacholoamit
       database: mysql
       existingSecret: mysql
+    primary:
+      startupProbe:
+        enabled: false
+      readinessProbe:
+        enabled: false
+      livenessProbe:
+        enabled: false
     persistence: 
       enabled: true
       storageClass: longhorn
