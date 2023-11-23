@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wordpress
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: wordpress
+      version: "18.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: default
+      interval: 1m
+  values:
+    existingSecret: wordpress
+    wordpressEmail: pacholoamit.tech@gmail.com
+    wordpressFirstName: Pacholo
+    wordpressLastName: Amit
+    wordpressScheme: https
+    persistence:
+      enabled: true
+      storageClass: longhorn
+      accessModes:
+        - ReadWriteMany
+      size: 5Gi
+
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/proxy-body-size: 999m
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Developer portfolio
+        gethomepage.dev/group: Apps/Services
+        gethomepage.dev/icon: wordpress.png
+        gethomepage.dev/name: Developer Portfolio WP
+      pathType: Prefix
+      hostname: wp.pacholoamit.com
+      path: /
