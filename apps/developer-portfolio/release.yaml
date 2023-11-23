@@ -1,0 +1,29 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+    name: developer-portfolio
+    namespace: default
+spec:
+    interval: 5m
+    chart:
+        spec:
+            chart: ./helm/developer-portfolio
+            reconcileStrategy: Revision
+            sourceRef:
+                kind: GitRepository
+                name: flux-system
+                namespace: flux-system
+    values:
+        image:
+            repository: ghcr.io/pacholoamit/developer-portfolio
+            pullPolicy: IfNotPresent
+            tag: v0.1.0
+        ingress:
+            enabled: true
+            hosts:
+                - host: www.pacholoamit.com
+                  paths:
+                      - path: /
+            annotations:
+                kubernetes.io/ingress.class: nginx
