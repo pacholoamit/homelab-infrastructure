@@ -47,7 +47,7 @@ spec:
 
     ingress:
       main:
-        enabled: false
+        enabled: true
         annotations:
         hosts:
           - host: homelab.pacholoamit.com
