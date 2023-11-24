@@ -33,6 +33,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: vaultwarden
+                name: wordpress
                 port:
                   number: 8080
