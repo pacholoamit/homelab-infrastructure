@@ -24,8 +24,6 @@ spec:
         namespace: default
       interval: 1m
   values:
-    global:
-      storageClass: longhorn
     image:
       debug: true
     auth:
@@ -39,10 +37,10 @@ spec:
     #     enabled: false
     #   livenessProbe:
     #     enabled: false
-    # persistence: 
-    #   enabled: true
-    #   storageClass: longhorn
-    #   storageClassName: longhorn
-    #   accessModes:
-    #     - ReadWriteOnce
-    #   size: 5Gi
+    persistence: 
+      enabled: true
+      storageClass: longhorn
+      storageClassName: longhorn
+      accessModes:
+        - ReadWriteMany
+      size: 5Gi
