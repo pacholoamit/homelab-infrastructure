@@ -18,10 +18,3 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  values:
-    mariadb:
-      auth:
-        rootPassword: supersecretpassword
-        database: bitnami_wordpress
-        user: bn_wordpress
-        password: supersecretpassword
