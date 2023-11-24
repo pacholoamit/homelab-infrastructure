@@ -24,12 +24,12 @@ spec:
         namespace: default
       interval: 1m
   values:
-    existingSecret: wordpress
-    wordpressEmail: pacholoamit.tech@gmail.com
-    wordpressFirstName: Pacholo
-    wordpressLastName: Amit
-    wordpressBlogName: Pacholo Amit's Developer Portfolio
-    wordpressScheme: http
+    # existingSecret: wordpress
+    # wordpressEmail: pacholoamit.tech@gmail.com
+    # wordpressFirstName: Pacholo
+    # wordpressLastName: Amit
+    # wordpressBlogName: Pacholo Amit's Developer Portfolio
+    # wordpressScheme: http
     persistence:
       enabled: true
       storageClass: longhorn
