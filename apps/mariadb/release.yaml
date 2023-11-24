@@ -24,6 +24,7 @@ spec:
         namespace: default
       interval: 1m
   values:
+    architecture: replication
     image:
       debug: true
     auth:
