@@ -10,6 +10,7 @@ spec:
         spec:
             chart: ./helm/developer-portfolio
             reconcileStrategy: Revision
+            version: "0.1.5"
             sourceRef:
                 kind: GitRepository
                 name: flux-system
@@ -18,7 +19,7 @@ spec:
         image:
             repository: ghcr.io/pacholoamit/developer-portfolio
             pullPolicy: IfNotPresent
-            tag: v0.1.5
+            tag: v0.1.2
         ingress:
             enabled: true
             annotations:
