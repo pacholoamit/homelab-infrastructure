@@ -4,4 +4,3 @@ resources:
   - repository.yaml
   - release.yaml
   - secret.yaml
-  - pvc.yaml
