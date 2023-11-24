@@ -17,16 +17,16 @@ spec:
       - name: mariadb
         image: mariadb:latest
         env:
-        - name: MYSQL_ROOT_PASSWORD
+        - name: MARIADB_ROOT_PASSWORD
           valuefrom:
             secretKeyRef:
               name: mariadb
               key: password
-        - name: MYSQL_DATABASE
+        - name: MARIADB_DATABASE
           value: wordpress
-        - name: MYSQL_USER
+        - name: MARIADB_USER
           value: wordpress
-        - name: MYSQL_PASSWORD
+        - name: MARIADB_PASSWORD
           valuefrom:
             secretKeyRef:
               name: mariadb
