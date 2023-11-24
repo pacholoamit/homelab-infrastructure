@@ -20,20 +20,20 @@ spec:
     wordpressFirstName: Pacholo
     wordpressLastName: Amit
     wordpressBlogName: Pacholo Amit's Developer Portfolio
-    persistence:
-      enabled: true
-      storageClass: longhorn
-      accessModes:
-        - ReadWriteMany
-      size: 5Gi
-    mariadb:
-      enabled: true
-      primary:
-        enabled: true
-        storageClass: longhorn
-        accessModes:
-          - ReadWriteMany
-        size: 5Gi
+    # persistence:
+    #   enabled: true
+    #   storageClass: longhorn
+    #   accessModes:
+    #     - ReadWriteMany
+    #   size: 5Gi
+    # mariadb:
+    #   enabled: true
+    #   primary:
+    #     enabled: true
+    #     storageClass: longhorn
+    #     accessModes:
+    #       - ReadWriteMany
+    #     size: 5Gi
     # externalDatabase:
     #   host: mariadb.default.svc.cluster.local
     #   port: 3306
