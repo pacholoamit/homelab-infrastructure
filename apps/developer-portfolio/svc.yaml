@@ -24,8 +24,8 @@ metadata:
     gethomepage.dev/description: My personal developer portfolio
     gethomepage.dev/group: Apps/Services
     gethomepage.dev/icon: javascript.png
-    gethomepage.dev/name: developer portfolio
-    gethomepage.dev/pod-selector: app.kubernetes.io/name=developer-portfolio
+    gethomepage.dev/name: Developer portfolio
+    gethomepage.dev/pod-selector: app=developer-portfolio
 spec:
   rules:
     - host: www.pacholoamit.com

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: developer-portfolio
+  name: developer-portfoliodeveloper-portfolio
   namespace: default
 spec:
   replicas: 1
@@ -16,6 +16,3 @@ spec:
       containers:
         - name: developer-portfolio
           image: ghcr.io/pacholoamit/developer-portfolio:v0.1.2
-          volumeMounts:
-            - name: developer-portfolio-volume
-              mountPath: /data
