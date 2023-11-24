@@ -5,10 +5,10 @@ metadata:
   name: wordpress
   namespace: flux-system
 spec:
-  # decryption:
-  #   provider: sops
-  #   secretRef:
-  #     name: sops-age
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   # dependsOn:
   #   - name: longhorn
   interval: 1m
