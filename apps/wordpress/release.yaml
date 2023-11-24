@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: wordpress
-      version: "17.x.x" # Upgrad
+      version: "18.x" # Upgrad
       sourceRef:
         kind: HelmRepository
         name: bitnami # Repo location in mysql
