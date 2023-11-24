@@ -15,25 +15,25 @@ spec:
         namespace: default
       interval: 1m
   values:
-    existingSecret: wordpress
-    wordpressEmail: pacholoamit.tech@gmail.com
-    wordpressFirstName: Pacholo
-    wordpressLastName: Amit
-    wordpressBlogName: Pacholo Amit's Developer Portfolio
-    persistence:
-      enabled: true
-      storageClass: longhorn
-      accessModes:
-        - ReadWriteMany
-      size: 5Gi
-    mariadb:
-      enabled: true
-      primary:
-        enabled: true
-        storageClass: longhorn
-        accessModes:
-          - ReadWriteMany
-        size: 5Gi
+    # existingSecret: wordpress
+    # wordpressEmail: pacholoamit.tech@gmail.com
+    # wordpressFirstName: Pacholo
+    # wordpressLastName: Amit
+    # wordpressBlogName: Pacholo Amit's Developer Portfolio
+    # persistence:
+    #   enabled: true
+    #   storageClass: longhorn
+    #   accessModes:
+    #     - ReadWriteMany
+    #   size: 5Gi
+    # mariadb:
+    #   enabled: true
+    #   primary:
+    #     enabled: true
+    #     storageClass: longhorn
+    #     accessModes:
+    #       - ReadWriteMany
+    #     size: 5Gi
     # externalDatabase:
     #   host: mariadb.default.svc.cluster.local
     #   port: 3306
