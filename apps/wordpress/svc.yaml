@@ -4,6 +4,7 @@ metadata:
   name: wordpress
   namespace: default
 spec:
+  type: LoadBalancer
   selector:
     app: wordpress
   ports:
