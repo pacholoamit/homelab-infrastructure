@@ -28,6 +28,7 @@ spec:
     wordpressEmail: pacholoamit.tech@gmail.com
     wordpressFirstName: Pacholo
     wordpressLastName: Amit
+    wordpressBlogName: Pacholo Amit's Developer Portfolio
     wordpressScheme: http
     persistence:
       enabled: true
