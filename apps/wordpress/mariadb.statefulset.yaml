@@ -18,7 +18,7 @@ spec:
         image: mariadb:latest
         env:
         - name: MARIADB_ROOT_PASSWORD
-          valuefrom:
+          valueFrom:
             secretKeyRef:
               name: mariadb
               key: password
@@ -27,7 +27,7 @@ spec:
         - name: MARIADB_USER
           value: wordpress
         - name: MARIADB_PASSWORD
-          valuefrom:
+          valueFrom:
             secretKeyRef:
               name: mariadb
               key: password
