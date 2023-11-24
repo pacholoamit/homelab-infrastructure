@@ -7,6 +7,7 @@ resources:
   - wordpress.deployment.yaml
   - wordpress.pvc.yaml
   - wordpress.service.yaml
+  - secret.yaml
   # - release.yaml
-  # - secret.yaml
+
   # - svc.yaml

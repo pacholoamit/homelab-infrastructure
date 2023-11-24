@@ -18,16 +18,21 @@ spec:
         image: mariadb:latest
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: your_root_password
+          valuefrom:
+            secretKeyRef:
+              name: mariadb
+              key: password
         - name: MYSQL_DATABASE
           value: wordpress
         - name: MYSQL_USER
-          value: wordpress_user
+          value: wordpress
         - name: MYSQL_PASSWORD
-          value: wordpress_password
+          valuefrom:
+            secretKeyRef:
+              name: mariadb
+              key: password
         ports:
         - containerPort: 3306
-          name: mysql
         volumeMounts:
         - name: mariadb-persistent-storage
           mountPath: /var/lib/mysql

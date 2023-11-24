@@ -17,13 +17,16 @@ spec:
         image: wordpress:latest
         env:
         - name: WORDPRESS_DB_HOST
-          value: mariadb.default.svc.cluster.local
+          value: mariadb
         - name: WORDPRESS_DB_NAME
           value: wordpress
         - name: WORDPRESS_DB_USER
-          value: wordpress_user
+          value: wordpress
         - name: WORDPRESS_DB_PASSWORD
-          value: wordpress_password
+          valueFrom:
+            secretKeyRef:
+              name: mariadb
+              key: password
         ports:
         - containerPort: 80
         volumeMounts:
