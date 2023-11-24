@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: developer-portfolio
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: developer-portfolio
+  ports:
+    - port: 80
+      targetPort: 3000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: developer-portfolio
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: 999m
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: My personal developer portfolio
+    gethomepage.dev/group: Apps/Services
+    gethomepage.dev/icon: javascript.png
+    gethomepage.dev/name: developer portfolio
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=developer-portfolio
+spec:
+  rules:
+    - host: www.pacholoamit.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: developer-portfolio
+                port:
+                  number: 80
