@@ -24,7 +24,7 @@ spec:
         namespace: default
       interval: 1m
   values:
-    architecture: replication
+    architecture: standalone
     image:
       debug: true
     auth:
@@ -44,4 +44,4 @@ spec:
       storageClassName: longhorn
       accessModes:
         - ReadWriteMany
-      size: 5Gi
+      size: 8Gi
