@@ -28,7 +28,7 @@ spec:
     wordpressEmail: pacholoamit.tech@gmail.com
     wordpressFirstName: Pacholo
     wordpressLastName: Amit
-    wordpressScheme: https
+    wordpressScheme: http
     persistence:
       enabled: true
       storageClass: longhorn
