@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: developer-portfoliodeveloper-portfolio
+  name: developer-portfolio
   namespace: default
 spec:
   replicas: 1
