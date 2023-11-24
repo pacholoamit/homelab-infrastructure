@@ -8,19 +8,12 @@ spec:
   chart:
     spec:
       chart: wordpress
-      version: "17.x.x"
+      version: "17.x.x" # Upgrad
       sourceRef:
         kind: HelmRepository
         name: bitnami # Repo location in mysql
         namespace: default
       interval: 1m
-  values:
-    mariadb:
-      auth:
-        rootPassword: supersecretpassword
-        database: bitnami_wordpress
-        user: bn_wordpress
-        password: supersecretpassword
     # existingSecret: wordpress
     # wordpressEmail: pacholoamit.tech@gmail.com
     # wordpressFirstName: Pacholo
