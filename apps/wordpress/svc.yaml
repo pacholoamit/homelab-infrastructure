@@ -15,7 +15,7 @@ metadata:
     gethomepage.dev/name: Developer Portfolio WP
 spec:
   rules:
-    - host: wp.pacholoamit.com
+    - host: dev.pacholoamit.com
       http:
         paths:
           - path: /
