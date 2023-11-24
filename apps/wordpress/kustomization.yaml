@@ -4,3 +4,4 @@ resources:
   - repository.yaml
   - release.yaml
   - secret.yaml
+  - svc.yaml
