@@ -34,11 +34,11 @@ spec:
         ports:
         - containerPort: 3306
         volumeMounts:
-        - name: mariadb-persistent-storage
+        - name: mariadb-storage
           mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
-      name: mariadb-persistent-storage
+      name: mariadb-storage
     spec:
       storageClassName: longhorn
       accessModes: [ "ReadWriteMany" ]
