@@ -1,17 +1,17 @@
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: vaultwarden
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: sealed-secrets
-    - name: longhorn
-  interval: 1m
-  prune: true
-  wait: true
-  path: ./apps/vaultwarden
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: vaultwarden
+#   namespace: flux-system
+# spec:
+#   dependsOn:
+#     - name: sealed-secrets
+#     - name: longhorn
+#   interval: 1m
+#   prune: true
+#   wait: true
+#   path: ./apps/vaultwarden
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
