@@ -30,8 +30,8 @@ spec:
       pullPolicy: IfNotPresent
     extraEnvSecrets:
       DB_POSTGRESDB_PASSWORD:
-      name: postgresql
-      key: password
+        name: postgresql
+        key: password
     config:
       generic:
         timezone: Asia/Manila
