@@ -28,6 +28,10 @@ spec:
       repository: n8nio/n8n
       tag: 1.18.0
       pullPolicy: IfNotPresent
+    extraEnvSecrets:
+      DB_POSTGRESDB_PASSWORD:
+      name: postgresql
+      key: password
     config:
       generic:
         timezone: Asia/Manila
@@ -35,15 +39,15 @@ spec:
       protocol: https
       port: 443
       database:
-        type: sqlite
+        type: postgresdb
+        postgresdb:
+          host: postgresql.default.svc.cluster.local
+          port: 5432
+          database: postgresql
+          user: pacholoamit
+
     persistence:
-      enabled: true
-      type: dynamic
-      storageClass: longhorn
-      storageClassName: longhorn
-      accessModes:
-        - ReadWriteMany
-      size: 3Gi
+      enabled: false
     extraEnv:
       WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
     ingress:
