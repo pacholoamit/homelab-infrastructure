@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: "2.0.x"
+      version: "1.8.x"
       sourceRef:
         kind: HelmRepository
         name: piraeus-charts
