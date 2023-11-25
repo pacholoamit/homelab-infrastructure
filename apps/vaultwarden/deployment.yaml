@@ -69,6 +69,10 @@ spec:
         name: vaultwarden-volume
       spec:
         storageClassName: longhorn
+        # dataSource From previous migration of data from deployment
+        dataSource:
+          kind: PersistentVolumeClaim
+          name: vaultwarden-pvc
         accessModes: ["ReadWriteMany"]
         resources:
           requests:
