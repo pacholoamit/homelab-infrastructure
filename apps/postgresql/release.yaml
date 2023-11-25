@@ -28,13 +28,6 @@ spec:
       username: pacholoamit
       database: postgresql
       existingSecret: postgresql
-    # primary:
-    #   startupProbe:
-    #     enabled: false
-    #   readinessProbe:
-    #     enabled: false
-    #   livenessProbe:
-    #     enabled: false
     persistence: 
       enabled: true
       storageClass: longhorn
