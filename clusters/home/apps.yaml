@@ -8,6 +8,10 @@ spec:
   interval: 1m
   prune: true
   wait: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   dependsOn:
     - name: helm
   path: ./clusters/home/apps
