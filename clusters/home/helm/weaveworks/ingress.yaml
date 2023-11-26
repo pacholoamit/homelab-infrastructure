@@ -11,7 +11,7 @@ metadata:
     gethomepage.dev/icon: https://avatars.githubusercontent.com/u/9976052?s=200&v=4
     gethomepage.dev/name: Weaveworks Dashboard
     gethomepage.dev/pod-selector: app.kubernetes.io/instance=ww-gitops
-    gethomepage.dev/weight: 2
+    gethomepage.dev/weight: "2"
 spec:
   rules:
     - host: weave.pacholoamit.com
