@@ -38,7 +38,7 @@ spec:
     # This enables the service account to access the necessary resources
     enableRbac: true
     config:
-      useExistingConfigMap: homepage-config
+      useExistingConfigMap: homepage-configmap
 
     ingress:
       main:

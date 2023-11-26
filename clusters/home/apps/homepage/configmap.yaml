@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: homepage-config
+    name: homepage-configmap
     namespace: default
 data:
     docker.yaml: ""
@@ -25,8 +25,8 @@ sops:
             RlpxenU5MXZ0Q2RZV1VaaWlNN29sOFUKkhSUus5vM8vpjuwdraI5UUFJy7BF6alh
             Q3Sa9kB4cObspOmpOCM6h12WwC5p+n9K3QMwKxvlNXLngdvXXudfaw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-11-24T19:05:09Z"
-    mac: ENC[AES256_GCM,data:hWmsYJ9lQ8C2KqAXpKRt0bk/8iQ29r7G7bd9lh2O9U+iyr1oq0xrvdkO+w6DFmKsdotn37LZotUnvjkuWSYh7yLPp9nSNOcCU5y5q/rfaCGPy79u/09c+iWAEbzt1ib3+Ky3OA4oBVDMcFywklevmQNnziFQkiT039NDzuw8sDI=,iv:I4XEHrlgSnHwzuRnyj/1vQt4ejRRfxvIQh069QbQu8w=,tag:i+dt/LWIN5Fl5HyRbs81+A==,type:str]
+    lastmodified: "2023-11-26T21:58:36Z"
+    mac: ENC[AES256_GCM,data:mRvIRk2oLTri6XNiRd5eMaT6L4P3cYevYQL1VmloyvixUSHD/9agOV2T9ipArHCnA1pV8RVz2ZaTS9UBizCqdJ2lgeC5QPUDpAXNI5PEeoaBlAYg3DrQewj1AtpeH3hTsA0wrsPXl/rbCByK+5CuioeH8SCCLwnlOTzKrv7H3DA=,iv:V79QY0qerElzflTHmsCMYJoRSLQIOvlHEtP9p53DqgE=,tag:TLKcBcX3eRj3UOw7mY1YUg==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData|annotations|host)$
     version: 3.8.1
