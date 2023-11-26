@@ -11,7 +11,7 @@ spec:
       version: "1.8.x"  # Do not change, this is for longhorn compatibility
       sourceRef:
         kind: HelmRepository
-        name: piraeus-charts
+        name: piraeus
         namespace: kube-system
       interval: 1m
   values:
