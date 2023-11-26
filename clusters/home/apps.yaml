@@ -8,6 +8,8 @@ spec:
   interval: 1m
   prune: true
   wait: true
+  dependsOn:
+      - name: helm
   path: ./clusters/home/helm
   sourceRef:
     kind: GitRepository
