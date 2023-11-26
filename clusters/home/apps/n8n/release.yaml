@@ -51,6 +51,8 @@ spec:
       type: dynamic
       storageClass: longhorn
       size: 5Gi
+      accessModes:
+        - ReadWriteMany
     extraEnv:
       WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
     ingress:
