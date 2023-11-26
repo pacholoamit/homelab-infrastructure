@@ -58,8 +58,8 @@ We're using sealed-secrets to encrypt our secrets. Install the kubeseal CLI tool
 
 ```sh
 # Create secret for longhorn
-USER=<USERNAME_HERE>; PASSWORD=<PASSWORD_HERE>;
-echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth &&
+htpasswd -c auth pacholoamit
+
 kubectl -n longhorn-system create secret generic basic-auth --from-file=auth --dry-run=client -o yaml > auth.yaml &&
 
 # Seal secret
