@@ -38,6 +38,7 @@ spec:
       name: vaultwarden-data
       size: 5Gi
       class: longhorn
+    domain: https://vaultwarden.pacholoamit.com
     ingress:
       enabled: true
       class: "nginx"
