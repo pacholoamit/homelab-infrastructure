@@ -1,0 +1,10 @@
+creation_rules:
+    # Secrets / ConfigMaps
+  - path_regex: .*.yaml
+    encrypted_regex: ^(data|stringData|annotations|)$
+    pgp: age19hfjt8tc0etz2swhums26jrsu8avaslpawkvrjcxj4tr0kwy6a2s4td64z
+
+    # Ingress Hosts
+  - path_regex: .*.yaml
+    encrypted_regex: ^(host)$
+    pgp: age19hfjt8tc0etz2swhums26jrsu8avaslpawkvrjcxj4tr0kwy6a2s4td64z
