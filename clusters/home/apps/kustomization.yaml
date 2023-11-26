@@ -4,4 +4,4 @@ resources:
   - postgresql
   - homepage
   - n8n
-  - vaultwarden-server
+  - vaultwarden
