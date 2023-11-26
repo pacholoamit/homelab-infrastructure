@@ -28,5 +28,5 @@ sops:
     lastmodified: "2023-11-24T19:05:09Z"
     mac: ENC[AES256_GCM,data:hWmsYJ9lQ8C2KqAXpKRt0bk/8iQ29r7G7bd9lh2O9U+iyr1oq0xrvdkO+w6DFmKsdotn37LZotUnvjkuWSYh7yLPp9nSNOcCU5y5q/rfaCGPy79u/09c+iWAEbzt1ib3+Ky3OA4oBVDMcFywklevmQNnziFQkiT039NDzuw8sDI=,iv:I4XEHrlgSnHwzuRnyj/1vQt4ejRRfxvIQh069QbQu8w=,tag:i+dt/LWIN5Fl5HyRbs81+A==,type:str]
     pgp: []
-    encrypted_regex: ^(data|stringData)$
+    encrypted_regex: ^(data|stringData|annotations|host)$
     version: 3.8.1
