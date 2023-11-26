@@ -3,6 +3,5 @@ kind: Kustomization
 resources:
   - configmap.yaml
   - release.yaml
-  - repository.yaml
 
   
