@@ -48,11 +48,8 @@ spec:
 
     persistence:
       enabled: true
-      type: dynamic
-      storageClass: longhorn
-      size: 5Gi
-      accessModes:
-        - ReadWriteMany
+      type: existing
+      existingClaim: n8n
     extraEnv:
       WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
     ingress:
