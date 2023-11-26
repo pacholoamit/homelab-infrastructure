@@ -35,6 +35,10 @@ spec:
       existingSecretKey: admin_secret
     signupsAllowed: true
     invitationsAllowed: true
+    data:
+      name: vaultwarden-data
+      size: 5Gi
+      class: longhorn
     ingress:
       enabled: true
       class: "nginx"
