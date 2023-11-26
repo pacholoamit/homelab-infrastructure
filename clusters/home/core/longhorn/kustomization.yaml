@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: longhorn-system
 resources:
   - release.yaml
-  - repository.yaml
   - secret.yaml
   - service.yaml
   - namespace.yaml

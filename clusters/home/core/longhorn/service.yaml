@@ -27,7 +27,7 @@ metadata:
     # prevent the controller from redirecting (308) to HTTPS
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     # name of the secret that contains the user/password definitions
-    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth-longhorn
     # message to display with an appropriate context why the authentication is required
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required "
     # custom max body size for file uploading like backing image uploading
@@ -38,7 +38,7 @@ metadata:
     gethomepage.dev/icon: longhorn.png
     gethomepage.dev/name: Longhorn
     gethomepage.dev/pod-selector: app=longhorn-ui
-    gethomepage.dev/weight: 2
+    gethomepage.dev/weight: "2"
 spec:
   rules:
     - host: longhorn.pacholoamit.com

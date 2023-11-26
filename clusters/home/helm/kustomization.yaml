@@ -8,3 +8,4 @@ resources:
   - weaveworks
   - descheduler
   - ingress-nginx
+  - longhorn

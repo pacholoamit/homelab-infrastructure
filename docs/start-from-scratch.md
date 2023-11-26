@@ -63,10 +63,9 @@ echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth &&
 kubectl -n longhorn-system create secret generic basic-auth --from-file=auth --dry-run=client -o yaml > auth.yaml &&
 
 # Seal secret
-kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
-< auth.yaml > secret.yaml
+sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)") --encrypted-regex '^(data|stringData)$' --in-place ./auth.yaml
 
-mv secret.yaml infrastructure/longhorn/secret.yaml
+mv auth.yaml clusters/home/core/longhorn/secret.yaml
 
 rm -rf auth.yaml auth
 
