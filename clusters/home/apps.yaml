@@ -9,8 +9,8 @@ spec:
   prune: true
   wait: true
   dependsOn:
-      - name: helm
-  path: ./clusters/home/helm
+    - name: helm
+  path: ./clusters/home/apps
   sourceRef:
     kind: GitRepository
     name: flux-system
