@@ -34,18 +34,18 @@ spec:
       persistence: 
         enabled: true
         accessModes:
-          - ReadWriteMany
+          - ReadWriteOnce
         size: 10Gi
     readReplicas:
       persistence: 
         enabled: true
         accessModes:
-          - ReadWriteMany
+          - ReadWriteOnce
         size: 10Gi
     backup:
       enabled: true
       cronjob:
         schedule: "0 1 * * *"
         accessModes:
-          - ReadWriteMany
+          - ReadWriteOnce
         size: 10Gi
