@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: sealed-secrets
   interval: 1m
-  prune: false
+  prune: true
   wait: true
   path: ./infrastructure/velero
   sourceRef:
