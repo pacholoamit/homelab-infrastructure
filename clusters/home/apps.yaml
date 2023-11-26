@@ -14,7 +14,6 @@ spec:
       name: sops-age
   dependsOn:
     - name: helm
-    - name: core
   path: ./clusters/home/apps
   sourceRef:
     kind: GitRepository
