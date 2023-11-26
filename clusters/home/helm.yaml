@@ -9,6 +9,10 @@ spec:
   prune: true
   wait: true
   path: ./clusters/home/helm
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   sourceRef:
     kind: GitRepository
     name: flux-system
