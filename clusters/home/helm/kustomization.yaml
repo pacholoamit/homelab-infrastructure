@@ -10,3 +10,4 @@ resources:
   - ingress-nginx
   - longhorn
   - piraeus
+  - vmware-tanzu

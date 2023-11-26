@@ -137,12 +137,11 @@ Then run the following commands
 kubectl -n velero create secret generic aws --from-file=cloud --dry-run=client -o yaml > cloud.yaml
 
 # Seal secret
-kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
-< cloud.yaml > aws-credentials-sealed.yaml
+ sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)") --encrypted-regex '^(data|stringData)$' --in-place ./cloud.yaml
 
-mv aws-credentials-sealed.yaml infrastructure/velero/secret.yaml
+mv cloud.yaml clusters/home/core/velero/secret.yaml
 
-rm -rf cloud.yaml
+rm -rf cloud.yaml cloud
 ```
 
 ## Configuring Homepage Secrets
