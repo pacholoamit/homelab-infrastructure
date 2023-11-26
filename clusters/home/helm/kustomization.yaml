@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - bitnami
   - jameswynn
+  - open-8gears
