@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  prune: true
+  prune: false
   wait: true
   path: ./external-crds/snapshot-controller
   sourceRef:
