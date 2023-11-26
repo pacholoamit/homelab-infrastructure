@@ -6,3 +6,4 @@ resources:
   - open-8gears
   - vaultwarden
   - weaveworks
+  - descheduler
