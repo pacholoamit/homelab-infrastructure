@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgresql
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: postgresql
+      version: "13.2.x"
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: default
+      interval: 1m
+  values:
+    global:
+      storageClass: longhorn
+    auth:
+      username: pacholoamit
+      database: postgresql
+      existingSecret: postgresql
+    primary:
+      persistence: 
+        # enabled: true
+        existingClaim: data-postgresql-0
+    # readReplicas:
+    #   persistence: 
+    #     # enabled: true
+    #     existingClaim: postgresql-replica
+    # backup:
+    #   # enabled: true
+    #   cronjob:
+    #     schedule: "0 1 * * *"
+    #     storage:
+    #       existingClaim: postgresql-backup
