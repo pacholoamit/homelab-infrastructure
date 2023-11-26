@@ -1,0 +1,51 @@
+# LINK TO INSPIRATION
+# https://github.dev/Michaelpalacce/HomeLab
+# Search for SOPS implementation
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: vaultwarden
+      version: "1.29.x"
+      sourceRef:
+        kind: HelmRepository
+        name: vaultwarden
+        namespace: default
+      interval: 1m
+  values:
+    image:
+      repository: vaultwarden/server
+      tag: "1.29.2-alpine"
+    adminToken:
+      existingSecret: vaultwarden
+      existingSecretKey: admin_secret
+    signupsAllowed: true
+    invitationsAllowed: true
+    ingress:
+      enabled: true
+      class: "nginx"
+      additionalAnnotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Self-hosted password manager
+        gethomepage.dev/group: Apps/Services
+        gethomepage.dev/icon: https://github.com/bitwarden/brand/blob/master/icons/128x128.png?raw=true
+        gethomepage.dev/name: Vaultwarden
+        gethomepage.dev/weight: "2"
+        gethomepage.dev/pod-selector: app=vaultwarden
+      hostname: vaultwarden.pacholoamit.com
+
+    

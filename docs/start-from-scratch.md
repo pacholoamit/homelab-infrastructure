@@ -158,6 +158,8 @@ kubectl create secret generic sops-age \
 --namespace=flux-system \
 --from-file=age.agekey=/dev/stdin
 
-sops --age=<public_key> \
---encrypt --encrypted-regex '^(data|stringData)$' --in-place homepage-configmap.yaml
-``````
+sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)") --encrypted-regex '^(data|stringData)$' --in-place ./apps/homepage/configmap.yaml  
+
+# Descrypting
+sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)") --encrypted-regex '^(data|stringData)$' --in-place ./apps/homepage/configmap.yaml  
+```

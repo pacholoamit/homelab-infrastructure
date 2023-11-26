@@ -4,3 +4,4 @@ resources:
   - bitnami
   - jameswynn
   - open-8gears
+  - vaultwarden
