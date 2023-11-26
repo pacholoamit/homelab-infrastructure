@@ -9,7 +9,7 @@ spec:
     - name: sealed-secrets
     - name: snapshot-controller # additional CRDs
   interval: 1m
-  prune: false
+  prune: true
   wait: true
   path: ./infrastructure/longhorn
   sourceRef:
