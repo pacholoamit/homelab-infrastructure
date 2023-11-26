@@ -34,13 +34,13 @@ spec:
       persistence: 
         # enabled: true
         existingClaim: data-postgresql-0
-    readReplicas:
-      persistence: 
-        # enabled: true
-        existingClaim: postgresql-replica
-    backup:
-      # enabled: true
-      cronjob:
-        schedule: "0 1 * * *"
-        storage:
-          existingClaim: postgresql-backup
+    # readReplicas:
+    #   persistence: 
+    #     # enabled: true
+    #     existingClaim: postgresql-replica
+    # backup:
+    #   # enabled: true
+    #   cronjob:
+    #     schedule: "0 1 * * *"
+    #     storage:
+    #       existingClaim: postgresql-backup
