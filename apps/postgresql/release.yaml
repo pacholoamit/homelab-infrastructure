@@ -33,19 +33,14 @@ spec:
     primary:
       persistence: 
         enabled: true
-        accessModes:
-          - ReadWriteOnce
-        size: 10Gi
+        existingClaim: postgresql-primary
     readReplicas:
       persistence: 
         enabled: true
-        accessModes:
-          - ReadWriteOnce
-        size: 10Gi
+        existingClaim: postgresql-replica
     backup:
       enabled: true
       cronjob:
         schedule: "0 1 * * *"
-        accessModes:
-          - ReadWriteOnce
-        size: 10Gi
+        storage:
+          existingClaim: postgresql-backup
