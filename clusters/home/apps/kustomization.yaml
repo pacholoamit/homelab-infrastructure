@@ -6,3 +6,4 @@ resources:
   - n8n
   - vaultwarden
   - cloudflare
+  - weaveworks-dashboard
