@@ -5,3 +5,4 @@ resources:
   - homepage
   - n8n
   - vaultwarden
+  - cloudflare
