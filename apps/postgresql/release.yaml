@@ -32,14 +32,14 @@ spec:
       existingSecret: postgresql
     primary:
       persistence: 
-        enabled: true
+        # enabled: true
         existingClaim: postgresql-primary
     readReplicas:
       persistence: 
-        enabled: true
+        # enabled: true
         existingClaim: postgresql-replica
     backup:
-      enabled: true
+      # enabled: true
       cronjob:
         schedule: "0 1 * * *"
         storage:
