@@ -14,7 +14,7 @@ spec:
       name: sops-age
   dependsOn:
     - name: helm
-  path: ./clusters/infrastructure/base
+  path: ./clusters/home/base
   sourceRef:
     kind: GitRepository
     name: flux-system
