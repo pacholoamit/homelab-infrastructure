@@ -33,7 +33,7 @@ spec:
     primary:
       persistence: 
         # enabled: true
-        existingClaim: postgresql-primary
+        existingClaim: data-postgresql-0
     readReplicas:
       persistence: 
         # enabled: true
