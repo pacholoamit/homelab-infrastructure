@@ -2,7 +2,7 @@ apiVersion: longhorn.io/v1beta2
 kind: Setting
 metadata:
   name: backup-target
-value: s3://velero-k3s-cluster-backups/longhorn-backups
+value: s3://velero-k3s-cluster-backups@us-east-1/longhorn-backups
 ---
 apiVersion: longhorn.io/v1beta2
 kind: Setting
