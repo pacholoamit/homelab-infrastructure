@@ -7,3 +7,4 @@ resources:
   - service.yaml
   - namespace.yaml
   - volume-snapshot-class.yaml
+  - settings.yaml
