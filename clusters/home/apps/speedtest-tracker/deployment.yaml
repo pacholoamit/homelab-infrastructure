@@ -20,6 +20,9 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: speedtest-tracker
+          mountPath: /config  
         env:
         - name: TZ
           value: Asia/Manila
@@ -38,5 +41,9 @@ spec:
             secretKeyRef:
               name: postgresql
               key: password
+      volumes:
+      - name: speedtest-tracker
+        persistentVolumeClaim:
+          claimName: speedtest-tracker
 
           

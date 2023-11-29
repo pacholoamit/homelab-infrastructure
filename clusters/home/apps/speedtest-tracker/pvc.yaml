@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: speedtest-tracker
+spec:
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 3Gi
+  accessModes:
+    - ReadWriteMany
