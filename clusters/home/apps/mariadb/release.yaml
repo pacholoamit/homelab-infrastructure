@@ -24,8 +24,6 @@ spec:
         namespace: default
       interval: 1m
   values:
-    global:
-      storageClass: longhorn
     auth:
       username: pacholoamit
       database: mariadb
