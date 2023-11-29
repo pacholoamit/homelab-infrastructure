@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speedtest-tracker
+spec:
+  selector:
+    matchLabels:
+      app: speedtest-tracker
+  template:
+    metadata:
+      labels:
+        app: speedtest-tracker
+    spec:
+      containers:
+      - name: speedtest-tracker
+        image: ghcr.io/alexjustesen/speedtest-tracker
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+        - name: TZ
+          value: Asia/Manila
+        - name: DB_CONNECTION
+          value: pgsql
+        - name: DB_HOST
+          value: postgresql
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_DATABASE
+          value: postgresql
+        - name: DB_USERNAME
+          value: pacholoamit
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: password
+
+          
