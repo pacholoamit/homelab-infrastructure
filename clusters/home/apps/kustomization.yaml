@@ -9,4 +9,5 @@ resources:
   - weaveworks-dashboard
   - descheduler
   # - mariadb
-  # - speedtest-tracker
+  - mariadb-external
+  - speedtest-tracker

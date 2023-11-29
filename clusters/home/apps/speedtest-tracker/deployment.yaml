@@ -30,18 +30,30 @@ spec:
         - name: DB_CONNECTION
           value: mysql
         - name: DB_HOST
-          value: mariadb.default.svc.cluster.local
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-external
+              key: host
         - name: DB_PORT
-          value: "3306"
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-external
+              key: port
         - name: DB_DATABASE
-          value: mariadb
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-external
+              key: database
         - name: DB_USERNAME
-          value: pacholoamit
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-external
+              key: username
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mariadb
-              key: mariadb-password
+              name: mariadb-external
+              key: password
       volumes:
       - name: speedtest-tracker
         persistentVolumeClaim:
