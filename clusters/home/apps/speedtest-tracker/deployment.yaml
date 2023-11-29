@@ -13,6 +13,7 @@ spec:
     spec:
       containers:
       - name: speedtest-tracker
+        imagePullPolicy: IfNotPresent
         image: ghcr.io/alexjustesen/speedtest-tracker
         resources:
           limits:
