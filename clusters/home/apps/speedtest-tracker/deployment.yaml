@@ -28,19 +28,19 @@ spec:
         - name: TZ
           value: Asia/Manila
         - name: DB_CONNECTION
-          value: pgsql
+          value: mysql
         - name: DB_HOST
-          value: postgresql.default.svc.cluster.local
+          value: mariadb.default.svc.cluster.local
         - name: DB_PORT
-          value: "5432"
+          value: "3306"
         - name: DB_DATABASE
-          value: postgresql
+          value: mariadb
         - name: DB_USERNAME
           value: pacholoamit
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgresql
+              name: mariadb
               key: password
       volumes:
       - name: speedtest-tracker
