@@ -32,9 +32,9 @@ spec:
       persistence: 
         enabled: true
         existingClaim: data-mariadb-0
-    readinessProbe:
-      enabled: false
-    livenessProbe:
-      enabled: false
-    startupProbe:
-      enabled: false
+      readinessProbe:
+        enabled: false
+      livenessProbe:
+        enabled: false
+      startupProbe:
+        enabled: false
