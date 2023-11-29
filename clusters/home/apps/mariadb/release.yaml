@@ -36,3 +36,5 @@ spec:
       enabled: false
     livenessProbe:
       enabled: false
+    startupProbe:
+      enabled: false
