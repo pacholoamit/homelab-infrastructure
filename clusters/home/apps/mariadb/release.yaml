@@ -34,3 +34,5 @@ spec:
       persistence: 
         enabled: true
         existingClaim: data-mariadb-0
+    livenessProbe:
+      enabled: false
