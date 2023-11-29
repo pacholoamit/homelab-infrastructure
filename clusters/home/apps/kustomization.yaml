@@ -8,6 +8,5 @@ resources:
   - cloudflare
   - weaveworks-dashboard
   - descheduler
-  # - mariadb
   - mariadb-external
   - speedtest-tracker
