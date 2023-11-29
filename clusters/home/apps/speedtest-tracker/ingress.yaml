@@ -17,6 +17,14 @@ metadata:
   name: speedtest-tracker
   labels:
     name: speedtest-tracker
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Self-hosted internet performance tracking application
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/icon: speedtest-tracker
+    gethomepage.dev/name: Speedtest Tracker
+    gethomepage.dev/weight: "1"
 spec:
   rules:
   - host: speedtest.pacholoamit.com
