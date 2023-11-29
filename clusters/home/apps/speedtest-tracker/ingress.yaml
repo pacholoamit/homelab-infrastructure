@@ -27,6 +27,7 @@ metadata:
     gethomepage.dev/weight: "1"
     gethomepage.dev/widget.type: speedtest
     gethomepage.dev/widget.url: https://speedtest.pacholoamit.com
+    gethomepage.dev/pod-selector: app=speedtest-tracker
 spec:
   rules:
   - host: speedtest.pacholoamit.com
