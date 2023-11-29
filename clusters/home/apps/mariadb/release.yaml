@@ -31,7 +31,7 @@ spec:
     primary:
       persistence: 
         enabled: true
-        existingClaim: data-mariadb-0
+        # existingClaim: data-mariadb-0
       readinessProbe:
         enabled: false
       livenessProbe:
