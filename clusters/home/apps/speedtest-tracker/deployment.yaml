@@ -34,7 +34,7 @@ spec:
         - name: DB_PORT
           value: "5432"
         - name: DB_DATABASE
-          value: postgresql
+          value: speedtest-tracker
         - name: DB_USERNAME
           value: pacholoamit
         - name: DB_PASSWORD
