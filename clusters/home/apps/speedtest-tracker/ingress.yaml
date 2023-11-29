@@ -25,6 +25,8 @@ metadata:
     gethomepage.dev/icon: speedtest-tracker
     gethomepage.dev/name: Speedtest Tracker
     gethomepage.dev/weight: "1"
+    gethomepage.dev/widget.type: speedtest
+    gethomepage.dev/widget.url: https://speedtest.pacholoamit.com
 spec:
   rules:
   - host: speedtest.pacholoamit.com

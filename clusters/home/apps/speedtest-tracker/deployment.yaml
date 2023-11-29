@@ -54,6 +54,26 @@ spec:
             secretKeyRef:
               name: mariadb-external
               key: password
+        - name: MAIL_MAILER
+          value: smtp
+        - name: MAIL_HOST
+          value: smtp-relay.brevo.com
+        - name: MAIL_PORT
+          value: "587"
+        - name: MAIL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: speedtest-tracker
+              key: smtp-username
+        - name: MAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: speedtest-tracker
+              key: smtp-password
+        - name: MAIL_FROM_ADDRESS
+          value: speedtest@pacholoamit.com
+        - name: MAIL_FROM_NAME
+          value: Speedtest Tracker
       volumes:
       - name: speedtest-tracker
         persistentVolumeClaim:
