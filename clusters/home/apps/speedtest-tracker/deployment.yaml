@@ -41,7 +41,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mariadb
-              key: password
+              key: mariadb-password
       volumes:
       - name: speedtest-tracker
         persistentVolumeClaim:
