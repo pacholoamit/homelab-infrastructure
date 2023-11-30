@@ -20,7 +20,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     gethomepage.dev/enabled: "true"
     gethomepage.dev/description: Open-source collaborative bookmark manage
-    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/group: Apps/Services
     gethomepage.dev/icon: linkwarden
     gethomepage.dev/name: Linkwarden
     gethomepage.dev/weight: "1"
