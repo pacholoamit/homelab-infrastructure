@@ -26,13 +26,15 @@ spec:
           mountPath: /data/data
         env:
         - name: DATABASE_URL
-          secretKeyRef:
-            name: linkwarden
-            key: database-url
+          valueFrom:
+            secretKeyRef:
+              name: linkwarden
+              key: database-url
         - name: NEXTAUTH_SECRET
-          secretKeyRef:
-            name: linkwarden
-            key: auth-secret
+          valueFrom:
+            secretKeyRef:
+              name: linkwarden
+              key: auth-secret
       volumes:
         - name: linkwarden
           persistentVolumeClaim:
