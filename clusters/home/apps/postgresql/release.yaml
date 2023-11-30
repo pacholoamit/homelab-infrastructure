@@ -32,7 +32,7 @@ spec:
       existingSecret: postgresql
     primary:
       persistence: 
-        # enabled: true
+        enabled: true
         existingClaim: data-postgresql-0
     # readReplicas:
     #   persistence: 
