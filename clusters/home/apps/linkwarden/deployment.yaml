@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: linkwarden
+spec:
+  selector:
+    matchLabels:
+      app: linkwarden
+  template:
+    metadata:
+      labels:
+        app: linkwarden
+    spec:
+      containers:
+      - name: linkwarden
+        image: ghcr.io/linkwarden/linkwarden:v2.3
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: linkwarden
+          mountPath: /data/data
+      volumes:
+        - name: linkwarden
+          persistentVolumeClaim:
+            claimName: linkwarden
+      env:
+      - name: DATABASE_URL
+        secretKeyRef:
+          name: postgresql
+          key: postgres-url
+      - name: NEXTAUTH_SECRET
+        secretKeyRef:
+          name: linkwarden
+          key: auth-secret

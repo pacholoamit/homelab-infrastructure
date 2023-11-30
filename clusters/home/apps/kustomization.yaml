@@ -10,3 +10,4 @@ resources:
   - descheduler
   - mariadb-external
   - speedtest-tracker
+  - linkwarden
