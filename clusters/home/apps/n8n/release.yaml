@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: n8nio/n8n
-      tag: 1.18.0
+      tag: ai-beta #1.18.0
       pullPolicy: IfNotPresent
     # extraEnvSecrets:
     #   DB_POSTGRESDB_PASSWORD:
