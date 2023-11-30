@@ -31,7 +31,7 @@ spec:
       - name: DATABASE_URL
         secretKeyRef:
           name: linkwarden
-          key: postgres-url
+          key: database-url
       - name: NEXTAUTH_SECRET
         secretKeyRef:
           name: linkwarden
