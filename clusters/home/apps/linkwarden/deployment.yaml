@@ -21,9 +21,9 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 3000
-        volumeMounts:
-        - name: linkwarden
-          mountPath: /data/data
+        # volumeMounts:
+        # - name: linkwarden
+        #   mountPath: /data/data
         env:
         - name: DATABASE_URL
           valueFrom:
