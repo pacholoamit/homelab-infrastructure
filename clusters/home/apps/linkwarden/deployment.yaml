@@ -15,10 +15,10 @@ spec:
       - name: linkwarden
         imagePullPolicy: IfNotPresent
         image: ghcr.io/linkwarden/linkwarden:latest
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
         ports:
         - containerPort: 3000
         volumeMounts:
