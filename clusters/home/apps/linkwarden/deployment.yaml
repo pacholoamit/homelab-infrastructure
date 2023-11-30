@@ -13,6 +13,7 @@ spec:
     spec:
       containers:
       - name: linkwarden
+        imagePullPolicy: IfNotPresent
         image: ghcr.io/linkwarden/linkwarden:v2.3.0
         resources:
           limits:
