@@ -21,22 +21,22 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 3000
-        # volumeMounts:
-        # - name: linkwarden
-        #   mountPath: /data/data
+        volumeMounts:
+        - name: linkwarden
+          mountPath: /data/data
         env:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: postgresql-external
-              key: url
+              name: linkwarden
+              key: database-url
         - name: NEXTAUTH_SECRET
           valueFrom:
             secretKeyRef:
               name: linkwarden
               key: auth-secret
-      # volumes:
-      #   - name: linkwarden
-      #     persistentVolumeClaim:
-      #       claimName: linkwarden
+      volumes:
+        - name: linkwarden
+          persistentVolumeClaim:
+            claimName: linkwarden
 
