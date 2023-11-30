@@ -23,6 +23,7 @@ metadata:
     gethomepage.dev/group: Apps/Services
     gethomepage.dev/icon: linkwarden
     gethomepage.dev/name: Linkwarden
+    gethomepage.dev/pod-selector: app=linkwarden
     gethomepage.dev/weight: "1"
 spec:
   rules:

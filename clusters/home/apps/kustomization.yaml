@@ -9,6 +9,5 @@ resources:
   - weaveworks-dashboard
   - descheduler
   - mariadb-external
-  - postgresql-external
   - speedtest-tracker
   - linkwarden
