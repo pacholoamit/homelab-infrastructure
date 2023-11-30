@@ -30,7 +30,7 @@ spec:
       env:
       - name: DATABASE_URL
         secretKeyRef:
-          name: postgresql
+          name: linkwarden
           key: postgres-url
       - name: NEXTAUTH_SECRET
         secretKeyRef:
