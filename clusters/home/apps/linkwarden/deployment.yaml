@@ -35,6 +35,13 @@ spec:
             secretKeyRef:
               name: linkwarden
               key: auth-secret
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: linkwarden
+              key: postgres-password
+        - name: NEXTAUTH_URL
+          value: https://linkwarden.pacholo.com
       volumes:
         - name: linkwarden
           persistentVolumeClaim:
