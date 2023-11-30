@@ -35,8 +35,8 @@ spec:
             secretKeyRef:
               name: linkwarden
               key: auth-secret
-      volumes:
-        - name: linkwarden
-          persistentVolumeClaim:
-            claimName: linkwarden
+      # volumes:
+      #   - name: linkwarden
+      #     persistentVolumeClaim:
+      #       claimName: linkwarden
 
