@@ -26,9 +26,11 @@ spec:
         - name: SERVER_ADMIN 
           value: pacholoamit.tech@gmail.com
         - name: HTTP_SERVER_NAME
-          value: links.pacholo.com
+          value: links.pacholoamit.com
         - name: HTTPS_SERVER_NAME
-          value: links.pacholo.com
+          value: links.pacholoamit.com
+        - name: LOG_LEVEL
+          value: "debug"
       initContainers:
       - name: linkstack-init
         image: busybox
