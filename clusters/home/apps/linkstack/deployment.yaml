@@ -15,12 +15,11 @@ spec:
       - name: linkstack
         imagePullPolicy: IfNotPresent
         image: linkstackorg/linkstack:latest
-
         ports:
         - containerPort: 80
-        # volumeMounts:
-        # - name: linkstack
-        #   mountPath: /htdocs
+        volumeMounts:
+        - name: linkstack
+          mountPath: /htdocs
         env:
         - name: TZ
           value: "Asia/Manila"
@@ -30,9 +29,15 @@ spec:
           value: links.pacholo.com
         - name: HTTPS_SERVER_NAME
           value: links.pacholo.com
-        
-      # volumes:
-      #   - name: linkstack
-      #     persistentVolumeClaim:
-      #       claimName: linkstack
+      initContainers:
+      - name: linkstack
+        image: busybox
+        command: ['sh', '-c', 'mkdir -p /htdocs/uploads && chown -R 82:82 /htdocs/uploads']
+        volumeMounts:
+        - name: linkstack
+          mountPath: /htdocs
+      volumes:
+        - name: linkstack
+          persistentVolumeClaim:
+            claimName: linkstack
 
