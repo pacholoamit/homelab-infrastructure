@@ -17,9 +17,9 @@ spec:
         image: linkstackorg/linkstack:latest
         ports:
         - containerPort: 80
-        volumeMounts:
-        - name: linkstack
-          mountPath: /htdocs
+        # volumeMounts:
+        # - name: linkstack
+        #   mountPath: /htdocs
         env:
         - name: TZ
           value: "Asia/Manila"
@@ -56,8 +56,8 @@ spec:
       #   volumeMounts:
       #   - name: linkstack
       #     mountPath: /htdocs
-      volumes:
-        - name: linkstack
-          persistentVolumeClaim:
-            claimName: linkstack
+      # volumes:
+      #   - name: linkstack
+      #     persistentVolumeClaim:
+      #       claimName: linkstack
 
