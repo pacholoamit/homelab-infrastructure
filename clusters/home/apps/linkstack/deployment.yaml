@@ -32,7 +32,7 @@ spec:
       initContainers:
       - name: linkstack
         image: busybox
-        command: ['sh', '-c', 'mkdir -p /htdocs/uploads && chown -R 82:82 /htdocs/uploads']
+        command: ['chmod', '777', '/htdocs']
         volumeMounts:
         - name: linkstack
           mountPath: /htdocs
