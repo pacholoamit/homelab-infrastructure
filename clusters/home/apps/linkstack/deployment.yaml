@@ -35,14 +35,20 @@ spec:
       - name: linkstack-init
         image: alpine/git
         command: 
-          - '/bin/sh'
-          - '-c'
-          - |
-            if [ -z "$(ls -A /htdocs)" ]; then
-              git clone https://github.com/LinkStackOrg/LinkStack.git /htdocs
-            else
-              echo "/htdocs is not empty. Skipping git clone."
-            fi
+        - '/bin/sh'
+        - '-c'
+        - |
+          htdocs_path="/htdocs"
+
+          if [ -z "$(ls -A $htdocs_path)" ]; then
+            git clone https://github.com/LinkStackOrg/LinkStack.git $htdocs_path
+          elif [ "$(ls -A $htdocs_path | wc -l)" -eq 1 ] && [ -d "$htdocs_path/lost+found" ]; then
+            echo "Removing 'lost+found' directory"
+            rm -rf $htdocs_path/lost+found
+            git clone https://github.com/LinkStackOrg/LinkStack.git $htdocs_path
+          else
+            echo "$htdocs_path is not empty or does not contain only 'lost+found'. Skipping git clone."
+          fi
         volumeMounts:
         - name: linkstack
           mountPath: /htdocs
