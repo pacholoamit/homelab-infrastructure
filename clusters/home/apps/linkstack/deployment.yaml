@@ -18,9 +18,9 @@ spec:
 
         ports:
         - containerPort: 80
-        # volumeMounts:
-        # - name: linkstack
-        #   mountPath: /htdocs
+        volumeMounts:
+        - name: linkstack
+          mountPath: /htdocs
         env:
         - name: TZ
           value: "Asia/Manila"
@@ -31,8 +31,8 @@ spec:
         - name: HTTPS_SERVER_NAME
           value: links.pacholo.com
         
-      # volumes:
-      #   - name: linkstack
-      #     persistentVolumeClaim:
-      #       claimName: linkstack
+      volumes:
+        - name: linkstack
+          persistentVolumeClaim:
+            claimName: linkstack
 
