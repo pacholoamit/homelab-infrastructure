@@ -34,7 +34,7 @@ spec:
       initContainers:
       - name: linkstack-init
         image: busybox
-        command: ['chmod', '777', '/htdocs']
+        command: ['git', 'clone', 'https://github.com/LinkStackOrg/LinkStack.git', '/htdocs']
         volumeMounts:
         - name: linkstack
           mountPath: /htdocs
