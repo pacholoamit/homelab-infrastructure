@@ -32,9 +32,9 @@ spec:
         - name: LOG_LEVEL
           value: "debug"
       securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
+        runAsUser: 100
+        runAsGroup: 101
+        fsGroup: 101
       # initContainers:
       # - name: linkstack-init
       #   image: alpine/git
