@@ -30,7 +30,7 @@ spec:
         - name: HTTPS_SERVER_NAME
           value: links.pacholo.com
       initContainers:
-      - name: linkstack
+      - name: linkstack-init
         image: busybox
         command: ['chmod', '777', '/htdocs']
         volumeMounts:
