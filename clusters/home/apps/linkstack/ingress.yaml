@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: linkstack
+spec:
+  type: LoadBalancer
+  selector:
+    app: linkstack
+
+  ports:
+  - port: 80
+    targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: linkstack
+  labels:
+    name: linkstack
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Self-hosted open-source Linktree alternative
+    gethomepage.dev/group: Apps/Services
+    gethomepage.dev/icon: linkstack
+    gethomepage.dev/name: linkstack
+    gethomepage.dev/pod-selector: app=linkstack
+    gethomepage.dev/weight: "1"
+spec:
+  rules:
+  - host: links.pacholoamit.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: linkstack
+            port: 
+              number: 80

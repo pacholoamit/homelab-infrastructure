@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: linkstack
+spec:
+  selector:
+    matchLabels:
+      app: linkstack
+  template:
+    metadata:
+      labels:
+        app: linkstack
+    spec:
+      containers:
+      - name: linkstack
+        imagePullPolicy: IfNotPresent
+        image: linkstackorg/linkstack:latest
+
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: linkstack
+          mountPath: /htdocs
+        env:
+        - name: TZ
+          value: "Asia/Manila"
+        - name: SERVER_ADMIN 
+          value: pacholoamit.tech@gmail.com
+        - name: HTTP_SERVER_NAME
+          value: links.pacholo.com
+        - name: HTTPS_SERVER_NAME
+          value: links.pacholo.com
+        
+      volumes:
+        - name: linkstack
+          persistentVolumeClaim:
+            claimName: linkstack
+
