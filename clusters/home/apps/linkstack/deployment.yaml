@@ -33,7 +33,7 @@ spec:
           value: "debug"
       initContainers:
       - name: linkstack-init
-        image: busybox
+        image: alpine/git
         command: ['git', 'clone', 'https://github.com/LinkStackOrg/LinkStack.git', '/htdocs']
         volumeMounts:
         - name: linkstack
