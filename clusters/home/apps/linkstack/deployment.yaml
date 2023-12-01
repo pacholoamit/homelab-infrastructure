@@ -34,7 +34,15 @@ spec:
       initContainers:
       - name: linkstack-init
         image: alpine/git
-        command: ['git', 'clone', 'https://github.com/LinkStackOrg/LinkStack.git', '/htdocs']
+        command: 
+          - '/bin/sh'
+          - '-c'
+          - |
+            if [ -z "$(ls -A /htdocs)" ]; then
+              git clone https://github.com/LinkStackOrg/LinkStack.git /htdocs
+            else
+              echo "/htdocs is not empty. Skipping git clone."
+            fi
         volumeMounts:
         - name: linkstack
           mountPath: /htdocs
