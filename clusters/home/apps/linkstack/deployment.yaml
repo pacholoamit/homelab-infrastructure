@@ -14,7 +14,7 @@ spec:
       containers:
       - name: linkstack
         imagePullPolicy: IfNotPresent
-        image: linkstackorg/linkstack:latest
+        image: linkstackorg/linkstack:v4.4.1
         ports:
         - containerPort: 80
         volumeMounts:
