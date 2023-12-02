@@ -16,7 +16,7 @@ spec:
         imagePullPolicy: IfNotPresent
         image: linkstackorg/linkstack:latest
         ports:
-        - containerPort: 80
+        - containerPort: 443
         volumeMounts:
         - name: linkstack
           mountPath: /htdocs
