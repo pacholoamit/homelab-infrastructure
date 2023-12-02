@@ -11,4 +11,4 @@ resources:
   - mariadb-external
   - speedtest-tracker
   - linkwarden
-  # - linkstack
+  - linkstack
