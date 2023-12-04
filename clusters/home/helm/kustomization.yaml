@@ -11,3 +11,4 @@ resources:
   - longhorn
   - piraeus
   - vmware-tanzu
+  - kube-reboot
