@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: speedtest-tracker
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: speedtest-tracker
@@ -11,6 +12,13 @@ spec:
       labels:
         app: speedtest-tracker
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: speedtest-tracker
       containers:
       - name: speedtest-tracker
         imagePullPolicy: IfNotPresent
