@@ -4,7 +4,7 @@ metadata:
   name: longhorn
   namespace: longhorn-system
 spec:
-  interval: 5m
+  interval: 168h # 7 days
   chart:
     spec:
       chart: longhorn
@@ -13,7 +13,6 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: longhorn-system
-      interval: 1m
   values:
     persistence:
       defaultClass: false
