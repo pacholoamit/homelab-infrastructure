@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: speedtest-tracker
 spec:
+  type: LoadBalancer
   selector:
     app: speedtest-tracker
   ports:
