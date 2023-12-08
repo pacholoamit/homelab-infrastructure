@@ -28,6 +28,8 @@ spec:
       repository: n8nio/n8n
       tag: 1.18.2
       pullPolicy: IfNotPresent
+    replicaCount: 2
+    
     # extraEnvSecrets:
     #   DB_POSTGRESDB_PASSWORD:
     #     name: postgresql

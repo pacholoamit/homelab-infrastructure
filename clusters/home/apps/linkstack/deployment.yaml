@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: linkstack
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: linkstack
@@ -11,6 +12,13 @@ spec:
       labels:
         app: linkstack
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: linkstack
       containers:
       - name: linkstack
         imagePullPolicy: IfNotPresent

@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: linkwarden
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: linkwarden
@@ -11,6 +12,13 @@ spec:
       labels:
         app: linkwarden
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: linkwarden
       containers:
       - name: linkwarden
         imagePullPolicy: IfNotPresent
