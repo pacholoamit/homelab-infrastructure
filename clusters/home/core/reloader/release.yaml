@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: reloader
+  namespace: eraser-system
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+  chart:
+    spec:
+      chart: reloader
+      sourceRef:
+        kind: HelmRepository
+        name: stakater
+        namespace: flux-system
+      interval: 30m

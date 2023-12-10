@@ -1,5 +1,5 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: stakater
+kind: HelmRepository
 metadata:
   name: stakater
   namespace: flux-system
