@@ -5,4 +5,4 @@ metadata:
   namespace: eraser-system
 spec:
   interval: 30m
-  url: https://eraser-dev.github.io/eraser/chart
+  url: https://eraser-dev.github.io/eraser/charts
