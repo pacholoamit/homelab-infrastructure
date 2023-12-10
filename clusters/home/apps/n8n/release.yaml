@@ -29,7 +29,8 @@ spec:
       tag: 1.18.2
       pullPolicy: IfNotPresent
     replicaCount: 2
-    
+    service:
+      type: LoadBalancer
     # extraEnvSecrets:
     #   DB_POSTGRESDB_PASSWORD:
     #     name: postgresql
