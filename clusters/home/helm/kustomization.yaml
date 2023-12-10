@@ -12,3 +12,4 @@ resources:
   - piraeus
   - vmware-tanzu
   - kube-reboot
+  - eraser
