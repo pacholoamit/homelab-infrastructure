@@ -13,3 +13,4 @@ resources:
   - vmware-tanzu
   - kube-reboot
   - eraser
+  - stakater
