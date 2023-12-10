@@ -2,15 +2,17 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: eraser
-  namespace: kube-system
+  namespace: eraser-system
 spec:
   interval: 5m
+  install:
+      createNamespace: true
   chart:
     spec:
-      chart: eraser
+      chart: eraser/eraser
       version: "1.3.x"
       sourceRef:
         kind: HelmRepository
         name: eraser
-        namespace: kube-system
+        namespace: eraser-system
       interval: 1m

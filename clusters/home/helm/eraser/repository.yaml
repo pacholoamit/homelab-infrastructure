@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: eraser
-  namespace: kube-system
+  namespace: eraser-system
 spec:
   interval: 30m
   url: https://eraser-dev.github.io/eraser/chart
