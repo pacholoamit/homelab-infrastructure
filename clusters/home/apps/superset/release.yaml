@@ -4,16 +4,6 @@ metadata:
   name: superset
 spec:
   interval: 5m
-  install:
-      replace: true
-      crds: CreateReplace
-      remediation:
-          retries: 3
-  upgrade:
-      replace: true
-      crds: CreateReplace
-      remediation:
-          retries: 3
   chart:
     spec:
       chart: superset
