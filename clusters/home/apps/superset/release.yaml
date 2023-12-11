@@ -14,16 +14,17 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+      # Configure secret key, required to supress warnings that causes pod creation failures
     configOverrides:
       secret: |
-        SECRET_KEY = '{{ .Values.extraEnvRaw[0].valueFrom.secretKeyRef.key }}'
-    # Configure secret key, required to supress warnings that causes pod creation failures
-    extraEnvRaw:
-      - name: SECRET_KEY
-        valueFrom:
-          secretKeyRef:
-            name: superset
-            key: secret-key
+        SECRET_KEY = 'AeDNQtvuCD2wkDk6jP3POLjYH4LVhHEey7oHzFJh2/2HaRC3LJAgCFbm'
+
+    # extraEnvRaw:
+    #   - name: SECRET_KEY
+    #     valueFrom:
+    #       secretKeyRef:
+    #         name: superset
+    #         key: secret-key
     # Set postgresql credentials
     postgresql:
       enabled: true
