@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: superset
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: superset
+      version: "13.2.x"
+      sourceRef:
+        kind: HelmRepository
+        name: superset
+        namespace: flux-system
+      interval: 1m
+  values:
+    # Set postgresql credentials
+    postgresql:
+      enabled: true
+      auth:
+        existingSecret: superset # Located in ./secret.yaml
+
+    # minimum values.yaml to enable clickhouse support for apache superset deployment
+    bootstrapScript: |
+      #!/bin/bash
+      pip install clickhouse-connect>=0.6.8 \
+      if [ ! -f ~/bootstrap ]; then echo "Running Superset with uid {{ .Values.runAsUser }}" > ~/bootstrap; fi
+
+
+    service:
+      type: LoadBalancer
+    # Ingress for my environment
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/proxy-body-size: 999m # Bypasses the 413 Request Entity Too Large error
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: SQL Editor & Visualizations
+        gethomepage.dev/group: Apps/Services
+        gethomepage.dev/icon: superset.png
+        gethomepage.dev/name: Apache Superset
+        gethomepage.dev/weight: "2"
+      hosts:
+        - host: superset.pacholoamit.com
+          paths:
+            - /
