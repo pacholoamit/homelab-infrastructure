@@ -19,6 +19,15 @@ spec:
       enabled: true
       auth:
         existingSecret: superset # Located in ./secret.yaml
+      
+    # Configure persistence of the database in the cluster
+      primary:
+        persistence:
+          enabled: true
+          storageClass: longhorn 
+          accessModes:
+            - ReadWriteMany
+          size: 5Gi
 
     # minimum values.yaml to enable clickhouse support for apache superset deployment
     bootstrapScript: |
@@ -26,6 +35,13 @@ spec:
       pip install clickhouse-connect>=0.6.8 && \
       if [ ! -f ~/bootstrap ]; then echo "Running Superset with uid {{ .Values.runAsUser }}" > ~/bootstrap; fi
 
+    # Apache superset master persistence
+    master:
+      persistence:
+        enabled: true
+        storageClass: longhorn 
+        accessModes:
+          - ReadWriteMany
 
     service:
       type: LoadBalancer
