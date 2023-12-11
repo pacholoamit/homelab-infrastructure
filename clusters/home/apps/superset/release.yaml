@@ -23,7 +23,7 @@ spec:
       interval: 1m
   values:
       # Configure secret key, required to supress warnings that causes pod creation failures
-    envFromSecret: superset-secret
+    # envFromSecret: superset-secret
 
     # extraEnvRaw:
     #   - name: SECRET_KEY
@@ -32,6 +32,10 @@ spec:
     #         name: superset
     #         key: secret-key
     # Set postgresql credentials
+
+    configOverrides:
+      secret: |
+        SECRET_KEY = 'AeDNQtvuCD2wkDk6jP3POLjYH4LVhHEey7oHzFJh2/2HaRC3LJAgCFbm'    
     postgresql:
       enabled: true
       auth:
