@@ -61,8 +61,8 @@ spec:
         accessModes:
           - ReadWriteMany
 
-    service:
-      type: LoadBalancer
+    # service:
+    #   type: LoadBalancer
     # Ingress for my environment
     ingress:
       enabled: true
