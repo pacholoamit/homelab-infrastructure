@@ -15,16 +15,16 @@ spec:
       interval: 1m
   values:
       # Configure secret key, required to supress warnings that causes pod creation failures
-    envFromSecret: superset-secret
-
+    envFromSecret: superset-secret # Located in secret-superset.yaml
 
     configOverrides:
       secret: |
-        SECRET_KEY = 'AeDNQtvuCD2wkDk6jP3POLjYH4LVhHEey7oHzFJh2/2HaRC3LJAgCFbm'    
+        # Generated using "openssl rand -base64 42"
+        SECRET_KEY = 'AeDNQtvuCD2wkDk6jP3POLjYH4LVhHEey7oHzFJh2/2HaRC3LJAgCFbm'
     postgresql:
       enabled: true
       auth:
-        existingSecret: superset-db-secret # Located in ./secret.yaml
+        existingSecret: superset-db-secret # Located in ./secret-db.yaml
       
     # Configure persistence of the database in the cluster
       primary:
