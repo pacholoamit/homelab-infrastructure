@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: demo
 resources:
   - namespace.yaml
-  - secret.yaml
+  - secret-db.yaml
+  - secret-superset.yaml
   - release.yaml
