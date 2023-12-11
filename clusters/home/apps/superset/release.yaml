@@ -59,21 +59,3 @@ spec:
         accessModes:
           - ReadWriteMany
 
-    # service:
-    #   type: LoadBalancer
-    # Ingress for my environment
-    ingress:
-      enabled: true
-      ingressClassName: nginx
-      annotations:
-        nginx.ingress.kubernetes.io/proxy-body-size: 999m # Bypasses the 413 Request Entity Too Large error
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/description: SQL Editor & Visualizations
-        gethomepage.dev/group: Apps/Services
-        gethomepage.dev/icon: superset.png
-        gethomepage.dev/name: Apache Superset
-        gethomepage.dev/weight: "2"
-      hosts:
-        - host: superset.pacholoamit.com
-          paths:
-            - /

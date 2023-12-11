@@ -6,3 +6,4 @@ resources:
   - secret-db.yaml
   - secret-superset.yaml
   - release.yaml
+  - ingress.yaml
