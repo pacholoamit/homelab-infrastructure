@@ -23,7 +23,7 @@ spec:
       interval: 1m
   values:
       # Configure secret key, required to supress warnings that causes pod creation failures
-    # envFromSecret: superset-secret
+    envFromSecret: superset-secret
 
     # extraEnvRaw:
     #   - name: SECRET_KEY
