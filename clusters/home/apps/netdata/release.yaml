@@ -25,7 +25,7 @@ spec:
         gethomepage.dev/group: Infrastructure
         gethomepage.dev/icon: netdata.png
         gethomepage.dev/name: Netdata
-        gethomepage.dev/weight: "1"
+        gethomepage.dev/weight: "2"
       path: /
       pathType: Prefix
       hosts:
