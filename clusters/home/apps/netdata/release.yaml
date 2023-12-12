@@ -26,3 +26,7 @@ spec:
         gethomepage.dev/icon: netdata.png
         gethomepage.dev/name: Netdata
         gethomepage.dev/weight: "1"
+      path: /
+      pathType: Prefix
+      hosts:
+        - netdata.pacholoamit.com
