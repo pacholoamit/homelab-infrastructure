@@ -7,7 +7,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: n8n
+      chart: netdata
       version: "3.7.x"
       sourceRef:
         kind: HelmRepository
