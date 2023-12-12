@@ -13,4 +13,4 @@ resources:
   - linkwarden
   - linkstack
  # -  netdata
-  # - superset
+  - superset
