@@ -12,5 +12,5 @@ resources:
   - speedtest-tracker
   - linkwarden
   - linkstack
-  # - netdata
+  - netdata
   # - superset
