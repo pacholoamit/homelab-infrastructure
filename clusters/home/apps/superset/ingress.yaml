@@ -10,7 +10,7 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/description: SQL Editor & Visualizations
     gethomepage.dev/group: Apps/Services
-    gethomepage.dev/icon: superset.png
+    gethomepage.dev/icon: https://superset.apache.org/img/superset-mark-dark.svg
     gethomepage.dev/name: Apache Superset
     gethomepage.dev/weight: "2"
 spec:
