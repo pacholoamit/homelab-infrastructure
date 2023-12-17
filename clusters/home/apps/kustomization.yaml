@@ -7,10 +7,10 @@ resources:
   - vaultwarden
   - cloudflare
   - weaveworks-dashboard
-  - descheduler
+  # - descheduler
   - mariadb-external
   - speedtest-tracker
   - linkwarden
   - linkstack
  # -  netdata
-  - superset
+  # - superset
