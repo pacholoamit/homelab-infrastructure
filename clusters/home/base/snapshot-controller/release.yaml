@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: "1.9.x"  # Do not change, this is for longhorn compatibility
+      version: "2.0.x"  # Do not change, this is for longhorn compatibility
       sourceRef:
         kind: HelmRepository
         name: piraeus
