@@ -8,12 +8,12 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: "2.0.x"  # Do not change, this is for longhorn compatibility
+      version: "2.0.x"  
       sourceRef:
         kind: HelmRepository
         name: piraeus
         namespace: kube-system
       interval: 1m
-  values:
-    image:
-      tag: v5.0.1 # Do not change, this is for longhorn compatibility
+  # values:
+  #   image:
+  #     tag: v5.0.1 # Do not change, this is for longhorn compatibility
