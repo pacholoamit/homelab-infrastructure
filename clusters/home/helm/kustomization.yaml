@@ -10,10 +10,11 @@ resources:
   - ingress-nginx
   - longhorn
   - piraeus
-  # - vmware-tanzu
+  - vmware-tanzu
   - kube-reboot
   - eraser
   - stakater
   - deliveryhero
   - superset
   - netdata
+  - botkube
