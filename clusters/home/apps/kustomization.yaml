@@ -4,7 +4,7 @@ resources:
   - postgresql
   - homepage
   # - n8n
-  # - vaultwarden
+  - vaultwarden
   - cloudflare
   - weaveworks-dashboard
   - descheduler

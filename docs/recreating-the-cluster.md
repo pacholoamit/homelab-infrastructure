@@ -24,3 +24,6 @@ flux bootstrap github \
 ```
 
 Set up botkube at app.botkube.io for notifications
+
+
+We use [pv-migrate](https://github.com/utkuozdemir/pv-migrate) to restore volumes if backups are available
