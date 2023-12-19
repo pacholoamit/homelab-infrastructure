@@ -30,6 +30,6 @@ spec:
       name: vaultwarden-data
       size: 5Gi
       class: longhorn
-      keepPvc: false
+      keepPvc: true
     domain: https://vaultwarden.pacholoamit.com
     
