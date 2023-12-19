@@ -5,9 +5,8 @@ metadata:
   name: helm
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 5m0s
   prune: true
-  wait: true
   path: ./clusters/home/helm
   decryption:
     provider: sops
