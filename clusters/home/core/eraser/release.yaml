@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: eraser
-  namespace: eraser-system
+  namespace: flux-system
 spec:
   interval: 5m
   install:
@@ -14,5 +14,5 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: eraser
-        namespace: eraser-system
+        namespace: flux-system
       interval: 1m
