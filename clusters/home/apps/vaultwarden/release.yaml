@@ -27,19 +27,9 @@ spec:
     signupsAllowed: true
     invitationsAllowed: true
     data:
-      name: pvc-5d307713-b775-4343-ab86-f4c8252c439f
+      name: vaultwarden
       size: 5Gi
       class: longhorn
       keepPvc: true
     domain: https://vaultwarden.pacholoamit.com
-    pvcSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: longhorn
-          accessModes:
-            - ReadWriteMany
-          resources:
-            requests:
-              storage: 5Gi
-          volumeName: pvc-5d307713-b775-4343-ab86-f4c8252c439f
     
