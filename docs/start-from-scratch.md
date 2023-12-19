@@ -54,7 +54,7 @@ cloudflared tunnel route dns home-k3s-cluster <route>.pacholoamit.com
 
 ## Preparing secrets
 
-We're using sealed-secrets to encrypt our secrets. Install the kubeseal CLI tool and run the following commands.
+We're using Mozilla sops to encrypt our secrets. Install the kubeseal CLI tool and run the following commands.
 
 ```sh
 # Create secret for longhorn
