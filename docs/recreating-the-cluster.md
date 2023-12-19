@@ -18,7 +18,7 @@ flux bootstrap github \
  --owner=<YOUR_GITHUB_USERNAME> \
  --repository=homelab-infra \
  --branch=master \
- --path=clusters/home \
+ --path=clusters/home/base \
  --personal \
  --token-auth
 ```
