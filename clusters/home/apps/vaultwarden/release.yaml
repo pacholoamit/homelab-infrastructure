@@ -26,11 +26,11 @@ spec:
       value: $argon2id$v=19$m=19456,t=2,p=1$TVFGVlVDMEpJMnZQbHVLbEl4NWJVcGYvREhyazBScXBYQU5PaTE3aE5Jdz0$vyl46eeXo+JMsTGuO5BfB8sb7BvdN2xaLt7wNX58plA
     signupsAllowed: true
     invitationsAllowed: true
-    data:
-      name: vaultwarden
-      size: 5Gi
-      class: longhorn
-      keepPvc: true
+    # data:
+    #   name: vaultwarden
+    #   size: 5Gi
+    #   class: longhorn
+    #   keepPvc: true
     domain: https://vaultwarden.pacholoamit.com
     pvcSpec:
       volumeClaimTemplate:
@@ -41,5 +41,5 @@ spec:
           resources:
             requests:
               storage: 5Gi
-          volumeName: vaultwarden
+          volumeName: pvc-5d307713-b775-4343-ab86-f4c8252c439f
     
