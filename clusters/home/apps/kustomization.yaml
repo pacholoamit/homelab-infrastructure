@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - postgresql
   - homepage
-  # - n8n
+  - n8n
   - vaultwarden
   - cloudflare
   - weaveworks-dashboard
