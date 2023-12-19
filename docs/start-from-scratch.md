@@ -18,6 +18,9 @@ flux bootstrap github \
  --token-auth
 ```
 
+
+Set up botkube at app.botkube.io
+
 ## Preparing Longhorn RWX compatibility,
 
 ensure to install open-iscsi on all nodes worker nodes with longhorn installed.

@@ -22,3 +22,5 @@ flux bootstrap github \
  --personal \
  --token-auth
 ```
+
+Set up botkube at app.botkube.io for notifications
