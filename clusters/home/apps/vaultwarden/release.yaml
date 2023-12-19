@@ -32,4 +32,6 @@ spec:
       class: longhorn
       keepPvc: true
     domain: https://vaultwarden.pacholoamit.com
+    pvcSpec:
+      volumeClaimTemplate:
     
