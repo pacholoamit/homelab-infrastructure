@@ -6,5 +6,4 @@ resources:
   - secret.yaml
   - service.yaml
   - namespace.yaml
-  # - volume-snapshot-class.yaml
-  - settings.yaml
+  - volume-snapshot-class.yaml

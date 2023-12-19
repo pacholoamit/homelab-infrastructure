@@ -17,3 +17,6 @@ spec:
     persistence:
       defaultClass: false
       defaultDataLocality: best-effort
+    defaultSettings:
+      backupTarget: s3://velero-k3s-cluster-backups@ap-southeast-1/longhorn-backups
+      backupTargetCredentialSecret: longhorn-aws-credentials

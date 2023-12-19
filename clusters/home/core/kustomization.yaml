@@ -4,7 +4,7 @@ resources:
   - ingress-nginx
   - longhorn
   - snapshot-controller
-  # - velero
+  - velero
   - kured # Restart kubernetes nodes
   - eraser # Erases irrelevant container images
   - reloader # Reloads config maps
