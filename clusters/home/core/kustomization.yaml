@@ -7,6 +7,5 @@ resources:
   - kured # Restart kubernetes nodes
   - eraser # Erases irrelevant container images
   - reloader # Reloads config maps
-  - snapshot-controller
   - node-problem-detector #   Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.
   # - system-upgrade
