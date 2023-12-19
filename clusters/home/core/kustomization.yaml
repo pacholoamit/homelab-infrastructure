@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - ingress-nginx
   - longhorn
-  - snapshot-controller
   - velero
   - kured # Restart kubernetes nodes
   - eraser # Erases irrelevant container images

@@ -13,6 +13,7 @@ spec:
       name: sops-age
   dependsOn:
     - name: helm
+    - name: base
     - name: core
   path: ./clusters/home/apps
   sourceRef:
