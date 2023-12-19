@@ -8,3 +8,17 @@ cat age.agekey |
    --namespace=flux-system \
    --from-file=age.agekey=/dev/stdin
 ```
+
+
+Point FluxCD to the repo
+```sh
+
+flux bootstrap github \
+ --components-extra=image-reflector-controller,image-automation-controller \
+ --owner=<YOUR_GITHUB_USERNAME> \
+ --repository=homelab-infra \
+ --branch=master \
+ --path=clusters/home \
+ --personal \
+ --token-auth
+```
