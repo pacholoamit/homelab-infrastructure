@@ -41,17 +41,4 @@ spec:
       class: longhorn
       keepPvc: false
     domain: https://vaultwarden.pacholoamit.com
-    ingress:
-      enabled: true
-      class: "nginx"
-      additionalAnnotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/description: Self-hosted password manager
-        gethomepage.dev/group: Apps/Services
-        gethomepage.dev/icon: vaultwarden
-        gethomepage.dev/name: Vaultwarden
-        gethomepage.dev/weight: "2"
-        # gethomepage.dev/pod-selector: app=vaultwarden
-      hostname: vaultwarden.pacholoamit.com
-
     
