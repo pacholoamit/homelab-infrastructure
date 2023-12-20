@@ -10,5 +10,4 @@ spec:
     key: password
   maxUserConnections: 20
   host: "%"
-  requeueInterval: 30s
   retryInterval: 5s
