@@ -14,5 +14,4 @@ spec:
   username: user
   grantOption: true
   host: "%"
-  requeueInterval: 30s
   retryInterval: 5s
