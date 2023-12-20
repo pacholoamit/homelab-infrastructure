@@ -1,0 +1,21 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  prune: true
+  dependsOn:
+    - name: helm
+    - name: core
+    - name: base
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./clusters/experimental/apps
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

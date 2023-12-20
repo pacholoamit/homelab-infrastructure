@@ -1,0 +1,15 @@
+# Required to see the ui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: longhorn-svc
+  namespace: longhorn-system
+spec:
+  type: LoadBalancer
+  selector:
+    app: longhorn-ui
+  ports:
+    - port: 80
+      targetPort: http
+

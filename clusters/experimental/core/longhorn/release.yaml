@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 168h # 7 days
+  chart:
+    spec:
+      chart: longhorn
+      version: "1.5.x"
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: longhorn-system
+  values:
+    persistence:
+      defaultClass: false
+      defaultDataLocality: best-effort
+    defaultSettings:
+      backupTarget: s3://velero-k3s-cluster-backups@ap-southeast-1/longhorn-backups
+      backupTargetCredentialSecret: longhorn-aws-credentials

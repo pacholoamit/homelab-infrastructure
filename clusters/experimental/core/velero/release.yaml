@@ -1,0 +1,70 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: velero
+  namespace: velero
+spec:
+  interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: velero
+      version: "5.2.x"
+      sourceRef:
+        kind: HelmRepository
+        name: vmware-tanzu
+        namespace: flux-system
+      interval: 1m
+  values:
+    upgradeCRDs: true
+    initContainers:
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.8.2
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+      - name: velero-plugin-for-csi
+        image: velero/velero-plugin-for-csi:v0.6.2
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+    metrics:
+      enabled: true
+      scrapeInterval: 120s
+      scrapeTimeout: 30s
+    deployNodeAgent: true
+    credentials:
+      existingSecret: aws
+    configuration:
+      volumeSnapshotLocation:
+        - name: default
+          provider: aws
+          config:
+            region: ap-southeast-1
+      backupStorageLocation:
+        - name: default
+          provider: aws
+          bucket: velero-k3s-cluster-backups
+          default: true
+          config:
+            region: ap-southeast-1
+          credential:
+            name: aws
+            key: cloud
+    schedules:
+      default:
+        schedule: "00 15 * * *"
+        template:
+          includedNamespaces:
+            - default
+          snapshotVolumes: true
+          ttl: 168h0m0s
+        useOwnerReferencesInBackup: false
