@@ -3,6 +3,20 @@ kind: MariaDB
 metadata:
   name: mariadb
 spec:
+  replicas: 3
+
+  replication:
+    enabled: true
+
+  service:
+    type: LoadBalancer
+
+  primaryService:
+    type: LoadBalancer
+
+  secondaryService:
+    type: LoadBalancer
+
   volumeClaimTemplate:
     resources:
       requests:
