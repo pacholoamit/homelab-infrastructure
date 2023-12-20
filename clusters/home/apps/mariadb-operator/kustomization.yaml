@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: default
+namespace: mariadb-operator
 resources:
   - backup.yaml
   - configmap.yaml
@@ -8,6 +8,7 @@ resources:
   - grant.yaml
   - mariadb-backup-pvc.yaml
   - mariadb.yaml
+  - namespace.yaml
   - release.yaml
   - secret.yaml
   - user.yaml
