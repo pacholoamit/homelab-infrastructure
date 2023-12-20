@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mariadb-operator
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: mariadb-operator
+      version: "0.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: mariadb-operator
+        namespace: default
+      interval:  1h0m0s
+  values:
+  
+
+    

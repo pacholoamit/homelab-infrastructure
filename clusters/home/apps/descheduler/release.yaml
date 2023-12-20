@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: descheduler
         namespace: kube-system
-      interval: 1m
+      interval:  1h0m0s
   values:
     schedule: "0 0 * * *"
     deschedulerPolicy:

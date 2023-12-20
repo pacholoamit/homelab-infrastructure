@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - backup.yaml
+  - configmap.yaml
+  - database.yaml
+  - grant.yaml
+  - mariadb-backup-pvc.yaml
+  - mariadb.yaml
+  - release.yaml
+  - secret.yaml
+  - user.yaml
+
+  

@@ -25,7 +25,7 @@ spec:
         kind: HelmRepository
         name: jameswynn
         namespace: default
-      interval: 1m
+      interval:  1h0m0s
   values:
     image:
       repository: ghcr.io/gethomepage/homepage
