@@ -1,0 +1,23 @@
+---
+# Configs to apply, usually after CRDS are installed
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  prune: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  dependsOn:
+    - name: helm
+    - name: base
+    - name: core
+    - name: apps
+  path: ./clusters/home/core
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
