@@ -18,3 +18,4 @@ resources:
   - superset
   - netdata
   - botkube
+  - mariadb-operator
