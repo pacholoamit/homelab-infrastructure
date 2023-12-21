@@ -8,6 +8,13 @@ spec:
     key: password
   image:  ghcr.io/mariadb-operator/mariadb
   port: 3306
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
   galera:
     enabled: true
     primary:
@@ -29,6 +36,8 @@ spec:
       podSyncTimeout: 5m
     initContainer:
       image: ghcr.io/mariadb-operator/init
+
+
   volumeClaimTemplate:
     resources:
       requests:
