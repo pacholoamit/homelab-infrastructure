@@ -6,36 +6,48 @@ spec:
   rootPasswordSecretKeyRef:
     name: mariadb
     key: password
-  image:  ghcr.io/mariadb-operator/mariadb
-  port: 3306
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
-    limits:
-      cpu: 300m
-      memory: 512Mi
-  galera:
+  image:  mariadb:lts
+  replica: 3
+  replication:
     enabled: true
-    primary:
-      podIndex: 0
-      automaticFailover: true
-    sst: mariabackup
-    replicaThreads: 1
-    agent:
-      image: ghcr.io/mariadb-operator/agent
-      port: 5555
-      kubernetesAuth:
-        enabled: true
-      gracefulShutdownTimeout: 5s
-    recovery:
-      enabled: true
-      clusterHealthyTimeout: 3m
-      clusterBootstrapTimeout: 10m
-      podRecoveryTimeout: 5m
-      podSyncTimeout: 5m
-    initContainer:
-      image: ghcr.io/mariadb-operator/init
+  service:
+    type: LoadBalancer
+
+  primaryService:
+    type: LoadBalancer
+
+  secondaryService:
+    type: LoadBalancer
+
+  
+  # resources:
+  #   requests:
+  #     cpu: 100m
+  #     memory: 128Mi
+  #   limits:
+  #     cpu: 300m
+  #     memory: 512Mi
+  # galera:
+  #   enabled: true
+  #   primary:
+  #     podIndex: 0
+  #     automaticFailover: true
+  #   sst: mariabackup
+  #   replicaThreads: 1
+  #   agent:
+  #     image: ghcr.io/mariadb-operator/agent
+  #     port: 5555
+  #     kubernetesAuth:
+  #       enabled: true
+  #     gracefulShutdownTimeout: 5s
+  #   recovery:
+  #     enabled: true
+  #     clusterHealthyTimeout: 3m
+  #     clusterBootstrapTimeout: 10m
+  #     podRecoveryTimeout: 5m
+  #     podSyncTimeout: 5m
+  #   initContainer:
+  #     image: ghcr.io/mariadb-operator/init
 
 
   volumeClaimTemplate:
