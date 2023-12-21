@@ -64,7 +64,7 @@ spec:
     mariadb:
       enabled: false
     externalDatabase:
-      host: mariadb.mariadb-operator.svc.cluster.local
+      host: mariadb
       port: 3306
       user: root
       existingSecret: wordpress
