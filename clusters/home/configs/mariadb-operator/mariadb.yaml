@@ -3,13 +3,14 @@ kind: MariaDB
 metadata:
   name: mariadb
 spec:
+  image:  mariadb:lts
+  replicas: 3
+  replication:
+    enabled: true
   rootPasswordSecretKeyRef:
     name: mariadb
     key: password
-  image:  mariadb:lts
-  replica: 3
-  replication:
-    enabled: true
+
   service:
     type: LoadBalancer
 
