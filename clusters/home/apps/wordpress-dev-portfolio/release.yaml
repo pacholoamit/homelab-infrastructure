@@ -64,7 +64,7 @@ spec:
     mariadb:
       enabled: false
     externalDatabase:
-      host: mariadb
+      host: mariadb # Reference mariadb-operator deployment
       port: 3306
       user: root
       existingSecret: wordpress
