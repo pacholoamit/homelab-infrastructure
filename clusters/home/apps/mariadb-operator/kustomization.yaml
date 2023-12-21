@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: mariadb-operator
 resources:
   - configmap.yaml
-  - mariadb-backup-pvc.yaml
   - namespace.yaml
   - release.yaml
   - secret.yaml
