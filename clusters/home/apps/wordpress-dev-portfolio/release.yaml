@@ -1,0 +1,70 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wordpress
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: wordpress
+      version: "19.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      interval: 1m
+  values:
+    wordpressUsername: pacholoamit
+    existingSecret: wordpress
+    wordpressEmail: pacholoamit.tech@gmail.com
+    wordpressFirstName: Pacholo
+    WordpressLastName: Amit
+    wordpressBlogName: Pacholo Amit | Developer Portfolio
+    wordpressExtraConfigContent: |
+      @ini_set( 'post_max_size', '999M');
+    replicaCount: 3
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: wordpress
+            app.kubernetes.io/instance: wordpress
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hostname: wordpress.pacholoamit.com
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Developer Portfolio 2
+        gethomepage.dev/group: Apps/Services
+        gethomepage.dev/icon: wordpress
+        gethomepage.dev/name: Developer Portfolio 2
+        gethomepage.dev/weight: "1"
+      pathType: Prefix
+      path: "/"
+    persistence:
+      enabled: true
+      storageClass: longhorn
+      accessModes:
+        - ReadWriteMany
+      size: 5Gi
+      existingClaim: wordpress
+    mariadb:
+      enabled: false
+    externalDatabase:
+      host: mariadb.mariadb-operator.svc.cluster.local
+      port: 3306
+      user: root
+      existingSecret: wordpress
