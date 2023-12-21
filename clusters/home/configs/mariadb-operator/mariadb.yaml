@@ -8,7 +8,7 @@ spec:
     key: password
   image:  
     repository: mariadb
-    tag: "11.0.3"
+    tag: "11.2.2"
     pullPolicy: IfNotPresent
   port: 3306
   galera:
