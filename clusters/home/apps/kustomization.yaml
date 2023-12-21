@@ -12,6 +12,6 @@ resources:
   - speedtest-tracker
   - linkwarden
   - linkstack
-  # - mariadb-operator
+  - mariadb-operator
   # -  netdata
   # - superset

@@ -1,24 +1,20 @@
 apiVersion: mariadb.mmontes.io/v1alpha1
 kind: MariaDB
 metadata:
-  name: mariadb
+  name: mariadb-from-backup
 spec:
-  image:  mariadb:lts
-  replicas: 3
-  replication:
-    enabled: true
+  image: mariadb:lts
   rootPasswordSecretKeyRef:
     name: mariadb
     key: password
-  service:
-    type: LoadBalancer
-  primaryService:
-    type: LoadBalancer
-  secondaryService:
-    type: LoadBalancer
   volumeClaimTemplate:
     resources:
       requests:
         storage: 3Gi
     accessModes:
       - ReadWriteOnce
+
+  bootstrapFrom:
+    backupRef:
+      name: backup-scheduled
+    # targetRecoveryTime: 2023-12-19T09:00:00Z
