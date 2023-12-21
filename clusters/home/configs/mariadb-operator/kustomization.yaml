@@ -4,8 +4,6 @@ namespace: mariadb-operator
 resources:
   - backup.yaml
   - database.yaml
-  - grant.yaml
   - mariadb.yaml
-  - user.yaml
 
   
