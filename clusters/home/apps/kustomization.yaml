@@ -14,5 +14,6 @@ resources:
   - linkstack
   - mariadb-operator
   - wordpress-dev-portfolio
+  - busybox
   # -  netdata
   # - superset
