@@ -70,3 +70,4 @@ spec:
       port: 3306
       user: root
       existingSecret: wordpress
+      database: mariadb
