@@ -46,7 +46,7 @@ spec:
     ingress:
       enabled: true
       ingressClassName: nginx
-      hostname: wordpress.pacholoamit.com
+      hostname: www.pacholoamit.com
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/description: Developer Portfolio 2
