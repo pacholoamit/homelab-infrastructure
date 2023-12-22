@@ -49,10 +49,10 @@ spec:
       hostname: www.pacholoamit.com
       annotations:
         gethomepage.dev/enabled: "true"
-        gethomepage.dev/description: Developer Portfolio 2
+        gethomepage.dev/description: Developer Portfolio
         gethomepage.dev/group: Apps/Services
         gethomepage.dev/icon: wordpress
-        gethomepage.dev/name: Developer Portfolio 2
+        gethomepage.dev/name: Developer Portfolio
         gethomepage.dev/weight: "1"
       pathType: Prefix
       path: "/"
