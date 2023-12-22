@@ -16,3 +16,6 @@ spec:
       containers:
       - name: busybox
         image: busybox
+        command:
+        - sleep
+        - "3600" # You can adjust the sleep duration as needed        
