@@ -64,7 +64,7 @@ spec:
     mariadb:
       enabled: false
     externalDatabase:
-      host: mariadb-primary.mariadb-operator.svc.cluster.local:3306 # Reference mariadb-operator deployment
-      # port: 3306
+      host: mariadb-primary.mariadb-operator.svc.cluster.local # Reference mariadb-operator deployment
+      port: 3306
       user: root
       existingSecret: wordpress
