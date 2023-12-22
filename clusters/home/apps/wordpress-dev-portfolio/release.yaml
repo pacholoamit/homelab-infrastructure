@@ -24,6 +24,8 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    image:
+      debug: true
     wordpressUsername: pacholoamit
     existingSecret: wordpress
     wordpressEmail: pacholoamit.tech@gmail.com
