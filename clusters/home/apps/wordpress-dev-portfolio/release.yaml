@@ -10,10 +10,13 @@ spec:
       crds: CreateReplace
       remediation:
           retries: 3
+      replace: true
+      
   upgrade:
       crds: CreateReplace
       remediation:
           retries: 3
+      cleanupOnFail: true
   chart:
     spec:
       chart: wordpress
@@ -22,7 +25,7 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      interval: 1m
+      interval: 50m
   values:
     image:
       debug: true
