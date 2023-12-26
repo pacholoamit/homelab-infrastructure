@@ -37,15 +37,15 @@ spec:
     wordpressBlogName: Pacholo Amit | Developer Portfolio
     wordpressExtraConfigContent: |
       @ini_set( 'post_max_size', '999M');
-    replicaCount: 0
-    # topologySpreadConstraints:
-    #    - maxSkew: 1
-    #      topologyKey: kubernetes.io/hostname
-    #      whenUnsatisfiable: DoNotSchedule
-    #      labelSelector:
-    #        matchLabels:
-    #          app.kubernetes.io/name: wordpress
-    #          app.kubernetes.io/instance: wordpress
+    replicaCount: 3
+    topologySpreadConstraints:
+       - maxSkew: 1
+         topologyKey: kubernetes.io/hostname
+         whenUnsatisfiable: DoNotSchedule
+         labelSelector:
+           matchLabels:
+             app.kubernetes.io/name: wordpress
+             app.kubernetes.io/instance: wordpress
     ingress:
       enabled: true
       ingressClassName: nginx
