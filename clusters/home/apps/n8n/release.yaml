@@ -28,7 +28,7 @@ spec:
       repository: n8nio/n8n
       tag: 1.22.1
       pullPolicy: IfNotPresent
-    replicaCount: 1
+    replicaCount: 0
     service:
       type: LoadBalancer
     # extraEnvSecrets:
