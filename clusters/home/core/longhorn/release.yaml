@@ -22,3 +22,4 @@ spec:
       backupTargetCredentialSecret: longhorn-aws-credentials
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       guaranteedInstanceManagerCPU: 30
+      v2DataEngine: true
