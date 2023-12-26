@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: n8n
@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: n8nio/n8n
-      tag: 1.21.1
+      tag: 1.22.1
       pullPolicy: IfNotPresent
     replicaCount: 1
     service:
