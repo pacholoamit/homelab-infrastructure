@@ -37,7 +37,7 @@ spec:
     wordpressBlogName: Pacholo Amit | Developer Portfolio
     wordpressExtraConfigContent: |
       @ini_set( 'post_max_size', '999M');
-    replicaCount: 3
+    replicaCount: 2
     topologySpreadConstraints:
        - maxSkew: 1
          topologyKey: kubernetes.io/hostname
