@@ -37,7 +37,7 @@ spec:
     wordpressBlogName: Pacholo Amit | Developer Portfolio
     wordpressExtraConfigContent: |
       @ini_set( 'post_max_size', '999M');
-    replicaCount: 2
+    replicaCount: 1
     topologySpreadConstraints:
        - maxSkew: 1
          topologyKey: kubernetes.io/hostname
@@ -74,3 +74,8 @@ spec:
       user: root
       existingSecret: wordpress
       database: mariadb
+    resources:
+      limits: {}
+      requests: 
+        cpu: 500m
+        memory: 1024Mi
