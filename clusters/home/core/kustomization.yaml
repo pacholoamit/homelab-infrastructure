@@ -7,4 +7,4 @@ resources:
   - kured # Restart kubernetes nodes
   # - reloader # Reloads config maps
   - node-problem-detector #   Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.
-  # - system-upgrade
+  - system-upgrade
