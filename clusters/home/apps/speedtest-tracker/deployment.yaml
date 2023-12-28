@@ -38,30 +38,18 @@ spec:
         - name: DB_CONNECTION
           value: mysql
         - name: DB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-external
-              key: host
+          value: mariadb-primary.mariadb-operator.svc.cluster.local
         - name: DB_PORT
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-external
-              key: port
+          value: "3306"
         - name: DB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-external
-              key: database
+          value: mariadb
         - name: DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-external
-              key: username
+          value: root
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mariadb-external
-              key: password
+              name: speedtest-tracker
+              key: mariadb-root-password
         - name: MAIL_MAILER
           value: smtp
         - name: MAIL_HOST
