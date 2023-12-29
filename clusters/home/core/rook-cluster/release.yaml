@@ -24,6 +24,16 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    cephBlockPools:
+      - name: ceph-blockpool
+        storageClass:
+          isDefault: false
+    cephFileSystems:
+      - name: ceph-filesystem
+        storageClass:
+          isDefault: false
+
+
     ingress:
       enabled: true
       ingressClassName: nginx
