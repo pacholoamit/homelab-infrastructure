@@ -65,10 +65,10 @@ spec:
             activeStandby: true
             resources:
               limits:
-                cpu: "1500m"
+                cpu: "500m"
                 memory: "2Gi"
               requests:
-                cpu: "1000m"
+                cpu: "500m"
                 memory: "2Gi"
             priorityClassName: system-cluster-critical
         storageClass:
