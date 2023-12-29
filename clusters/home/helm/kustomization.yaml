@@ -19,3 +19,4 @@ resources:
   - netdata
   - botkube
   - mariadb-operator
+  - rook
