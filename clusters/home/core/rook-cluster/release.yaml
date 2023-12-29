@@ -88,18 +88,18 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
             csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/fstype: ext4
-    # ingress:
-    #   enabled: true
-    #   ingressClassName: nginx
-    #   host:
-    #     name: rook.pacholoamit.com
-    #     path: /
-    #   annotations:
-    #     nginx.ingress.kubernetes.io/proxy-body-size: 10000m
-    #     gethomepage.dev/enabled: "true"
-    #     gethomepage.dev/description: Cloud native storage orchestrator
-    #     gethomepage.dev/group: Infrastructure
-    #     gethomepage.dev/icon: rook.png
-    #     gethomepage.dev/name: Rook
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      host:
+        name: rook.pacholoamit.com
+        path: /
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Cloud native storage orchestrator
+        gethomepage.dev/group: Infrastructure
+        gethomepage.dev/icon: rook.png
+        gethomepage.dev/name: Rook
 
   
