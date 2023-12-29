@@ -27,25 +27,25 @@ spec:
     cephBlockPools:
       - name: ceph-blockpool
         storageClass:
+          enabled: true
           isDefault: false
     cephFileSystems:
       - name: ceph-filesystem
         storageClass:
+          enabled: true
           isDefault: false
-
-
-    ingress:
-      enabled: true
-      ingressClassName: nginx
-      host:
-        name: rook.pacholoamit.com
-        path: /
-      annotations:
-        nginx.ingress.kubernetes.io/proxy-body-size: 10000m
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/description: Cloud native storage orchestrator
-        gethomepage.dev/group: Infrastructure
-        gethomepage.dev/icon: rook.png
-        gethomepage.dev/name: Rook
+    # ingress:
+    #   enabled: true
+    #   ingressClassName: nginx
+    #   host:
+    #     name: rook.pacholoamit.com
+    #     path: /
+    #   annotations:
+    #     nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+    #     gethomepage.dev/enabled: "true"
+    #     gethomepage.dev/description: Cloud native storage orchestrator
+    #     gethomepage.dev/group: Infrastructure
+    #     gethomepage.dev/icon: rook.png
+    #     gethomepage.dev/name: Rook
 
   
