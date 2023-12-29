@@ -28,6 +28,7 @@ spec:
       - name: ceph-blockpool
         storageClass:
           enabled: false
+          isDefault: false
     cephFileSystems:
       - name: ceph-filesystem
         storageClass:
