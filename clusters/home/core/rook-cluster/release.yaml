@@ -26,14 +26,10 @@ spec:
   values:
 cephBlockPools:
   - name: ceph-blockpool
-    # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Block-Storage/ceph-block-pool-crd.md#spec for available configuration
     spec:
       failureDomain: host
       replicated:
         size: 3
-      # Enables collecting RBD per-image IO statistics by enabling dynamic OSD performance counters. Defaults to false.
-      # For reference: https://docs.ceph.com/docs/master/mgr/prometheus/#rbd-io-statistics
-      # enableRBDStats: true
     storageClass:
       enabled: true
       name: ceph-block
@@ -42,11 +38,8 @@ cephBlockPools:
       allowVolumeExpansion: true
       volumeBindingMode: "Immediate"
       mountOptions: []
-    
-      allowedTopologies: []
-    
+      allowedTopologies: []    
       parameters:
-
         imageFormat: "2"
         imageFeatures: layering
         csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
@@ -58,7 +51,6 @@ cephBlockPools:
         csi.storage.k8s.io/fstype: ext4
 cephFileSystems:
   - name: ceph-filesystem
-    # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#filesystem-settings for available configuration
     spec:
       metadataPool:
         replicated:
@@ -67,7 +59,6 @@ cephFileSystems:
         - failureDomain: host
           replicated:
             size: 3
-          # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#pools
           name: data0
       metadataServer:
         activeCount: 1
@@ -84,13 +75,11 @@ cephFileSystems:
       enabled: true
       isDefault: false
       name: ceph-filesystem
-      # (Optional) specify a data pool to use, must be the name of one of the data pools above, 'data0' by default
       pool: data0
       reclaimPolicy: Delete
       allowVolumeExpansion: true
       volumeBindingMode: "Immediate"
       mountOptions: []
-      # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Shared-Filesystem-CephFS/filesystem-storage.md#provision-storage for available configuration
       parameters:
         csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
         csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
