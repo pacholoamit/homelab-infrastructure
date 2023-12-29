@@ -31,7 +31,7 @@ spec:
           replicated:
             size: 3
         storageClass:
-          enabled: true
+          enabled: false
           name: ceph-block
           isDefault: false
           reclaimPolicy: Delete
@@ -65,11 +65,11 @@ spec:
             activeStandby: true
             resources:
               limits:
-                cpu: "2000m"
-                memory: "4Gi"
+                cpu: "1500m"
+                memory: "2Gi"
               requests:
                 cpu: "1000m"
-                memory: "4Gi"
+                memory: "2Gi"
             priorityClassName: system-cluster-critical
         storageClass:
           enabled: true
@@ -88,6 +88,39 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
             csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/fstype: ext4
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1
+          preservePoolsOnDelete: true
+          gateway:
+            port: 80
+            resources:
+              limits:
+                cpu: "2000m"
+                memory: "2Gi"
+              requests:
+                cpu: "1000m"
+                memory: "1Gi"
+            instances: 1
+            priorityClassName: system-cluster-critical
+        storageClass:
+          enabled: false
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          volumeBindingMode: "Immediate"
+          parameters:
+            region: us-east-1
+
+
     ingress:
       enabled: true
       ingressClassName: nginx
