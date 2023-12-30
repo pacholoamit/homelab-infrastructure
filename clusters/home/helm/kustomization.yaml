@@ -12,7 +12,6 @@ resources:
   - piraeus
   - vmware-tanzu
   - kube-reboot
-  - eraser
   - stakater
   - deliveryhero
   - superset
@@ -20,3 +19,4 @@ resources:
   - botkube
   - mariadb-operator
   - rook
+  - rancher
