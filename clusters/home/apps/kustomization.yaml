@@ -13,7 +13,7 @@ resources:
   - linkstack
   - mariadb-operator
   - wordpress-dev-portfolio
-  # - wg-easy
+  - wg-easy
   # - busybox
   # -  netdata
   # - superset
