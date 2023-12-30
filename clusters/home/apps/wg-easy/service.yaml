@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wg-easy
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-port: "51821"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-protocol: "tcp"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-check-interval-seconds: "3"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-response-timeout-seconds: "4"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-unhealthy-threshold: "3"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-healthy-threshold: "5"
+spec:
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  type: LoadBalancer
+  selector:
+    app: wg-easy
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: wg
+      port: 51820
+      targetPort: 51820
+      protocol: UDP
+    - name: wgdashboard 
+      port: 51821
+      targetPort: 51821
+      protocol: TCP
