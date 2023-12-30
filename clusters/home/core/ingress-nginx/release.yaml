@@ -17,4 +17,8 @@ spec:
   values:
     admissionWebhooks:
       enabled: false
-
+    controller:
+      config: 
+        udp-services-configmap: "ingress-nginx/udp-services"
+    extraArgs:
+      /nginx-ingress-controller: --udp-services-configmap=ingress-nginx/udp-services
