@@ -5,5 +5,4 @@ metadata:
   name: udp-services
   namespace: ingress-nginx
 data:
-  # References wg-easy UDP service in ./apps/wg-easy/service.yaml
-  51820: "default/wg-easy:51820"
+  "51820": "default/wg-easy:51820"   # References wg-easy UDP service in ./apps/wg-easy/service.yaml
