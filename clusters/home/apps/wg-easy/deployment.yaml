@@ -37,6 +37,7 @@ spec:
       containers:
         - name: wg-easy
           image: weejewel/wg-easy
+          imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
             capabilities:
