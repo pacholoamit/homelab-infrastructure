@@ -20,7 +20,7 @@ spec:
         whenUnsatisfiable: DoNotSchedule
         labelSelector:
           matchLabels:
-            app: linkstack
+            app: wg-easy
       restartPolicy: Always
       initContainers:
         - name: init
