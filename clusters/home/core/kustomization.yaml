@@ -5,7 +5,7 @@ resources:
   - longhorn
   - velero
   - kured # Restart kubernetes nodes
-  - rancher
+  # - rancher
   - node-problem-detector #   Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.
   # - reloader # Reloads config maps
   # - rook-cluster
