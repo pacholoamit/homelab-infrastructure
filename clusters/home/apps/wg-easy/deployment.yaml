@@ -5,7 +5,7 @@ metadata:
   labels:
     app: wg-easy
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: wg-easy
@@ -14,13 +14,13 @@ spec:
       labels:
         app: wg-easy
     spec:
-      topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: "kubernetes.io/hostname"
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app: wg-easy
+      # topologySpreadConstraints:
+      # - maxSkew: 1
+      #   topologyKey: "kubernetes.io/hostname"
+      #   whenUnsatisfiable: DoNotSchedule
+      #   labelSelector:
+      #     matchLabels:
+      #       app: wg-easy
       restartPolicy: Always
       initContainers:
         - name: init
