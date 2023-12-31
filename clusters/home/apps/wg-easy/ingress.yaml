@@ -15,6 +15,16 @@ metadata:
     gethomepage.dev/weight: "1"
 spec:
   rules:
+  - host: vpn.pacholoamit.com:51820
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: wg-easy
+            port: 
+              number: 51820
   - host: vpn.pacholoamit.com
     http:
       paths:
