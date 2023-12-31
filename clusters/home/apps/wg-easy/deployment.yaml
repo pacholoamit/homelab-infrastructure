@@ -57,9 +57,9 @@ spec:
                   name: wg-easy
                   key: password
             - name: WG_HOST
-              value: "vpn.pacholoamit.com"
+              value: "wg.pacholoamit.com"
             - name: "WG_PORT"
-              value: "51820"
+              value: null
             - name: WG_DEFAULT_DNS
               value: "1.1.1.1"
           resources:

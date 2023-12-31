@@ -15,7 +15,8 @@ metadata:
     gethomepage.dev/weight: "1"
 spec:
   rules:
-  - host: vpn.pacholoamit.com:51820
+    # UDP port
+  - host: wg.pacholoamit.com
     http:
       paths:
       - pathType: Prefix
