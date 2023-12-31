@@ -1,8 +1,0 @@
-# For exposing UDP port through ingress-nginx
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: udp-services
-  namespace: ingress-nginx
-data:
-  "51820": "default/wg-easy:51820"   # References wg-easy UDP service in ./apps/wg-easy/service.yaml

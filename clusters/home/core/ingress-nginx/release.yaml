@@ -17,8 +17,5 @@ spec:
   values:
     admissionWebhooks:
       enabled: false
-    controller:
-      config: 
-        udp-services-configmap: "ingress-nginx/udp-services"
-    extraArgs:
-      /nginx-ingress-controller: --udp-services-configmap=ingress-nginx/udp-services
+    udp:
+      51820: "default/wg-easy:51820" # References wg-easy UDP service in ./apps/wg-easy/service.yaml
