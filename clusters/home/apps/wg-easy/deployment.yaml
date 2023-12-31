@@ -59,7 +59,7 @@ spec:
             - name: WG_HOST
               value: "wg.pacholoamit.com"
             - name: "WG_PORT"
-              value: null
+              value: "80"
             - name: WG_DEFAULT_DNS
               value: "1.1.1.1"
           resources:
