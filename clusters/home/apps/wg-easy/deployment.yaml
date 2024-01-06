@@ -24,7 +24,7 @@ spec:
       restartPolicy: Always
       initContainers:
         - name: init
-          image: busybox:1.32.0
+          image: busybox:1.32.1
           command:
             - sh
             - -c
