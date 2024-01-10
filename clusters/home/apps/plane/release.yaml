@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: plane
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: plane-ce
+      # version: "13.2.x"
+      sourceRef:
+        kind: HelmRepository
+        name: plane
+        namespace: flux-system
+      interval: 1m
+  values:
+    ingress:
+      host: plane.pacholoamit.com
