@@ -31,7 +31,7 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: cloudflared
-          image: cloudflare/cloudflared:2023.10.0
+          image: cloudflare/cloudflared:2024.2.1
           imagePullPolicy: IfNotPresent
           args:
             - tunnel
