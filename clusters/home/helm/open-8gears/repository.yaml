@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: open-8gears
+  name: n8n
   namespace: flux-system
 spec:
   interval: 30m

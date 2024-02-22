@@ -20,7 +20,7 @@ spec:
       version: "0.x.x"
       sourceRef:
         kind: HelmRepository
-        name: open-8gears
+        name: n8n
         namespace: flux-system
       interval: 1m
   values:
