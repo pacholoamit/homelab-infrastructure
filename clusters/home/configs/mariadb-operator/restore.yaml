@@ -17,4 +17,4 @@ spec:
   bootstrapFrom:
     backupRef:
       name: backup-scheduled
-    targetRecoveryTime: 2023-12-19T09:00:00Z
+    targetRecoveryTime: 2024-02-19T09:00:00Z
