@@ -5,4 +5,4 @@ metadata:
   namespace: default
 spec:
   interval: 30m
-  url: https://8gears.container-registry.com/chartrepo/library/n8n
+  url: oci://8gears.container-registry.com/library/n8n
