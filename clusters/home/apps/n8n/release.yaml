@@ -21,7 +21,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: open-8gears
-        namespace: default
+        namespace: flux-system
       interval: 1m
   values:
     image:
