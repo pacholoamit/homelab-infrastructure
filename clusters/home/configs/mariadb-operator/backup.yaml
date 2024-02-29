@@ -8,7 +8,6 @@ spec:
   schedule:
     cron: "0 */6 * * *"
     suspend: false
-  maxRetentionDays: 30
   storage:
     persistentVolumeClaim:
       resources:
