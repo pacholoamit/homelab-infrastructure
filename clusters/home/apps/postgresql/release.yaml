@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: postgresql
-      version: "13.2.x"
+      version: "13.4.x"
       sourceRef:
         kind: HelmRepository
         name: bitnami
