@@ -5,5 +5,5 @@ resources:
   - longhorn
   - system-upgrade  
   - kured # Restart kubernetes nodes
-  - rancher
+  # - rancher # Disabled to to minimum version requirements
   - node-problem-detector #   Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.
