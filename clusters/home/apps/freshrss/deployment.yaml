@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshrss
+  labels:
+    app.kubernetes.io/name: freshrss
+    app.kubernetes.io/instance: freshrss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: freshrss
+      app.kubernetes.io/instance: freshrss
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: freshrss
+        app.kubernetes.io/instance: freshrss
+    spec:
+      containers:
+      - name: linkwarden
+        imagePullPolicy: IfNotPresent
+        image: lscr.io/linuxserver/freshrss:1.23.1
+        resources:
+            requests:
+                cpu: 200m
+                memory: 200Mi
+        ports:
+          - name: web
+            containerPort: 80
+      
+        volumeMounts:
+        - name: freshrss
+          mountPath: /config
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "Asia/Manila"
+        livenessProbe:
+          tcpSocket:
+            port: web
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 6
+        startupProbe:
+          tcpSocket:
+            port: web
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 6
+        restartPolicy: Always
+
+      volumes:
+        - name: freshrss
+          persistentVolumeClaim:
+            claimName: freshrss
+

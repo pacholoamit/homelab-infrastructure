@@ -13,3 +13,4 @@ resources:
   - linkstack
   - mariadb-operator
   - wordpress-dev-portfolio
+  - freshrss

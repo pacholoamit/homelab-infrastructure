@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: freshrss
+  annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: RSS Reader
+      gethomepage.dev/group: Apps/Services
+      gethomepage.dev/icon: freshrss
+      gethomepage.dev/name: Fresh RSS
+  labels:
+    name: freshrss
+spec:
+  rules:
+  - host: rss.pacholoamit.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: freshrss
+            port: 
+              number: 80
+
