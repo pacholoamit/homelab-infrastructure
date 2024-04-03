@@ -75,3 +75,44 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Homepage</title>*)"
+        
+        - name: FreshRSS
+          group: Apps/Services
+          url: https://rss.pacholoamit.com
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            - "[Body] == "pat(*<title>Login · FreshRSS</title>*)"
+        
+        - name: Developer Portfolio
+          group: Apps/Services
+          url: https://pacholoamit.com
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            - "[Body] == "pat(*<title>Pacholo Amit | Developer Portfolio 💻</title>*)"
+            - "[RESPONSE_TIME] < 300"
+          
+        - name: Linkwarden
+          group: Apps/Services
+          url: https://linkwarden.pacholoamit.com
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            - "[Body] == "pat(*<title>Linkwarden</title>*)"
+
+        - name: n8n
+          group: Apps/Services
+          url: https://n8n.pacholoamit.com
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            - "[Body] == "pat(*<title>n8n.io - Workflow Automation</title>*)"
+
+        - name: Vaultwarden
+          group: Apps/Services
+          url: https://vaultwarden.pacholoamit.com
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            - "[Body] == "pat(*<title page-title>Vaultwarden Web</title>*)"
