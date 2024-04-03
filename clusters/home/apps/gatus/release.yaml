@@ -56,16 +56,16 @@ spec:
         existingSecret: gatus
     secrets: true
     config:
-      alerting:
-        email:
-          from: "uptime@pacholoamit.com"
-          username: "${username}"
-          password: "${password}"
-          host: smtp-relay.brevo.com
-          port: 587
-          to: "pacholoamit.tech@gmail.com"
-          client:
-            insecure: false
+      # alerting:
+      #   email:
+      #     from: "uptime@pacholoamit.com"
+      #     username: "${username}"
+      #     password: "${password}"
+      #     host: smtp-relay.brevo.com
+      #     port: 587
+      #     to: "pacholoamit.tech@gmail.com"
+      #     client:
+      #       insecure: false
 
       endpoints:
         - name: Homelab Dashboard
@@ -75,10 +75,10 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Homepage</title>*)"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
+          # alerts:
+          #   - type: email
+          #     description: "Healthcheck failed"
+          #     send-on-resolved: true
         
         - name: FreshRSS
           group: Apps/Services
@@ -87,10 +87,10 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Login · FreshRSS</title>*)"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
+          # alerts:
+          #   - type: email
+          #     description: "Healthcheck failed"
+          #     send-on-resolved: true
 
         - name: Developer Portfolio
           group: Apps/Services
@@ -100,10 +100,10 @@ spec:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Pacholo Amit | Developer Portfolio 💻</title>*)"
             - "[RESPONSE_TIME] < 300"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
+          # alerts:
+          #   - type: email
+          #     description: "Healthcheck failed"
+          #     send-on-resolved: true
 
         - name: Linkwarden
           group: Apps/Services
@@ -112,10 +112,10 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Linkwarden</title>*)"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
+          # alerts:
+          #   - type: email
+          #     description: "Healthcheck failed"
+          #     send-on-resolved: true
 
         - name: n8n
           group: Apps/Services
@@ -124,10 +124,10 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>n8n.io - Workflow Automation</title>*)"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
+          # alerts:
+          #   - type: email
+          #     description: "Healthcheck failed"
+          #     send-on-resolved: true
 
         - name: Vaultwarden
           group: Apps/Services
@@ -136,7 +136,7 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title page-title>Vaultwarden Web</title>*)"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
+          # alerts:
+          #   - type: email
+          #     description: "Healthcheck failed"
+          #     send-on-resolved: true
