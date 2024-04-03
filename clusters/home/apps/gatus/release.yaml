@@ -1,0 +1,54 @@
+# LINK TO INSPIRATION
+# https://github.dev/Michaelpalacce/HomeLab
+# Search for SOPS implementation
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: gatus
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: homepage
+      version: "3.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: minicloudlabs
+        namespace: flux-system
+      interval:  1h0m0s
+  values:
+    image:
+      repository: twinproduction/gatus
+      tag: v5.8.0
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+      hosts:
+        - uptime.pacholoamit.com
+    persistence:
+      enabled: true
+      size: 5Gi
+      accessMode: ReadWriteOnce
+      storageClass: local-path
+    
+    config:
+      endpoints:
+        - name: Homelab Dashboard
+          url: https://homelab.pacholoamit.com
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+
+
+    
