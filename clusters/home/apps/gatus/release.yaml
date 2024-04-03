@@ -94,7 +94,7 @@ spec:
 
         - name: Developer Portfolio
           group: Apps/Services
-          url: https://pacholoamit.com
+          url: https://www.pacholoamit.com/
           interval: 60s
           conditions:
             - "[STATUS] == 200"
