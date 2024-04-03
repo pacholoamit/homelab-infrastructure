@@ -3,8 +3,9 @@ kind: Kustomization
 resources:
   - ingress-nginx
   - longhorn
-  - node-problem-detector #   Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.  
-  - kured # Restart kubernetes nodes
+  - node-problem-detector 
+  - kured 
+  - rancher 
   # - system-upgrade  # Enable for upgrades
-  # - rancher # Disabled to to minimum version requirements
+  
   

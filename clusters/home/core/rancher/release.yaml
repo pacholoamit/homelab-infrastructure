@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: rancher
-      version: "2.8.x"
+      version: "2.x.x"
       sourceRef:
         kind: HelmRepository
         name: rancher
