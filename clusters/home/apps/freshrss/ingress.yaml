@@ -4,7 +4,8 @@ metadata:
   name: freshrss
 spec:
   selector:
-    app: freshrss
+    app.kubernetes.io/name: freshrss
+    app.kubernetes.io/instance: freshrss
   ports:
   - port: 80
     targetPort: 80
