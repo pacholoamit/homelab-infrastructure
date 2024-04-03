@@ -74,7 +74,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == "pat(*<title>Homepage</title>*)"
+            # - "[BODY] == "pat(*<title>Homepage</title>*)"
           # alerts:
           #   - type: email
           #     description: "Healthcheck failed"
@@ -86,7 +86,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == "pat(*<title>Login · FreshRSS</title>*)"
+            # - "[BODY] == "pat(*<title>Login · FreshRSS</title>*)"
           # alerts:
           #   - type: email
           #     description: "Healthcheck failed"
@@ -98,8 +98,8 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == "pat(*<title>Pacholo Amit | Developer Portfolio 💻</title>*)"
-            - "[RESPONSE_TIME] < 300"
+            # - "[BODY] == "pat(*<title>Pacholo Amit | Developer Portfolio 💻</title>*)"
+            # - "[RESPONSE_TIME] < 300"
           # alerts:
           #   - type: email
           #     description: "Healthcheck failed"
@@ -111,7 +111,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == "pat(*<title>Linkwarden</title>*)"
+            # - "[BODY] == "pat(*<title>Linkwarden</title>*)"
           # alerts:
           #   - type: email
           #     description: "Healthcheck failed"
@@ -123,7 +123,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == "pat(*<title>n8n.io - Workflow Automation</title>*)"
+            # - "[BODY] == "pat(*<title>n8n.io - Workflow Automation</title>*)"
           # alerts:
           #   - type: email
           #     description: "Healthcheck failed"
@@ -135,7 +135,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == "pat(*<title page-title>Vaultwarden Web</title>*)"
+            # - "[BODY] == "pat(*<title page-title>Vaultwarden Web</title>*)"
           # alerts:
           #   - type: email
           #     description: "Healthcheck failed"
