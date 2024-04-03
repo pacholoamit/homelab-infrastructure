@@ -49,14 +49,27 @@ spec:
       size: 5Gi
       accessMode: ReadWriteOnce
       storageClass: local-path
-    
+    extraVolumeMounts:
+      - name: secrets
+        mountPath: /mnt/secrets
+        readOnly: true
+        existingSecret: gatus
+    secrets: true
     config:
       endpoints:
         - name: Homelab Dashboard
+          group: Apps/Services
           url: https://homelab.pacholoamit.com
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-
-
-    
+      alerting:
+        email:
+          from: "uptime@pacholoamit.com"
+          username: "${username}"
+          password: "${password}"
+          host: smtp-relay.brevo.com
+          port: 587
+          to: "pacholoamit.tech@gmail.com"
+          client:
+            insecure: false
