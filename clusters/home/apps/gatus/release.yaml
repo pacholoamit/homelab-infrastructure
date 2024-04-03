@@ -19,7 +19,7 @@ spec:
           retries: 3
   chart:
     spec:
-      chart: homepage
+      chart: gatus
       version: "3.x.x"
       sourceRef:
         kind: HelmRepository
