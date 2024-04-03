@@ -57,15 +57,15 @@ spec:
     secrets: true
     config:
       alerting:
-        - email:
-            from: "uptime@pacholoamit.com"
-            username: "${username}"
-            password: "${password}"
-            host: smtp-relay.brevo.com
-            port: 587
-            to: "pacholoamit.tech@gmail.com"
-            client:
-              insecure: false
+        email:
+          from: "uptime@pacholoamit.com"
+          username: "${username}"
+          password: "${password}"
+          host: smtp-relay.brevo.com
+          port: 587
+          to: "pacholoamit.tech@gmail.com"
+          client:
+            insecure: false
 
       endpoints:
         - name: Homelab Dashboard
