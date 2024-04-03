@@ -75,6 +75,10 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Homepage</title>*)"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
         
         - name: FreshRSS
           group: Apps/Services
@@ -83,7 +87,11 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Login · FreshRSS</title>*)"
-        
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
         - name: Developer Portfolio
           group: Apps/Services
           url: https://pacholoamit.com
@@ -92,7 +100,11 @@ spec:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Pacholo Amit | Developer Portfolio 💻</title>*)"
             - "[RESPONSE_TIME] < 300"
-          
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
         - name: Linkwarden
           group: Apps/Services
           url: https://linkwarden.pacholoamit.com
@@ -100,6 +112,10 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>Linkwarden</title>*)"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
 
         - name: n8n
           group: Apps/Services
@@ -108,6 +124,10 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title>n8n.io - Workflow Automation</title>*)"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
 
         - name: Vaultwarden
           group: Apps/Services
@@ -116,3 +136,7 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[Body] == "pat(*<title page-title>Vaultwarden Web</title>*)"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
