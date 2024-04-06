@@ -74,7 +74,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            # - "[BODY] == "pat(*<title>Homepage</title>*)"
+            - "[BODY] == pat(*<title>Homepage</title>*)"
           alerts:
             - type: email
               description: "Healthcheck failed"
