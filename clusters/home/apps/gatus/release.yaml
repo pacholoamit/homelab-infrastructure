@@ -177,10 +177,10 @@ spec:
 
         - name: Weaveworks
           group: Infrastructure
-          url: https://weavee.pacholoamit.com/
+          url: https://weave.pacholoamit.com/
           interval: 60s
           conditions:
-            - "[STATUS] == 401"
+            - "[STATUS] == 200"
           alerts:
             - type: email
               description: "Healthcheck failed"
