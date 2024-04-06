@@ -99,7 +99,7 @@ spec:
           conditions:
             - "[STATUS] == 200"
             - "[BODY] == pat(*<title>Pacholo Amit | Developer Portfolio 💻</title>*)"
-            - "[RESPONSE_TIME] < 100"
+            - "[RESPONSE_TIME] < 300"
 
           alerts:
             - type: email
