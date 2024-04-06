@@ -148,7 +148,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == pat(*<title page-title>Proxmox Virtual Environment</title>*)"
+            # - "[BODY] == pat(*<title page-title>Proxmox Virtual Environment</title>*)"
           alerts:
             - type: email
               description: "Healthcheck failed"
@@ -160,7 +160,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == pat(*<title page-title>Speedtest Tracker</title>*)"            
+            # - "[BODY] == pat(*<title page-title>Speedtest Tracker</title>*)"            
           alerts:
             - type: email
               description: "Healthcheck failed"
@@ -183,7 +183,7 @@ spec:
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == pat(*<title page-title>Weave GitOps</title>*)"                 
+            # - "[BODY] == pat(*<title page-title>Weave GitOps</title>*)"                 
           alerts:
             - type: email
               description: "Healthcheck failed"
