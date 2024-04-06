@@ -140,3 +140,126 @@ spec:
             - type: email
               description: "Healthcheck failed"
               send-on-resolved: true
+
+          ## Infrastucture Section
+        - name: Proxmox
+          group: Infrastructure
+          url: https://pve.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Speedtest Tracker
+          group: Infrastructure
+          url: https://speedtest.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Longhorn
+          group: Infrastructure
+          url: https://longhorn.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 401"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Weaveworks
+          group: Infrastructure
+          url: https://weavee.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 401"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+              
+          ## MEDIA SECTION
+        - name: Jellyseerr
+          group: Media
+          url: https://jellyseerr.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Jellyfin
+          group: Media
+          url: https://media.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Tdarr
+          group: Media
+          url: http://192.168.0.53:8265/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: QFlood
+          group: Media
+          url: http://192.168.0.53:3005/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Prowlarr
+          group: Media
+          url: http://192.168.0.53:9696/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Radarr
+          group: Media
+          url: http://192.168.0.53:7878/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Sonarr
+          group: Media
+          url: http://192.168.0.53:8989/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
