@@ -85,8 +85,7 @@ spec:
           url: https://rss.pacholoamit.com/i/
           interval: 60s
           conditions:
-            - "[STATUS] == 200"
-            - "[BODY] == pat(*<title>FreshRSS</title>*)"
+            - "[STATUS] == 200"            
           alerts:
             - type: email
               description: "Healthcheck failed"
