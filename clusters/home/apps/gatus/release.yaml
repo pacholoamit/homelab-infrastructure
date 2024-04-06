@@ -82,11 +82,11 @@ spec:
         
         - name: FreshRSS
           group: Apps/Services
-          url: https://rss.pacholoamit.com
+          url: https://rss.pacholoamit.com/i/
           interval: 60s
           conditions:
             - "[STATUS] == 200"
-            - "[BODY] == pat(*<title>Login · FreshRSS</title>*)"
+            - "[BODY] == pat(*<title>FreshRSS</title>*)"
           alerts:
             - type: email
               description: "Healthcheck failed"
