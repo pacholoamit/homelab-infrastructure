@@ -166,6 +166,30 @@ spec:
               description: "Healthcheck failed"
               send-on-resolved: true
 
+        - name: Truenas
+          group: Infrastructure
+          url: https://nas.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            # - "[BODY] == pat(*<title page-title>Speedtest Tracker</title>*)"            
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
+        - name: Proxmox Backup Server
+          group: Infrastructure
+          url: https://pbs.pacholoamit.com/
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            # - "[BODY] == pat(*<title page-title>Speedtest Tracker</title>*)"            
+          alerts:
+            - type: email
+              description: "Healthcheck failed"
+              send-on-resolved: true
+
         - name: Longhorn
           group: Infrastructure
           url: https://longhorn.pacholoamit.com/
