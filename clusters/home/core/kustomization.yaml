@@ -5,7 +5,7 @@ resources:
   - longhorn
   - kured 
   - rancher 
-  - node-problem-detector 
+  # - node-problem-detector 
   # - system-upgrade  # Enable for upgrades
   
   
