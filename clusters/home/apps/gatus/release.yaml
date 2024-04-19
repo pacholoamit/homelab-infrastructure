@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: twinproduction/gatus
-      tag: v5.8.0
+      tag: v5.10.0
     ingress:
       enabled: true
       annotations:
