@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-developer-portfolio
+  labels:
+    app.kubernetes.io/name: nextjs-developer-portfolio
+    app.kubernetes.io/instance: nextjs-developer-portfolio
+spec:
+  replicas: 3
+  revisionHistoryLimit: 0
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nextjs-developer-portfolio
+      app.kubernetes.io/instance: nextjs-developer-portfolio
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: freshrss
+        app.kubernetes.io/instance: freshrss
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - cloudflared
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: linkwarden
+        imagePullPolicy: IfNotPresent
+        image: ghcr.io/pacholoamit/nextjs-portfolio:latest
+        ports:
+          - name: web
+            containerPort: 3000
+        startupProbe:
+          tcpSocket:
+            port: web
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 6
+
+
+
