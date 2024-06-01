@@ -25,10 +25,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: app
+                  - key: app.kubernetes.io/name
                     operator: In
                     values:
-                      - cloudflared
+                      - nextjs-developer-portfolio
               topologyKey: "kubernetes.io/hostname"
       containers:
       - name: nextjs-developer-portfolio        
