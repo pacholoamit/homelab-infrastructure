@@ -21,5 +21,6 @@ spec:
       backupTarget: s3://velero-k3s-cluster-backups@ap-southeast-1/longhorn-backups
       backupTargetCredentialSecret: longhorn-aws-credentials
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+      detachManuallyAttachedVolumesWhenCordoned: true
       guaranteedInstanceManagerCPU: 35
       v2DataEngine: false
