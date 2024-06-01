@@ -8,7 +8,6 @@ metadata:
 spec:
   replicas: 3
   revisionHistoryLimit: 0
-
   selector:
     matchLabels:
       app.kubernetes.io/name: nextjs-developer-portfolio
@@ -19,19 +18,16 @@ spec:
         app.kubernetes.io/name: nextjs-developer-portfolio
         app.kubernetes.io/instance: nextjs-developer-portfolio
     spec:
-
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - nextjs-developer-portfolio
-              topologyKey: "kubernetes.io/hostname"
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: nextjs-developer-portfolio
+                app.kubernetes.io/instance: nextjs-developer-portfolio
+            topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: nextjs-developer-portfolio        
+      - name: nextjs-developer-portfolio
         imagePullPolicy: IfNotPresent
         image: ghcr.io/pacholoamit/nextjs-portfolio:latest
         ports:
@@ -44,6 +40,3 @@ spec:
           timeoutSeconds: 5
           periodSeconds: 10
           failureThreshold: 6
-
-
-
