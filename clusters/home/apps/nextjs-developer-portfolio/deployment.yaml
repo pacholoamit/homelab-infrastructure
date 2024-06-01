@@ -16,9 +16,10 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: freshrss
-        app.kubernetes.io/instance: freshrss
+        app.kubernetes.io/name: nextjs-developer-portfolio
+        app.kubernetes.io/instance: nextjs-developer-portfolio
     spec:
+
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -30,7 +31,7 @@ spec:
                       - cloudflared
               topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: linkwarden
+      - name: nextjs-developer-portfolio        
         imagePullPolicy: IfNotPresent
         image: ghcr.io/pacholoamit/nextjs-portfolio:latest
         ports:
