@@ -31,7 +31,7 @@ metadata:
     name: pachtop-landing-page
 spec:
   rules:
-  - host: pachtop.com
+  - host: pachtop.pacholoamit.com
     http:
       paths:
       - pathType: Prefix
