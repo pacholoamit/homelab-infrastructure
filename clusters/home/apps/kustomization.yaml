@@ -7,10 +7,9 @@ resources:
   - vaultwarden
   - cloudflare
   - weaveworks-dashboard
-  # - descheduler  # Fix this as there is an problem with the policy
   - speedtest-tracker
   - linkwarden
-  - linkstack
+  # - linkstack
   - mariadb-operator
   - wordpress-dev-portfolio
   - freshrss
