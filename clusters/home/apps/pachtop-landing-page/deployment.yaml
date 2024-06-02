@@ -29,7 +29,7 @@ spec:
       containers:
       - name: pachtop-landing-page
         imagePullPolicy: IfNotPresent
-        image: ghcr.io/pacholoamit/nextjs-portfolio:latest
+        image: ghcr.io/pacholoamit/pacthop-landing:latest
         ports:
           - name: web
             containerPort: 3000
