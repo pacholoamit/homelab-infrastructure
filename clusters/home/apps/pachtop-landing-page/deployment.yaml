@@ -30,7 +30,7 @@ spec:
       - name: pachtop-landing-page
         imagePullPolicy: IfNotPresent
         # TODO: Make this dynamic based on latest tag
-        image: ghcr.io/pacholoamit/pacthop-landing-page:latest
+        image: ghcr.io/pacholoamit/pachtop-landing-page:latest
         ports:
           - name: web
             containerPort: 3000
