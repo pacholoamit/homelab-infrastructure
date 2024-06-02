@@ -68,6 +68,30 @@ spec:
             insecure: false
 
       endpoints:
+        - name: Pachtop Landing Page
+          group: Pachtop
+          url: https://pachtop.com
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            - "[BODY] == pat(*<title>Pachtop - Cross-platform Desktop system monitor</title>*)"
+          alerts:
+            - type: email
+              description: "OHHHH SH!T!!! Pachtop is down! LOOK AT ME DAMN YOU!"
+              send-on-resolved: true
+
+        - name: Pachtop Update Server
+          group: Pachtop
+          url: https://update.pachtop.com/releases/pachtop/darwin-x86_64/3.0.0
+          interval: 60s
+          conditions:
+            - "[STATUS] == 200"
+            - "has([BODY].version) == true"
+          alerts:
+            - type: email
+              description: "OHHHH SH!T!!! Pachtop is down! LOOK AT ME DAMN YOU!"
+              send-on-resolved: true
+
         - name: Homelab Dashboard
           group: Apps/Services
           url: https://homelab.pacholoamit.com
