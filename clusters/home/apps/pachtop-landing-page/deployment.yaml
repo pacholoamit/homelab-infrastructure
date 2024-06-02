@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: pachtop-landing-page
     app.kubernetes.io/instance: pachtop-landing-page
 spec:
-  replicas: 3
+  replicas: 2
   revisionHistoryLimit: 0
   selector:
     matchLabels:
