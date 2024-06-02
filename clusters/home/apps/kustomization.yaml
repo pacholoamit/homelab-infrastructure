@@ -7,7 +7,7 @@ resources:
   - vaultwarden
   - cloudflare
   - weaveworks-dashboard
-  - descheduler
+  # - descheduler
   - speedtest-tracker
   - linkwarden
   - linkstack
