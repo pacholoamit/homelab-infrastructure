@@ -29,11 +29,68 @@ spec:
       containers:
       - name: pachtop-landing-page
         imagePullPolicy: IfNotPresent
-        # TODO: Make this dynamic based on latest tag
         image: ghcr.io/pacholoamit/pachtop-landing-page:latest
         ports:
           - name: web
             containerPort: 3000
+        livenessProbe:
+          tcpSocket:
+            port: web
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 6
+        startupProbe:
+          tcpSocket:
+            port: web
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 6
+          
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pachtop-update-server
+  labels:
+    app.kubernetes.io/name: pachtop-update-server
+    app.kubernetes.io/instance: pachtop-update-server
+spec:
+  replicas: 2
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pachtop-update-server
+      app.kubernetes.io/instance: pachtop-update-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pachtop-update-server
+        app.kubernetes.io/instance: pachtop-update-server
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: pachtop-update-server
+                app.kubernetes.io/instance: pachtop-update-server
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: pachtop-update-server
+        imagePullPolicy: IfNotPresent
+        image: ghcr.io/pacholoamit/pachtop-update-server:latest
+        ports:
+          - name: web
+            containerPort: 8000
+        livenessProbe:
+          tcpSocket:
+            port: web
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 6
         startupProbe:
           tcpSocket:
             port: web

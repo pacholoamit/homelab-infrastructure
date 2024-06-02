@@ -4,7 +4,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: pachtop-landing-page
-  namespace: default
 spec:
   type: LoadBalancer
   selector:
@@ -19,13 +18,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: pachtop-landing-page
-  namespace: default
   annotations:
       kubernetes.io/ingress.class: nginx
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Pachtop Landing Page
       gethomepage.dev/group: Apps/Services
-      gethomepage.dev/icon: nuxtjs
+      gethomepage.dev/icon: https://github.com/pacholoamit/pachtop/blob/master/public/logo-only.png?raw=true
       gethomepage.dev/name: Pachtop Landing Page
       nginx.ingress.kubernetes.io/rewrite-target: /
   labels:
@@ -42,3 +40,46 @@ spec:
             name: pachtop-landing-page
             port: 
               number: 3000
+
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pachtop-update-server
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: pachtop-update-server
+  ports:
+    - port: 8000
+      targetPort: web
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pachtop-update-server
+  annotations:
+      kubernetes.io/ingress.class: nginx
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: This must never go down
+      gethomepage.dev/group: Apps/Services
+      gethomepage.dev/icon: https://github.com/pacholoamit/pachtop/blob/master/public/logo-only.png?raw=true
+      gethomepage.dev/name: Pachtop Update Server
+  labels:
+    name: pachtop-update-server
+spec:
+  rules:
+  - host: update.pachtop.com # If this fails, add a hostname and point to http://192.168.0.38:8000 in service
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: pachtop-update-server
+            port: 
+              number: 8000
