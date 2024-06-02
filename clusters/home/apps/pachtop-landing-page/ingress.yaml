@@ -27,11 +27,12 @@ metadata:
       gethomepage.dev/group: Apps/Services
       gethomepage.dev/icon: nuxtjs
       gethomepage.dev/name: Pachtop Landing Page
+      nginx.ingress.kubernetes.io/rewrite-target: /
   labels:
     name: pachtop-landing-page
 spec:
   rules:
-  - host: test.pachtop.com
+  - host: pachtop.com
     http:
       paths:
       - pathType: Prefix
