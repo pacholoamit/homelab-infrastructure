@@ -3,6 +3,9 @@
 # Make sure to add secret first
 # kubectl create secret  generic tunnel-credentials \
 #  -n cloudflare --from-file=credentials.json=/Users/pacholoamit/.cloudflared/d0a7216a-3354-4a5d-9f0d-9a63be7b8934.json
+
+# NOTE: 1 cert.pem for each zone is needed so to manage multiple zones/domains you'll have to hot swap cert.pems when 
+# you run `cloudflared tunnel login
 ---
 apiVersion: apps/v1
 kind: Deployment
