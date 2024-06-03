@@ -28,7 +28,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: pachtop-landing-page
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         image: ghcr.io/pacholoamit/pachtop-landing-page:latest
         ports:
           - name: web
