@@ -4,5 +4,5 @@ namespace: pachtop
 resources:
   - namespace.yaml
   - deployment.yaml
-  - image.yaml
+  # - image.yaml
   - ingress.yaml
