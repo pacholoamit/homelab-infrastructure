@@ -1,0 +1,84 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: pachtop
+spec:
+  interval: 30s
+  image: ghcr.io/pacholoamit/pachtop-landing-page
+
+---
+
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: pachtop
+spec:
+  imageRepositoryRef:
+    name: pachtop
+  policy:
+    semver:
+      range: 1.x.x
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: pachtop
+  namespace: flux-system
+spec:
+  interval: 30s
+  sourceRef:
+    kind: GitRepository
+    name: my-git-repo  # Change to the actual name of your GitRepository resource
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: flux@yourdomain.com
+        name: Flux
+      messageTemplate: 'Update image to {{.ImageURL}}'
+    push:
+      branch: main
+  update:
+    path: ./deployments  # Adjust to the correct path where your Kubernetes manifests are stored
+    strategy: Setters
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: homelab-infrastructure
+  namespace: flux-system
+spec:
+  interval: 30s
+  url: https://github.com/pacholoamit/homelab-infrastructure
+  ref:
+    branch: master
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: pachtop
+  namespace: flux-system
+spec:
+  interval: 30s
+  sourceRef:
+    kind: GitRepository
+    name: homelab-infrastructure 
+  git:
+    checkout:
+      ref:
+        branch: master
+    commit:
+      author:
+        email: flux@pacholoamit.com
+        name: Flux
+      messageTemplate: 'Update image to {{.ImageURL}}'
+    push:
+      branch: master
+  update:
+    path: ./clusters/home/apps/pachtop  # Adjust to the correct path where your Kubernetes manifests are stored
+    strategy: Setters
