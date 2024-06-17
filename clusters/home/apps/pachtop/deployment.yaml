@@ -79,7 +79,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: pachtop-update-server
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         image: ghcr.io/pacholoamit/pachtop-update-server:latest
         ports:
           - name: web
