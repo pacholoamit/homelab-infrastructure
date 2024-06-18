@@ -33,6 +33,17 @@ spec:
         ports:
           - name: web
             containerPort: 3000
+        env:
+          - name: NUXT_PUBLIC_UMAMI_HOST
+            valueFrom:
+              secretKeyRef:
+                name: pachtop
+                key: umami-host
+          - name: NUXT_PUBLIC_UMAMI_ID
+            valueFrom:
+              secretKeyRef:
+                name: pachtop
+                key: umami-id
         livenessProbe:
           tcpSocket:
             port: web
