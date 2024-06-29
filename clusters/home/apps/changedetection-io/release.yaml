@@ -20,7 +20,7 @@ spec:
       version: "1.x.x"
       sourceRef:
         kind: HelmRepository
-        name: zeekker6
+        name: zekker6
         namespace: flux-system
       interval: 1m
   values:
