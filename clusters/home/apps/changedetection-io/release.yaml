@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: changedetection-io
+  namespace: default
+spec:
+  interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  chart:
+    spec:
+      chart: changedetection-io
+      version: "1.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: zeekker6
+        namespace: flux-system
+      interval: 1m
+  values:
+
+    persistence:
+      data:
+        enabled: true
+        storageClass: longhorn
+        accessMode: ReadWriteMany
+        size: 1Gi
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          nginx.ingress.kubernetes.io/proxy-body-size: 999m
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Web Site Change Detection, Restock monitoring and notifications.
+          gethomepage.dev/group: Apps/Services
+          gethomepage.dev/icon: changedetection-io.png
+          gethomepage.dev/name: changedetection-io
+          gethomepage.dev/weight: "2"
+        hosts:
+          - host: change-detection.pacholoamit.com
+            paths:
+              - /
