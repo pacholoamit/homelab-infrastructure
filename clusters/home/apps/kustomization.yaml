@@ -10,7 +10,7 @@ resources:
   - speedtest-tracker
   - linkwarden
   # - linkstack
-  - changedetection-io
+  # - changedetection-io
   - mariadb-operator
   - wordpress-dev-portfolio
   - freshrss
