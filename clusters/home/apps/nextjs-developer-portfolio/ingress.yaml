@@ -15,29 +15,29 @@ spec:
 
 ---
 
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: nextjs-developer-portfolio
-#   namespace: default
-#   annotations:
-#       kubernetes.io/ingress.class: nginx
-#       gethomepage.dev/enabled: "true"
-#       gethomepage.dev/description: Developer Portfolio
-#       gethomepage.dev/group: Apps/Services
-#       gethomepage.dev/icon: nextjs
-#       gethomepage.dev/name: Next.js Developer Portfolio
-#   labels:
-#     name: nextjs-developer-portfolio
-# spec:
-#   rules:
-#   - host: next.pacholoamit.com
-#     http:
-#       paths:
-#       - pathType: Prefix
-#         path: "/"
-#         backend:
-#           service:
-#             name: nextjs-developer-portfolio
-#             port: 
-#               number: 3000
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextjs-developer-portfolio
+  namespace: default
+  annotations:
+      kubernetes.io/ingress.class: nginx
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Developer Portfolio
+      gethomepage.dev/group: Apps/Services
+      gethomepage.dev/icon: nextjs
+      gethomepage.dev/name: Next.js Developer Portfolio
+  labels:
+    name: nextjs-developer-portfolio
+spec:
+  rules:
+  - host: next.pacholoamit.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nextjs-developer-portfolio
+            port: 
+              number: 3000
