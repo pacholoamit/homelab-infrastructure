@@ -21,7 +21,7 @@ spec:
     resourceType: Deployment
     image:
       repository: vaultwarden/server
-      tag: "1.30.5-alpine"
+      tag: "1.32.0-alpine"
     adminToken:
       value: $argon2id$v=19$m=19456,t=2,p=1$TVFGVlVDMEpJMnZQbHVLbEl4NWJVcGYvREhyazBScXBYQU5PaTE3aE5Jdz0$vyl46eeXo+JMsTGuO5BfB8sb7BvdN2xaLt7wNX58plA
     signupsAllowed: true
