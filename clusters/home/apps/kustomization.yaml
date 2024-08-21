@@ -6,7 +6,7 @@ resources:
   # - n8n
   # - vaultwarden
   - cloudflare
-  # - weaveworks-dashboard
+  - weaveworks-dashboard
   # - speedtest-tracker
   # - linkwarden
   # - linkstack
