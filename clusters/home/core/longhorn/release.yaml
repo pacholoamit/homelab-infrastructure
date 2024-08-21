@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: "1.6.x"
+      version: "1.7.x"
       sourceRef:
         kind: HelmRepository
         name: longhorn
@@ -23,4 +23,4 @@ spec:
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       detachManuallyAttachedVolumesWhenCordoned: true
       guaranteedInstanceManagerCPU: 35
-      v2DataEngine: false
+      v2DataEngine: true
