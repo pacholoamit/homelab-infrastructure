@@ -24,3 +24,4 @@ spec:
       detachManuallyAttachedVolumesWhenCordoned: true
       guaranteedInstanceManagerCPU: 35
       v2DataEngine: true
+      v1DataEngine: false
