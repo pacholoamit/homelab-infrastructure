@@ -7,13 +7,13 @@ resources:
   - vaultwarden
   - cloudflare
   - weaveworks-dashboard
-  - speedtest-tracker
+ # - speedtest-tracker
   # - linkwarden
   # - linkstack
   # - changedetection-io
   # - mariadb-operator
   # - wordpress-dev-portfolio
-  - freshrss
+#  - freshrss
   - gatus
   - pachtop
   # - nextjs-developer-portfolio
