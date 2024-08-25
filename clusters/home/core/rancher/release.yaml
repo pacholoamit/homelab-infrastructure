@@ -7,6 +7,14 @@ spec:
   interval: 5m
   install:
       createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
+  upgrade:
+      crds: CreateReplace
+      remediation:
+          retries: 3
+      createNamespace: true
   chart:
     spec:
       chart: rancher
