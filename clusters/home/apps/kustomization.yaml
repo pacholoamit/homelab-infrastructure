@@ -14,6 +14,6 @@ resources:
   # - mariadb-operator
   # - wordpress-dev-portfolio
   # - freshrss
-  # - gatus
-  # - pachtop
+  - gatus
+  - pachtop
   # - nextjs-developer-portfolio
