@@ -8,7 +8,7 @@ resources:
   - cloudflare
   - weaveworks-dashboard
   - speedtest-tracker
-  - linkwarden
+  # - linkwarden
   # - linkstack
   # - changedetection-io
   # - mariadb-operator
