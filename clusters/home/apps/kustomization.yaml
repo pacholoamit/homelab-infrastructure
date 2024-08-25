@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   # - postgresql # WARNING: Removing this will also remove the volume
   - homepage
-  # - n8n
+  - n8n
   # - vaultwarden
   - cloudflare
   - weaveworks-dashboard
