@@ -23,8 +23,8 @@ spec:
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       detachManuallyAttachedVolumesWhenCordoned: true
       guaranteedInstanceManagerCPU: 35
-      v2DataEngine: true
-      v1DataEngine: false
+      v2DataEngine: false
+      v1DataEngine: true
       orphanAutoDeletion: true
       rwxVolumeFastFailover: true
       autoCleanupSnapshotWhenDeleteBackup: true
