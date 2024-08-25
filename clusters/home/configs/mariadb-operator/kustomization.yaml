@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: mariadb-operator
 resources:
   - backup.yaml
-  # - restore.yaml # To restore, ensure that backup pvc has the data
+  - restore.yaml # To restore, ensure that backup pvc has the data
   - database.yaml
   - mariadb.yaml
 
