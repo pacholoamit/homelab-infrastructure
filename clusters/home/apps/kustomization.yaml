@@ -12,7 +12,7 @@ resources:
   # - linkstack
   # - changedetection-io
   - mariadb-operator
-  # - wordpress-dev-portfolio
+  - wordpress-dev-portfolio
 #  - freshrss
   - gatus
   - pachtop
