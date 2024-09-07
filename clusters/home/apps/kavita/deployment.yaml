@@ -20,7 +20,7 @@ spec:
           ports:
             - containerPort: 5000
           volumeMounts:
-            - mountPath: /manga
+            - mountPath: /books
               name: kavita
             - mountPath: /kavita/config
               name: kavita-config
