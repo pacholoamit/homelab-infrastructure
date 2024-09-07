@@ -29,7 +29,7 @@ metadata:
     gethomepage.dev/weight: "1"
 spec:
   rules:
-  - host: linkwarden.pacholoamit.com
+  - host: kavita.pacholoamit.com
     http:
       paths:
       - pathType: Prefix
