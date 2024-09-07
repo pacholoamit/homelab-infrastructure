@@ -11,7 +11,7 @@ resources:
   - linkwarden
   # - linkstack
   # - changedetection-io
-  - mariadb-operator
+  # - mariadb-operator
   - wordpress-dev-portfolio
 #  - freshrss
   - gatus
