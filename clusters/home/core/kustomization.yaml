@@ -3,9 +3,9 @@ kind: Kustomization
 resources:
   - ingress-nginx
   - longhorn
-  - kured 
+  # - kured 
   # - rancher 
-  - reloader
+  # - reloader
   # - node-problem-detector 
   # - system-upgrade  # Enable for upgrades
   
