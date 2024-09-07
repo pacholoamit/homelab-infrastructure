@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kavita
+  labels:
+    app: kavita
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kavita
+  template:
+    metadata:
+      labels:
+        app: kavita
+    spec:
+      containers:
+        - name: kavita
+          image: jvmilazz0/kavita:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: /manga
+              name: kavita
+            - mountPath: /kavita/config
+              name: kavita-config
+          restartPolicy: Always
+      volumes:
+        - name: kavita
+          persistentVolumeClaim:
+            claimName: kavita
+        - name: kavita-config
+          persistentVolumeClaim:
+            claimName: kavita-config
+---
