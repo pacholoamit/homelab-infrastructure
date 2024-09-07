@@ -24,7 +24,7 @@ spec:
               name: kavita
             - mountPath: /kavita/config
               name: kavita-config
-          restartPolicy: Always
+      
       volumes:
         - name: kavita
           persistentVolumeClaim:
