@@ -36,6 +36,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: linkwarden
+            name: kavita
             port: 
-              number: 3000
+              number: 5000
