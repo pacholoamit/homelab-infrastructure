@@ -1,1 +1,5 @@
-ageKeyFile: /home/ubuntu/code-workspace/devops/homelab-infra/age.agekey
+# For windows
+# ageKeyFile: /home/ubuntu/code-workspace/devops/homelab-infra/age.agekey
+
+# For MacOs
+ageKeyFile: /Users/pacholoamit/Developer/code-workspace/devops/homelab-infra/age.agekey
