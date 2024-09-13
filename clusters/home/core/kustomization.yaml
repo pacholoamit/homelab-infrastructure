@@ -4,10 +4,7 @@ resources:
   - ingress-nginx
   - longhorn
   - cloudflare
-  # - kured 
   # - rancher 
-  # - reloader
-  # - node-problem-detector 
   # - system-upgrade  # Enable for upgrades
   
   
