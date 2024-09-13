@@ -24,6 +24,9 @@ spec:
       interval: 30m
   values:
     hostname: rancher.pacholoamit.com
+    letsencrypt:
+      ingress:
+        class: nginx
     ingress:
       ingressClassName: nginx
       replicas: 1
