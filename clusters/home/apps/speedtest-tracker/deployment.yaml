@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: speedtest-tracker
+
 spec:
+    
   replicas: 1
   selector:
     matchLabels:
@@ -38,7 +40,7 @@ spec:
         - name: DB_CONNECTION
           value: mysql
         - name: DB_HOST
-          value: mariadb-primary.mariadb-operator.svc.cluster.local
+          value: mariadb.default.svc.cluster.local
         - name: DB_PORT
           value: "3306"
         - name: DB_DATABASE
