@@ -11,12 +11,14 @@ spec:
       remediation:
           retries: 3
       replace: true
-      
   upgrade:
       crds: CreateReplace
       remediation:
           retries: 3
       cleanupOnFail: true
+  dependsOn:
+    - name: mariadb
+      namespace: default
   chart:
     spec:
       chart: wordpress
