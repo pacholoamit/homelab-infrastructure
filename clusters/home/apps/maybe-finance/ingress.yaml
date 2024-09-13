@@ -22,7 +22,7 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/description: Personal finance tracker
     gethomepage.dev/group: Apps/Services
-    gethomepage.dev/icon: maybe-finance
+    gethomepage.dev/icon: https://avatars.githubusercontent.com/u/80786585?s=200&v=4
     gethomepage.dev/name: Maybe Finance
     gethomepage.dev/pod-selector: app=maybe-finance
     gethomepage.dev/weight: "1"
