@@ -9,7 +9,7 @@ resources:
   # - speedtest-tracker
   - linkwarden
   - wordpress-dev-portfolio
-#  - freshrss
+  - freshrss
   - mariadb
   - gatus
   - pachtop
