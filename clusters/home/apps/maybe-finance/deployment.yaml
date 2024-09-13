@@ -40,9 +40,9 @@ spec:
             - name: DB_HOST
               value: postgresql.default.svc.cluster.local
             - name: POSTGRES_DB
-              value: mariadb
+              value: postgresql
             - name: POSTGRES_USER
-              value: root
+              value: pacholoamit
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
