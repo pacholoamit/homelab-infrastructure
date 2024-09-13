@@ -5,6 +5,11 @@ metadata:
   namespace: cattle-system
 spec:
   interval: 5m
+  install:
+      createNamespace: true
+      crds: CreateReplace
+      remediation:
+          retries: 3
   chart:
     spec:
       chart: rancher
