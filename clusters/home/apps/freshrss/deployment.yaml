@@ -17,6 +17,7 @@ spec:
         app.kubernetes.io/name: freshrss
         app.kubernetes.io/instance: freshrss
     spec:
+      
       containers:
       - name: linkwarden
         imagePullPolicy: IfNotPresent
