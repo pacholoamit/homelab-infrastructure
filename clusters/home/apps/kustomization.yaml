@@ -5,13 +5,9 @@ resources:
   - homepage
   - n8n
   - vaultwarden
-  # - cloudflare
   - weaveworks-dashboard
   # - speedtest-tracker
   - linkwarden
-  # - linkstack
-  # - changedetection-io
-  # - mariadb-operator
   - wordpress-dev-portfolio
 #  - freshrss
   - mariadb
