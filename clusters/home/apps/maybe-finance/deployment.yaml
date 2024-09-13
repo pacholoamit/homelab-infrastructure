@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maybe-finance
+  labels:
+    app: maybe-finance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maybe-finance
+  template:
+    metadata:
+      labels:
+        app: maybe-finance
+    spec:
+      containers:
+        - name: maybe-finance
+          image: ghcr.io/maybe-finance/maybe:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: maybe-finance
+              mountPath: /rails/storage
+          env:
+            - name: SELF_HOSTING_ENABLED
+              value: "true"
+            - name: RAILS_FORCE_SSL
+              value: "false"
+            - name: RAILS_ASSUME_SSL
+              value: "false"
+            - name: GOOD_JOB_EXECUTION_MODE
+              value: async
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: maybe-finance
+                  key: SECRET_KEY_BASE
+            - name: DB_HOST
+              value: postgresql.default.svc.cluster.local
+            - name: POSTGRES_DB
+              value: mariadb
+            - name: POSTGRES_USER
+              value: root
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: maybe-finance
+                  key: POSTGRES_PASSWORD
+      
+      volumes:
+        - name: maybe-finance
+          persistentVolumeClaim:
+            claimName: maybe-finance
+
+---

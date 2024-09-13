@@ -13,5 +13,6 @@ resources:
   - mariadb
   - gatus
   - pachtop
-  - nextjs-developer-portfolio
+  # - nextjs-developer-portfolio
   - kavita
+  - maybe-finance
