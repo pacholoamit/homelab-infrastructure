@@ -28,6 +28,7 @@ spec:
     hostname: rancher.pacholoamit.com
     ingress:
       ingressClassName: nginx
+      replicas: 1
       extraAnnotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/description: Kubernetes management

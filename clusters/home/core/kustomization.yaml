@@ -4,7 +4,7 @@ resources:
   - ingress-nginx
   - longhorn
   - cloudflare
-  # - rancher 
+  - rancher 
   # - system-upgrade  # Enable for upgrades
   
   
