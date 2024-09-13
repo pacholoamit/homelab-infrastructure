@@ -35,6 +35,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: kavita
+            name: maybe-finance
             port: 
               number: 3000
