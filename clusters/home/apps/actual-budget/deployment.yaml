@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: actual-budget
-          image: ghcr.io/actualbudget/actual-server:latest-alpine
+          image: ghcr.io/actualbudget/actual-server:latest
           ports:
             - containerPort: 5006
           volumeMounts:
