@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actual-budget
+  labels:
+    app: actual-budget
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: actual-budget
+  template:
+    metadata:
+      labels:
+        app: actual-budget
+    spec:
+      containers:
+        - name: actual-budget
+          image: ghcr.io/actualbudget/actual-server:latest-alpine
+          ports:
+            - containerPort: 5006
+          volumeMounts:
+            - name: actual-budget
+              mountPath: /data
+          
+      volumes:
+        - name: actual-budget
+          persistentVolumeClaim:
+            claimName: actual-budget
+
+---
