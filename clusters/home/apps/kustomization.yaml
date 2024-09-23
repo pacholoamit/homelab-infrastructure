@@ -6,7 +6,7 @@ resources:
   - n8n
   - vaultwarden
   - weaveworks-dashboard
-  - speedtest-tracker
+  # - speedtest-tracker
   - linkwarden
   - wordpress-dev-portfolio
   - freshrss
@@ -16,4 +16,4 @@ resources:
   # - nextjs-developer-portfolio
   - kavita
   # - maybe-finance
-  - actual-budget
+  # - actual-budget
