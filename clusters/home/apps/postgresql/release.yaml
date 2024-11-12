@@ -24,6 +24,8 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    image:
+      tag: 16.0
     global:
       storageClass: longhorn
     auth:
