@@ -8,7 +8,7 @@ spec:
     requests:
       storage: 2Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 
 ---
 
@@ -22,4 +22,4 @@ spec:
     requests:
       storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany

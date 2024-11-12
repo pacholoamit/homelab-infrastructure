@@ -65,7 +65,7 @@ spec:
       enabled: true
       storageClass: longhorn
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       size: 5Gi
       existingClaim: wordpress
     mariadb:

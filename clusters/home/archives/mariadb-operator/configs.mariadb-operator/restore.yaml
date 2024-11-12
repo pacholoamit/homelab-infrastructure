@@ -12,7 +12,7 @@ spec:
       requests:
         storage: 3Gi
     accessModes:
-      - ReadWriteOnce
+      - ReadWriteMany
 
   bootstrapFrom:
     backupRef:

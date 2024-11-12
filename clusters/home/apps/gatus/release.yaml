@@ -47,7 +47,7 @@ spec:
     persistence:
       enabled: true
       size: 5Gi
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteMany
       storageClass: local-path
     extraVolumeMounts:
       - name: secrets

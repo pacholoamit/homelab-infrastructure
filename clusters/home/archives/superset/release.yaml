@@ -33,7 +33,7 @@ spec:
           enabled: true
           storageClass: longhorn 
           accessModes:
-            - ReadWriteOnce
+            - ReadWriteMany
           size: 5Gi
 
     # minimum values.yaml to enable clickhouse support for apache superset deployment
@@ -48,5 +48,5 @@ spec:
         enabled: true
         storageClass: longhorn 
         accessModes:
-          - ReadWriteOnce
+          - ReadWriteMany
 
