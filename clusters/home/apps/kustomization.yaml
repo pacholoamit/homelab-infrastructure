@@ -10,7 +10,7 @@ resources:
   - linkwarden
   - wordpress-dev-portfolio
   - freshrss
-  # - mariadb
+  - mariadb
   - gatus
   - pachtop
   # - nextjs-developer-portfolio
