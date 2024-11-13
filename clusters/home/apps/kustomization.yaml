@@ -4,7 +4,7 @@ resources:
   - postgresql # WARNING: Removing this will also remove the volume
   - homepage
   - n8n
-  - vaultwarden
+  # - vaultwarden
   - weaveworks-dashboard
   # - speedtest-tracker
   - linkwarden
