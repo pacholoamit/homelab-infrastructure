@@ -7,7 +7,7 @@ resources:
   - vaultwarden # Migrated to ReadWriteOnce
   - weaveworks-dashboard
   # - speedtest-tracker
-  - linkwarden
+  # - linkwarden
   - wordpress-dev-portfolio # Migrated to ReadWriteOnce
   # - freshrss
   - mariadb # Migrated to ReadWriteOnce
