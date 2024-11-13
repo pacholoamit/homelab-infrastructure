@@ -52,7 +52,7 @@ spec:
     persistence:
       enabled: true
       type: existing
-      existingClaim: n8n
+      existingClaim: pvc-13c2362e-68a6-4532-ae4e-fc2-7f1d8185 # TODO: When rebuilding cluster, set this to n8n pvc
     
     extraEnv:
       WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com

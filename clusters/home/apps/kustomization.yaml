@@ -3,10 +3,8 @@ kind: Kustomization
 resources:
   - postgresql # Migrated to ReadWriteOnce
   - homepage
-  - n8n
+  # - n8n
   - vaultwarden # Migrated to ReadWriteOnce
-  - weaveworks-dashboard
-  # - speedtest-tracker
   # - linkwarden # ENABLE POSTGRES FIRST
   - wordpress-dev-portfolio # Migrated to ReadWriteOnce
   # - freshrss
