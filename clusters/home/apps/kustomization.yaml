@@ -9,8 +9,8 @@ resources:
   # - speedtest-tracker
   - linkwarden
   - wordpress-dev-portfolio # Migrated
-  - freshrss
-  - mariadb
+  # - freshrss
+  - mariadb # Migrated
   - gatus
   - pachtop
   # - nextjs-developer-portfolio
