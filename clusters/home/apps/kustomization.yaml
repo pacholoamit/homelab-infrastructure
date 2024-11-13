@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - postgresql # WARNING: Removing this will also remove the volume
+  # - postgresql # WARNING: Removing this will also remove the volume
   - homepage
   - n8n
   - vaultwarden # Migrated to ReadWriteOnce
   - weaveworks-dashboard
   # - speedtest-tracker
-  # - linkwarden
+  # - linkwarden # ENABLE POSTGRES FIRST
   - wordpress-dev-portfolio # Migrated to ReadWriteOnce
   # - freshrss
   - mariadb # Migrated to ReadWriteOnce
