@@ -8,7 +8,7 @@ resources:
   - weaveworks-dashboard
   # - speedtest-tracker
   - linkwarden
-  - wordpress-dev-portfolio
+  # - wordpress-dev-portfolio
   - freshrss
   - mariadb
   - gatus
