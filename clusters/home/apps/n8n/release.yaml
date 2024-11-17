@@ -57,6 +57,7 @@ spec:
     extraEnv:
       WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
       WEBHOOK_URL: https://n8n.pacholoamit.com
+      N8N_EDITOR_BASE_URL: https://n8n.pacholoamit.com
     ingress:
       enabled: true
       annotations:
