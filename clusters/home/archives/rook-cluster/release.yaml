@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: "1.15.x"
+      version: "1.16.x"
       sourceRef:
         kind: HelmRepository
         name: rook
