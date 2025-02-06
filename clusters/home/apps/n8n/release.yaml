@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: n8nio/n8n
-      tag: 1.77.2
+      tag: 1.77.3
       pullPolicy: IfNotPresent
     replicaCount: 1
     service:
