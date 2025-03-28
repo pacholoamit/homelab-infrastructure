@@ -6,11 +6,11 @@ resources:
   - n8n
   - vaultwarden # Migrated to ReadWriteOnce
   # - linkwarden # ENABLE POSTGRES FIRST
-  - wordpress-dev-portfolio # Migrated to ReadWriteOnce
+  # - wordpress-dev-portfolio # Migrated to ReadWriteOnce
   # - freshrss
-  - mariadb # Migrated to ReadWriteOnce
-  - gatus
-  - pachtop
+  # - mariadb # Migrated to ReadWriteOnce
+  # - gatus
+  # - pachtop
   # - nextjs-developer-portfolio
   # - kavita
   # - maybe-finance
