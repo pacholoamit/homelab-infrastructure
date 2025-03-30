@@ -17,13 +17,13 @@ resources:
 - namespace.yaml
 - web-deployment.yaml
 - web-service.yaml
+- web-ingress.yaml
 - chrome-deployment.yaml
 - chrome-service.yaml
 - meilisearch-deployment.yaml
 - meilisearch-service.yaml
 - meilisearch-pvc.yaml
 - data-pvc.yaml
-- ingress.yaml
 - configmap.yaml
 - secrets.yaml
 
