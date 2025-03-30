@@ -25,6 +25,7 @@ resources:
 - data-pvc.yaml
 - ingress.yaml
 - configmap.yaml
+- secrets.yaml
 
 
 replacements:
