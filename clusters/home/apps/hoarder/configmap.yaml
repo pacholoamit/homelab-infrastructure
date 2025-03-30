@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hoarder-configuration
+data:
+  HOARDER_VERSION: "release"
+  NEXTAUTH_URL: "http://localhost:3000"
+

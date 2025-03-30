@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hoarder-web-ingress
+  namespace: default
+  labels:
+    name: hoarder-web-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Open-source collaborative bookmark manage
+    gethomepage.dev/group: Apps/Services
+    gethomepage.dev/icon: hoarder
+    gethomepage.dev/name: Hoarder
+    gethomepage.dev/pod-selector: app=hoarder-web
+    gethomepage.dev/weight: "1"
+
+spec:
+  rules:
+  - host: "hoarder.pacholoamit.com"
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: "web"
+            port:
+              number: 3000

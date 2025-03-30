@@ -5,3 +5,5 @@ resources:
   - homepage
   - n8n
   - vaultwarden
+  - weaveworks-dashboard
+  - hoarder
