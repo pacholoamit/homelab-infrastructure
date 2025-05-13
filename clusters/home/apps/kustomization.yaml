@@ -6,4 +6,4 @@ resources:
   - vaultwarden
   - weaveworks-dashboard
   - hoarder
-  - pachtop
+  # - pachtop
