@@ -21,7 +21,7 @@ spec:
       containers:
       - name: linkwarden
         imagePullPolicy: IfNotPresent
-        image: lscr.io/linuxserver/freshrss:1.24.3
+        image: lscr.io/linuxserver/freshrss:1.26.3
         resources:
             requests:
                 cpu: 200m
