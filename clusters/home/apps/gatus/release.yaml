@@ -23,13 +23,13 @@ spec:
       version: "3.x.x"
       sourceRef:
         kind: HelmRepository
-        name: minicloudlabs
+        name: twin
         namespace: flux-system
       interval:  1h0m0s
   values:
-    image:
-      repository: twinproduction/gatus
-      tag: v5.13.1
+    # image:
+    #   repository: twinproduction/gatus
+    #   tag: v5.13.1
     ingress:
       enabled: true
       annotations:
@@ -47,7 +47,7 @@ spec:
     persistence:
       enabled: true
       size: 5Gi
-      accessMode: ReadWriteMany
+      accessMode: ReadWriteOnce
       storageClass: local-path
     extraVolumeMounts:
       - name: secrets
@@ -55,6 +55,12 @@ spec:
         readOnly: true
         existingSecret: gatus
     secrets: true
+    env:
+      x-api-key:
+        valueFrom:
+          secretKeyRef:
+            name: gatus
+            key: x-api-key
     config:
       alerting:
         email:

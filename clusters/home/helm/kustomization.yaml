@@ -21,6 +21,6 @@ resources:
   - rook
   - rancher
   - plane
-  - minicloudlabs
+  - twin
   - zekker6
   - jetstack
