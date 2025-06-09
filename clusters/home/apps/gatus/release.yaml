@@ -104,30 +104,7 @@ spec:
               description: "Healthcheck failed"
               send-on-resolved: true
         
-        - name: FreshRSS
-          group: Apps/Services
-          url: https://rss.pacholoamit.com/i/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"            
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
 
-        - name: Developer Portfolio
-          group: Apps/Services
-          url: https://www.pacholoamit.com/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-            - "[BODY] == pat(*<title>Pacholo Amit | Developer Portfolio 💻</title>*)"
-            - "[RESPONSE_TIME] < 300"
-
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
 
         - name: Linkwarden
           group: Apps/Services
@@ -178,18 +155,6 @@ spec:
               description: "Healthcheck failed"
               send-on-resolved: true
 
-        - name: Speedtest Tracker
-          group: Infrastructure
-          url: https://speedtest.pacholoamit.com/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-            # - "[BODY] == pat(*<title page-title>Speedtest Tracker</title>*)"            
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
-
         - name: Truenas
           group: Infrastructure
           url: https://nas.pacholoamit.com/
@@ -202,17 +167,6 @@ spec:
               description: "Healthcheck failed"
               send-on-resolved: true
 
-        - name: Proxmox Backup Server
-          group: Infrastructure
-          url: https://pbs.pacholoamit.com/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-            # - "[BODY] == pat(*<title page-title>Speedtest Tracker</title>*)"            
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
 
         - name: Longhorn
           group: Infrastructure
@@ -225,92 +179,37 @@ spec:
               description: "Healthcheck failed"
               send-on-resolved: true
 
-        - name: Weaveworks
+        - name: GraphQL DMP API
           group: Infrastructure
-          url: https://weave.pacholoamit.com/
+          url: https://graphql.dmp.cnna.io
+          method: POST
           interval: 60s
+          headers:
+            X-API-Key: "${x-api-key}"
+            Content-Type: "application/json"
+          body: |
+            {
+              "query": "query Advertisers($sharedOrgsWhere: AdvertiserOrgsWhereInput) { advertisers { id name sharedOrgs(where: $sharedOrgsWhere) { id org { id name } } } }",
+              "variables": {
+                "sharedOrgsWhere": {
+                  "org": {
+                    "id_in": [
+                      "ck935mwk5027i0a93ijk0fczw",
+                      "clw89jomn0dai0b72hm947h7e",
+                      "cjpkhilv4es4q0722xgsd8k12"
+                    ]
+                  }
+                }
+              }
+            }
           conditions:
             - "[STATUS] == 200"
-            # - "[BODY] == pat(*<title page-title>Weave GitOps</title>*)"                 
+            - "has([BODY].data) == true"
+            - "has([BODY].data.advertisers) == true"
           alerts:
             - type: email
-              description: "Healthcheck failed"
+              description: "GraphQL DMP API healthcheck failed"
               send-on-resolved: true
+
               
-          ## MEDIA SECTION
-        - name: Jellyseerr
-          group: Media
-          url: https://jellyseerr.pacholoamit.com/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
-
-        - name: Jellyfin
-          group: Media
-          url: https://media.pacholoamit.com/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
-
-        - name: Tdarr
-          group: Media
-          url: http://192.168.0.53:8265/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
-
-        - name: QFlood
-          group: Media
-          url: http://192.168.0.53:3005/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
-
-        - name: Prowlarr
-          group: Media
-          url: http://192.168.0.53:9696/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
-
-        - name: Radarr
-          group: Media
-          url: http://192.168.0.53:7878/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
-
-        - name: Sonarr
-          group: Media
-          url: http://192.168.0.53:8989/
-          interval: 60s
-          conditions:
-            - "[STATUS] == 200"
-          alerts:
-            - type: email
-              description: "Healthcheck failed"
-              send-on-resolved: true
+    
