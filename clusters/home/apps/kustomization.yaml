@@ -6,4 +6,5 @@ resources:
   - vaultwarden
   - weaveworks-dashboard
   - hoarder
-  - gatus
+  - uptime-kuma
+  # - gatus

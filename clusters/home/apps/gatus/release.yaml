@@ -187,7 +187,7 @@ spec:
 
         - name: GraphQL DMP API
           group: Infrastructure
-          url: https://graphql.dmp.cnna.io
+          url: https://graphql.dmp.cnna.io/
           method: POST
           interval: 60s
           headers:

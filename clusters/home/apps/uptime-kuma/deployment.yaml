@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-kuma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: uptime-kuma
+      containers:
+      - name: uptime-kuma
+        imagePullPolicy: IfNotPresent
+        image: louislam/uptime-kuma
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 3001
+        volumeMounts:
+        - name: uptime-kuma
+          mountPath: /app/data
+      volumes:
+        - name: uptime-kuma
+          persistentVolumeClaim:
+            claimName: uptime-kuma
+
