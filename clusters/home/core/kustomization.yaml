@@ -4,7 +4,7 @@ resources:
   - ingress-nginx
   - longhorn
   - cloudflare
-  - mariadb
+  # - mariadb
   # - system-upgrade  # Enable for upgrades
   
   
