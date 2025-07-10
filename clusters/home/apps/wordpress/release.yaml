@@ -36,7 +36,7 @@ spec:
     wordpressEmail: pacholoamit.tech@gmail.com
     wordpressFirstName: Pacholo
     WordpressLastName: Amit
-    wordpressBlogName: Pacholo Amit | Developer Portfolio
+    wordpressBlogName: Mediajel
     wordpressExtraConfigContent: |
       @ini_set( 'post_max_size', '999M');
     replicaCount: 1
@@ -51,7 +51,7 @@ spec:
     ingress:
       enabled: true
       ingressClassName: nginx
-      hostname: www.pacholoamit.com
+      hostname: wordpress-env.pacholoamit.com
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/description: Developer Portfolio
