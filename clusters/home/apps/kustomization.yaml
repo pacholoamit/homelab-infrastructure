@@ -7,5 +7,4 @@ resources:
   - weaveworks-dashboard
   - hoarder
   - uptime-kuma
-  - mariadb
   - wordpress
