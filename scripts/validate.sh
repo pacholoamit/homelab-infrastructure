@@ -31,8 +31,8 @@ set -o pipefail
 kustomize_flags=("--load-restrictor=LoadRestrictionsNone")
 kustomize_config="kustomization.yaml"
 
-# skip Kubernetes Secrets due to SOPS fields failing validation
-kubeconform_flags=("-skip=Secret" "-skip=ConfigMap")
+# skip Kubernetes Secrets and ConfigMaps due to SOPS fields failing validation
+kubeconform_flags=("-skip" "Secret,ConfigMap")
 kubeconform_config=("-strict" "-ignore-missing-schemas" "-schema-location" "default" "-schema-location" "/tmp/flux-crd-schemas" "-verbose")
 
 echo "INFO - Downloading Flux OpenAPI schemas"
