@@ -6,4 +6,4 @@ resources:
   - vaultwarden
   - weaveworks-dashboard
   - hoarder
-  - uptime-kuma
+  # - uptime-kuma
