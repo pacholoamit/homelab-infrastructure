@@ -26,11 +26,14 @@ spec:
       value: $argon2id$v=19$m=19456,t=2,p=1$TVFGVlVDMEpJMnZQbHVLbEl4NWJVcGYvREhyazBScXBYQU5PaTE3aE5Jdz0$vyl46eeXo+JMsTGuO5BfB8sb7BvdN2xaLt7wNX58plA
     signupsAllowed: true
     invitationsAllowed: true
-    existingVolumeClaim:
-      claimName: vaultwarden
-      dataPath: "/data"
-      attachmentsPath: "/data/attachments"
     # Data persistence - SQLite database is stored at /data/db.sqlite3 on this Longhorn-backed PVC
     # Attachments are stored at /data/attachments on the same PVC
+    storage:
+      data:
+        name: vaultwarden
+        size: 5Gi
+        class: longhorn
+        keepPvc: true
+        accessMode: "ReadWriteOnce"
     domain: https://vaultwarden.pacholoamit.com
     
