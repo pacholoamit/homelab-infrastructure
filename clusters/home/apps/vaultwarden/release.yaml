@@ -30,7 +30,7 @@ spec:
     # Attachments are stored at /data/attachments on the same PVC
     storage:
       data:
-        name: vaultwarden
+        name: vaultwarden-pvc
         size: 5Gi
         class: longhorn
         keepPvc: true
