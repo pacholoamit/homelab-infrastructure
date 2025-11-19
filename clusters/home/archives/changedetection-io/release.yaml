@@ -28,7 +28,7 @@ spec:
     # -- image repository
     repository: ghcr.io/dgtlmoon/changedetection.io
     # -- image tag
-    tag: "0.50.7"
+    tag: "0.51.3"
     # -- image pull policy
     pullPolicy: IfNotPresent
     persistence:
