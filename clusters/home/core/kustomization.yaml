@@ -4,6 +4,7 @@ resources:
   - ingress-nginx
   - longhorn
   - cloudflare
+  - descheduler
   # - mariadb
   # - system-upgrade  # Enable for upgrades
   

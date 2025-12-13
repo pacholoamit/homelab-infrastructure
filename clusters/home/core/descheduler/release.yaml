@@ -8,42 +8,59 @@ spec:
   chart:
     spec:
       chart: descheduler
-      version: "0.33.x"
+      version: "0.34.x"
       sourceRef:
         kind: HelmRepository
         name: descheduler
         namespace: kube-system
-      interval:  1h0m0s
+      interval: 1h0m0s
   values:
-    schedule: "0 0 * * *"
+    kind: CronJob
+    schedule: "0 */6 * * *" # Run every 6 hours
     deschedulerPolicy:
-      strategies:
-        RemoveDuplicates:
-          enabled: true
-        RemovePodsHavingTooManyRestarts:
-          enabled: true
-          params:
-            podsHavingTooManyRestarts:
-              podRestartThreshold: 100
-              includingInitContainers: true
-        RemovePodsViolatingNodeTaints:
-          enabled: true
-        RemovePodsViolatingNodeAffinity:
-          enabled: true
-          params:
-            nodeAffinityType:
-              - requiredDuringSchedulingIgnoredDuringExecution
-        RemovePodsViolatingInterPodAntiAffinity:
-          enabled: true
-        RemovePodsViolatingTopologySpreadConstraint:
-          enabled: true
-          params:
-            includeSoftConstraints: false
-        HighNodeUtilization:
-          enabled: true
-          params:
-            nodeResourceUtilizationThresholds:
-              thresholds:
-                cpu: 30
-                memory: 30
-                pods: 30
+      profiles:
+        - name: default
+          pluginConfig:
+            - name: DefaultEvictor
+              args:
+                evictLocalStoragePods: false
+                evictSystemCriticalPods: false
+                evictDaemonSetPods: false
+            - name: RemoveDuplicates
+            - name: RemovePodsHavingTooManyRestarts
+              args:
+                podRestartThreshold: 100
+                includingInitContainers: true
+            - name: RemovePodsViolatingNodeTaints
+            - name: RemovePodsViolatingNodeAffinity
+              args:
+                nodeAffinityType:
+                  - requiredDuringSchedulingIgnoredDuringExecution
+            - name: RemovePodsViolatingInterPodAntiAffinity
+            - name: RemovePodsViolatingTopologySpreadConstraint
+              args:
+                constraints:
+                  - DoNotSchedule
+                  - ScheduleAnyway
+            - name: LowNodeUtilization
+              args:
+                thresholds:
+                  cpu: 20
+                  memory: 20
+                  pods: 20
+                targetThresholds:
+                  cpu: 50
+                  memory: 50
+                  pods: 50
+          plugins:
+            balance:
+              enabled:
+                - RemoveDuplicates
+                - RemovePodsViolatingTopologySpreadConstraint
+                - LowNodeUtilization
+            deschedule:
+              enabled:
+                - RemovePodsHavingTooManyRestarts
+                - RemovePodsViolatingNodeTaints
+                - RemovePodsViolatingNodeAffinity
+                - RemovePodsViolatingInterPodAntiAffinity
