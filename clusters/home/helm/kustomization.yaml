@@ -24,3 +24,5 @@ resources:
   - twin
   - zekker6
   - jetstack
+  - temporal
+  - bitnami-postgresql

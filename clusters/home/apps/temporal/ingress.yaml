@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: temporal-web
+  namespace: zentech
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Workflow orchestration engine
+    gethomepage.dev/group: Apps/Services
+    gethomepage.dev/icon: temporal
+    gethomepage.dev/name: Temporal
+    gethomepage.dev/weight: "3"
+spec:
+  rules:
+    - host: temporal.pacholoamit.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: temporal-web
+                port:
+                  number: 8080
