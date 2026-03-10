@@ -1,9 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: bitnami-postgresql
+  name: hatchet
   namespace: flux-system
 spec:
   interval: 30m
-  type: oci
-  url: oci://registry-1.docker.io/bitnamicharts
+  url: https://hatchet-dev.github.io/hatchet-charts

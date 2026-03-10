@@ -6,5 +6,5 @@ resources:
   - vaultwarden
   - weaveworks-dashboard
   - hoarder
-  - temporal
+  - hatchet
   # - uptime-kuma

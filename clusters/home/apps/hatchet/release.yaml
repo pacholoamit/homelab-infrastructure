@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: hatchet-stack
+  namespace: zentech
+spec:
+  interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    timeout: 10m
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    timeout: 10m
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: hatchet-stack
+      version: "0.10.x"
+      sourceRef:
+        kind: HelmRepository
+        name: hatchet
+        namespace: flux-system
+      interval: 1m
+  values:
+    sharedConfig:
+      enabled: false
+    api:
+      enabled: true
+      replicaCount: 1
+    engine:
+      enabled: true
+      replicaCount: 1
+    frontend:
+      enabled: true
+    postgres:
+      enabled: true
+      image:
+        repository: "bitnamilegacy/postgresql"
+      global:
+        security:
+          allowInsecureImages: true
+      auth:
+        username: "hatchet"
+        database: "hatchet"
+        existingSecret: "hatchet-postgresql"
+      tls:
+        enabled: false
+      primary:
+        persistence:
+          enabled: true
+          storageClass: longhorn
+          size: 10Gi
+    rabbitmq:
+      enabled: true
+      image:
+        repository: "bitnamilegacy/rabbitmq"
+      global:
+        security:
+          allowInsecureImages: true
+      auth:
+        username: "hatchet"
+        existingSecretPasswordKey: "rabbitmq-password"
+        existingSecret: "hatchet-rabbitmq"
+      persistence:
+        enabled: true
+        storageClass: longhorn
+        size: 5Gi
+    caddy:
+      enabled: false
