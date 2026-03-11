@@ -51,6 +51,8 @@ spec:
       tls:
         enabled: false
       primary:
+        configuration: |-
+          timezone = 'UTC'
         persistence:
           enabled: true
           storageClass: longhorn
