@@ -51,7 +51,7 @@ spec:
       tls:
         enabled: false
       primary:
-        configuration: |-
+        extendedConfiguration: |-
           timezone = 'UTC'
         persistence:
           enabled: true
