@@ -25,21 +25,25 @@ spec:
         name: hatchet
         namespace: flux-system
       interval: 1m
+  valuesFrom:
+    - kind: Secret
+      name: hatchet-helm-values
   values:
     sharedConfig:
-      enabled: false
+      enabled: true
+      serverUrl: "https://hatchet.pacholoamit.com"
+      serverAuthCookieDomain: "hatchet.pacholoamit.com"
+      serverAuthCookieInsecure: "f"
+      serverAuthSetEmailVerified: "t"
+      serverAuthBasicAuthEnabled: "t"
+      grpcBroadcastAddress: "engine.hatchet.pacholoamit.com:443"
+      grpcInsecure: "t"
     api:
       enabled: true
       replicaCount: 1
-      deploymentEnvFrom:
-        - secretRef:
-            name: hatchet-shared-config
     engine:
       enabled: true
       replicaCount: 1
-      deploymentEnvFrom:
-        - secretRef:
-            name: hatchet-shared-config
     frontend:
       enabled: true
     postgres:

@@ -24,4 +24,4 @@ resources:
   - twin
   - zekker6
   - jetstack
-  # - hatchet
+  - hatchet
