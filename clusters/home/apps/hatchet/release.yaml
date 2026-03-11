@@ -31,15 +31,13 @@ spec:
     api:
       enabled: true
       replicaCount: 1
-      deploymentEnvFrom: []
-      envFrom:
+      deploymentEnvFrom:
         - secretRef:
             name: hatchet-shared-config
     engine:
       enabled: true
       replicaCount: 1
-      deploymentEnvFrom: []
-      envFrom:
+      deploymentEnvFrom:
         - secretRef:
             name: hatchet-shared-config
     frontend:
