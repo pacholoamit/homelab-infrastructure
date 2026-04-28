@@ -9,4 +9,5 @@ resources:
   - reloader
   - node-problem-detector
   - image-gc
+  - kyverno
   # - mariadb

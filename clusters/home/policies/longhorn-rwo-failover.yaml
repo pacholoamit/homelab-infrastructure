@@ -1,0 +1,89 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: longhorn-rwo-failover
+  annotations:
+    policies.kyverno.io/title: "Longhorn RWO Failover Settings"
+    policies.kyverno.io/category: "Reliability"
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Deployment
+    policies.kyverno.io/description: >-
+      Inject NoExecute tolerations (30s) and strategy.type=Recreate into any
+      Deployment whose pod template mounts a PVC backed by the longhorn
+      StorageClass with ReadWriteOnce access mode. This ensures pods reschedule
+      onto a healthy node within ~1 minute when a worker node fails, instead
+      of the default 5+ minute delay that produces Multi-Attach errors.
+spec:
+  background: false
+  rules:
+    - name: add-failover-tolerations
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+              operations:
+                - CREATE
+                - UPDATE
+      context:
+        - name: rwoPvcs
+          apiCall:
+            urlPath: "/api/v1/namespaces/{{ request.namespace }}/persistentvolumeclaims"
+            jmesPath: "items[?spec.storageClassName=='longhorn' && contains(spec.accessModes, 'ReadWriteOnce')].metadata.name"
+        - name: deploymentPvcs
+          variable:
+            jmesPath: "request.object.spec.template.spec.volumes[?persistentVolumeClaim != null].persistentVolumeClaim.claimName || `[]`"
+      preconditions:
+        all:
+          - key: "{{ length(deploymentPvcs) }}"
+            operator: GreaterThan
+            value: 0
+          - key: "{{ length(intersection(rwoPvcs, deploymentPvcs)) }}"
+            operator: GreaterThan
+            value: 0
+      mutate:
+        patchStrategicMerge:
+          spec:
+            template:
+              spec:
+                tolerations:
+                  - key: node.kubernetes.io/unreachable
+                    operator: Exists
+                    effect: NoExecute
+                    tolerationSeconds: 30
+                  - key: node.kubernetes.io/not-ready
+                    operator: Exists
+                    effect: NoExecute
+                    tolerationSeconds: 30
+
+    - name: set-recreate-strategy
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+              operations:
+                - CREATE
+                - UPDATE
+      context:
+        - name: rwoPvcs
+          apiCall:
+            urlPath: "/api/v1/namespaces/{{ request.namespace }}/persistentvolumeclaims"
+            jmesPath: "items[?spec.storageClassName=='longhorn' && contains(spec.accessModes, 'ReadWriteOnce')].metadata.name"
+        - name: deploymentPvcs
+          variable:
+            jmesPath: "request.object.spec.template.spec.volumes[?persistentVolumeClaim != null].persistentVolumeClaim.claimName || `[]`"
+      preconditions:
+        all:
+          - key: "{{ length(deploymentPvcs) }}"
+            operator: GreaterThan
+            value: 0
+          - key: "{{ length(intersection(rwoPvcs, deploymentPvcs)) }}"
+            operator: GreaterThan
+            value: 0
+      mutate:
+        patchesJson6902: |-
+          - op: replace
+            path: /spec/strategy
+            value:
+              type: Recreate
