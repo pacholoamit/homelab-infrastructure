@@ -1,0 +1,56 @@
+apiVersion: kyverno.io/v2
+kind: ClusterPolicy
+metadata:
+  name: cleanup-stale-volumeattachments
+  annotations:
+    policies.kyverno.io/title: "Cleanup VolumeAttachments on NotReady Nodes"
+    policies.kyverno.io/category: "Reliability"
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: VolumeAttachment
+    policies.kyverno.io/description: >-
+      When a Node has been Ready=Unknown or Ready=False for more than 5 minutes,
+      remove finalizers from all VolumeAttachments referencing that node. This
+      unblocks pod rescheduling — once the finalizer is gone, k8s GC deletes
+      the (already deletionTimestamp-set) VolumeAttachments, freeing the underlying
+      Longhorn volume to attach on a healthy node. Without this, a wedged node
+      causes Multi-Attach errors that require manual `kubectl patch` to clear.
+spec:
+  mutateExistingOnPolicyUpdate: false
+  rules:
+    - name: clear-finalizers-when-node-dead
+      match:
+        any:
+          - resources:
+              kinds:
+                - Node
+      context:
+        - name: readyCondition
+          variable:
+            jmesPath: "request.object.status.conditions[?type=='Ready'] | [0]"
+        - name: durationUnready
+          variable:
+            jmesPath: "time_since('', '{{ readyCondition.lastTransitionTime }}', '')"
+      preconditions:
+        all:
+          - key: "{{ readyCondition.status }}"
+            operator: NotEquals
+            value: "True"
+          - key: "{{ durationUnready }}"
+            operator: GreaterThan
+            value: "5m0s"
+      mutate:
+        targets:
+          - apiVersion: storage.k8s.io/v1
+            kind: VolumeAttachment
+            preconditions:
+              all:
+                - key: "{{ target.spec.nodeName }}"
+                  operator: Equals
+                  value: "{{ request.object.metadata.name }}"
+                - key: "{{ length(target.metadata.finalizers || `[]`) }}"
+                  operator: GreaterThan
+                  value: 0
+        patchesJson6902: |-
+          - op: replace
+            path: /metadata/finalizers
+            value: []

@@ -1,0 +1,52 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: longhorn-rwo-image-pull-always
+  annotations:
+    policies.kyverno.io/title: "Force imagePullPolicy=Always on Longhorn-backed apps"
+    policies.kyverno.io/category: "Reliability"
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Deployment
+    policies.kyverno.io/description: >-
+      Set imagePullPolicy=Always on every container in any Deployment whose
+      pod template mounts a PVC backed by the longhorn StorageClass with
+      ReadWriteOnce access mode. After unclean node shutdowns, containerd's
+      image cache can become corrupt (observed: tini "exec format error"). With
+      Always, the kubelet re-fetches digests on each restart, working around
+      cache corruption on the new scheduling node. Trade-off: extra registry
+      round-trip per pod start (cheap; stays cached at registry layer).
+spec:
+  background: false
+  rules:
+    - name: set-image-pull-always
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+              operations:
+                - CREATE
+                - UPDATE
+      context:
+        - name: rwoPvcs
+          apiCall:
+            urlPath: "/api/v1/namespaces/{{ request.namespace }}/persistentvolumeclaims"
+            jmesPath: "items[?spec.storageClassName=='longhorn' && contains(spec.accessModes, 'ReadWriteOnce')].metadata.name"
+        - name: deploymentPvcs
+          variable:
+            jmesPath: "request.object.spec.template.spec.volumes[?persistentVolumeClaim != null].persistentVolumeClaim.claimName || `[]`"
+      preconditions:
+        all:
+          - key: "{{ length(deploymentPvcs) }}"
+            operator: GreaterThan
+            value: 0
+          - key: "{{ length(intersection(rwoPvcs, deploymentPvcs)) }}"
+            operator: GreaterThan
+            value: 0
+      mutate:
+        foreach:
+          - list: "request.object.spec.template.spec.containers"
+            patchesJson6902: |-
+              - op: replace
+                path: /spec/template/spec/containers/{{ elementIndex }}/imagePullPolicy
+                value: Always

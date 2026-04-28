@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kured
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: kured
+      version: "5.11.x"
+      sourceRef:
+        kind: HelmRepository
+        name: kube-reboot
+        namespace: kube-system
+      interval: 1m
+  values:
+    configuration:
+      period: 5m
+      timeZone: Asia/Manila
+      startTime: "02:00"
+      endTime: "05:00"
+      rebootDays:
+        - mo
+        - tu
+        - we
+        - th
+        - fr
+        - sa
+        - su
+      logLevel: info
+    tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      - effect: NoExecute
+        operator: Exists
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 128Mi

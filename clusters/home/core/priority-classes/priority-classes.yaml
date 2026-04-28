@@ -1,0 +1,24 @@
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: homelab-critical
+value: 1000000
+globalDefault: false
+preemptionPolicy: PreemptLowerPriority
+description: >-
+  Critical infra (Longhorn, ingress-nginx, kube-system, kyverno, flux-system).
+  These workloads boot first under cold-start resource pressure (e.g. after
+  a power outage) so the cluster's data path and admission path come up before
+  application workloads.
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: homelab-high
+value: 100000
+globalDefault: false
+preemptionPolicy: PreemptLowerPriority
+description: >-
+  Stateful application workloads (Longhorn-backed apps). Boot before stateless
+  workloads so PVC mounts proceed before workloads that depend on them.

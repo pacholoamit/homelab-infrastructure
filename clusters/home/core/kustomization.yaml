@@ -8,6 +8,8 @@ resources:
   - system-upgrade
   - reloader
   - node-problem-detector
+  - kured
   - image-gc
+  - priority-classes
   - kyverno
   # - mariadb

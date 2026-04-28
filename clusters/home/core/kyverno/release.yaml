@@ -17,6 +17,12 @@ spec:
   values:
     admissionController:
       replicas: 3
+      container:
+        image:
+          pullPolicy: Always
+      initContainer:
+        image:
+          pullPolicy: Always
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:

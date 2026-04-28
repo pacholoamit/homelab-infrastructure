@@ -29,3 +29,14 @@ spec:
       rwxVolumeFastFailover: true
       autoCleanupSnapshotWhenDeleteBackup: true
       restoreVolumeRecurringJobs: true
+      replicaAutoBalance: best-effort
+      replicaReplenishmentWaitInterval: "0"
+      nodeDrainPolicy: block-for-eviction-if-contains-last-replica
+      autoSalvage: true
+      replicaSoftAntiAffinity: false
+      replicaZoneSoftAntiAffinity: false
+      concurrentReplicaRebuildPerNodeLimit: 5
+      concurrentVolumeBackupRestorePerNodeLimit: 5
+      disableSchedulingOnCordonedNode: true
+      defaultDataLocality: best-effort
+      systemManagedComponentsNodeSelector: ""
