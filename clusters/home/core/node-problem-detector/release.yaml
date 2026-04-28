@@ -21,7 +21,6 @@ spec:
     settings:
       log_monitors:
         - /config/kernel-monitor.json
-        - /config/readonly-monitor.json
       custom_plugin_monitors: []
     tolerations:
       - effect: NoSchedule
