@@ -5,7 +5,7 @@ resources:
   - longhorn
   - cloudflare
   - descheduler
+  - system-upgrade
+  - reloader
+  - node-problem-detector
   # - mariadb
-  # - system-upgrade  # Enable for upgrades
-  
-  

@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: descheduler
-      version: "0.34.x"
+      version: "0.35.x"
       sourceRef:
         kind: HelmRepository
         name: descheduler
@@ -16,7 +16,7 @@ spec:
       interval: 1h0m0s
   values:
     kind: CronJob
-    schedule: "0 */6 * * *" # Run every 6 hours
+    schedule: "0 */3 * * *" # Run every 3 hours
     deschedulerPolicy:
       profiles:
         - name: default
@@ -26,10 +26,11 @@ spec:
                 evictLocalStoragePods: false
                 evictSystemCriticalPods: false
                 evictDaemonSetPods: false
+                ignorePvcPods: true
             - name: RemoveDuplicates
             - name: RemovePodsHavingTooManyRestarts
               args:
-                podRestartThreshold: 100
+                podRestartThreshold: 10
                 includingInitContainers: true
             - name: RemovePodsViolatingNodeTaints
             - name: RemovePodsViolatingNodeAffinity
@@ -45,13 +46,24 @@ spec:
             - name: LowNodeUtilization
               args:
                 thresholds:
-                  cpu: 20
-                  memory: 20
-                  pods: 20
+                  cpu: 30
+                  memory: 30
+                  pods: 30
                 targetThresholds:
-                  cpu: 50
-                  memory: 50
-                  pods: 50
+                  cpu: 60
+                  memory: 60
+                  pods: 60
+                numberOfNodes: 2
+            - name: RemoveFailedPods
+              args:
+                reasons:
+                  - NodeAffinity
+                  - NodeLost
+                  - Shutdown
+                includingInitContainers: true
+                excludeOwnerKinds:
+                  - Job
+                minPodLifetimeSeconds: 3600
           plugins:
             balance:
               enabled:
@@ -64,3 +76,4 @@ spec:
                 - RemovePodsViolatingNodeTaints
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingInterPodAntiAffinity
+                - RemoveFailedPods

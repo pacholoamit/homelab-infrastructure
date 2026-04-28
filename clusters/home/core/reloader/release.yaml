@@ -6,13 +6,17 @@ metadata:
 spec:
   interval: 5m
   install:
-      createNamespace: true
+    createNamespace: true
   chart:
     spec:
       chart: reloader
-      version: "1.1.x"
+      version: "2.2.x"
       sourceRef:
         kind: HelmRepository
         name: stakater
         namespace: flux-system
       interval: 30m
+  values:
+    reloader:
+      watchGlobally: true
+      reloadOnCreate: true

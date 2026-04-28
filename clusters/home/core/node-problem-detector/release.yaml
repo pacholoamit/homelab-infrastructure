@@ -8,8 +8,19 @@ spec:
   chart:
     spec:
       chart: node-problem-detector
+      version: "2.4.x"
       sourceRef:
         kind: HelmRepository
         name: deliveryhero
         namespace: flux-system
       interval: 30m
+  values:
+    metrics:
+      enabled: true
+    settings:
+      log_monitors:
+        - /config/kernel-monitor.json
+        - /config/docker-monitor.json
+      custom_plugin_monitors: []
+      system_stats_monitor:
+        - /config/system-stats-monitor.json
