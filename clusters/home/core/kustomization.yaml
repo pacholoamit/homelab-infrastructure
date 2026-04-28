@@ -8,4 +8,5 @@ resources:
   - system-upgrade
   - reloader
   - node-problem-detector
+  - image-gc
   # - mariadb
