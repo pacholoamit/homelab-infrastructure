@@ -11,5 +11,4 @@ resources:
   - kured
   - image-gc
   - priority-classes
-  - kyverno
   # - mariadb
