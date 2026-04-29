@@ -22,7 +22,7 @@ spec:
         operations: ["CREATE", "UPDATE"]
   variables:
     - name: rwoPvcs
-      expression: 'resource.List("v1", "persistentvolumeclaims", object.metadata.namespace).items.filter(p, p.spec.storageClassName == "longhorn" && p.spec.accessModes.exists(a, a == "ReadWriteOnce")).map(p, p.metadata.name)'
+      expression: 'dyn(resource.List("v1", "persistentvolumeclaims", object.metadata.namespace).items).filter(p, p.spec.storageClassName == "longhorn" && dyn(p.spec.accessModes).exists(a, a == "ReadWriteOnce")).map(p, p.metadata.name)'
     - name: deploymentPvcs
       expression: 'has(object.spec.template.spec.volumes) ? object.spec.template.spec.volumes.filter(v, has(v.persistentVolumeClaim)).map(v, v.persistentVolumeClaim.claimName) : []'
   matchConditions:
@@ -33,31 +33,36 @@ spec:
     - name: deployment-uses-longhorn-rwo
       expression: variables.deploymentPvcs.filter(p, p in variables.rwoPvcs).size() > 0
   mutations:
-    - patchType: ApplyConfiguration
-      applyConfiguration:
+    - patchType: JSONPatch
+      jsonPatch:
         expression: |
-          Object{
-            spec: Object.spec{
-              strategy: Object.spec.strategy{
-                type: "Recreate"
-              },
-              template: Object.spec.template{
-                spec: Object.spec.template.spec{
-                  tolerations: [
-                    Object.spec.template.spec.tolerations.item{
-                      key: "node.kubernetes.io/unreachable",
-                      operator: "Exists",
-                      effect: "NoExecute",
-                      tolerationSeconds: 30
-                    },
-                    Object.spec.template.spec.tolerations.item{
-                      key: "node.kubernetes.io/not-ready",
-                      operator: "Exists",
-                      effect: "NoExecute",
-                      tolerationSeconds: 30
-                    }
-                  ]
-                }
-              }
+          [
+            JSONPatch{
+              op: "replace",
+              path: "/spec/strategy",
+              value: {"type": dyn("Recreate")}
+            },
+            JSONPatch{
+              op: (has(object.spec.template.spec.tolerations) ? "replace" : "add"),
+              path: "/spec/template/spec/tolerations",
+              value:
+                (has(object.spec.template.spec.tolerations) ?
+                  object.spec.template.spec.tolerations.filter(t,
+                    !(t.key == "node.kubernetes.io/unreachable" && t.effect == "NoExecute") &&
+                    !(t.key == "node.kubernetes.io/not-ready" && t.effect == "NoExecute"))
+                  : []) + [
+                  {
+                    "key": dyn("node.kubernetes.io/unreachable"),
+                    "operator": dyn("Exists"),
+                    "effect": dyn("NoExecute"),
+                    "tolerationSeconds": dyn(30)
+                  },
+                  {
+                    "key": dyn("node.kubernetes.io/not-ready"),
+                    "operator": dyn("Exists"),
+                    "effect": dyn("NoExecute"),
+                    "tolerationSeconds": dyn(30)
+                  }
+                ]
             }
-          }
+          ]

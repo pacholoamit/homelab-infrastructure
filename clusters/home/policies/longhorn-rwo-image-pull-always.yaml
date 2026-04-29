@@ -24,7 +24,7 @@ spec:
         operations: ["CREATE", "UPDATE"]
   variables:
     - name: rwoPvcs
-      expression: 'resource.List("v1", "persistentvolumeclaims", object.metadata.namespace).items.filter(p, p.spec.storageClassName == "longhorn" && p.spec.accessModes.exists(a, a == "ReadWriteOnce")).map(p, p.metadata.name)'
+      expression: 'dyn(resource.List("v1", "persistentvolumeclaims", object.metadata.namespace).items).filter(p, p.spec.storageClassName == "longhorn" && dyn(p.spec.accessModes).exists(a, a == "ReadWriteOnce")).map(p, p.metadata.name)'
     - name: deploymentPvcs
       expression: 'has(object.spec.template.spec.volumes) ? object.spec.template.spec.volumes.filter(v, has(v.persistentVolumeClaim)).map(v, v.persistentVolumeClaim.claimName) : []'
   matchConditions:
@@ -43,7 +43,7 @@ spec:
               template: Object.spec.template{
                 spec: Object.spec.template.spec{
                   containers: object.spec.template.spec.containers.map(c,
-                    Object.spec.template.spec.containers.item{
+                    Object.spec.template.spec.containers{
                       name: c.name,
                       imagePullPolicy: "Always"
                     })
