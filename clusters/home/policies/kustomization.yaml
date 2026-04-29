@@ -4,4 +4,5 @@ resources:
   - longhorn-rwo-failover.yaml
   - longhorn-rwo-image-pull-always.yaml
   - cleanup-stale-volumeattachments.yaml
-  - inject-priority-class.yaml
+  - inject-priority-class-critical.yaml
+  - inject-priority-class-rwo.yaml

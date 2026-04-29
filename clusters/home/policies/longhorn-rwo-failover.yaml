@@ -1,5 +1,5 @@
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
   name: longhorn-rwo-failover
   annotations:
@@ -14,76 +14,54 @@ metadata:
       onto a healthy node within ~1 minute when a worker node fails, instead
       of the default 5+ minute delay that produces Multi-Attach errors.
 spec:
-  background: false
-  rules:
-    - name: add-failover-tolerations
-      match:
-        any:
-          - resources:
-              kinds:
-                - Deployment
-              operations:
-                - CREATE
-                - UPDATE
-      context:
-        - name: rwoPvcs
-          apiCall:
-            urlPath: "/api/v1/namespaces/{{ request.namespace }}/persistentvolumeclaims"
-            jmesPath: "items[?spec.storageClassName=='longhorn' && contains(spec.accessModes, 'ReadWriteOnce')].metadata.name"
-        - name: deploymentPvcs
-          variable:
-            jmesPath: "request.object.spec.template.spec.volumes[?persistentVolumeClaim != null].persistentVolumeClaim.claimName || `[]`"
-      preconditions:
-        all:
-          - key: "{{ length(deploymentPvcs) }}"
-            operator: GreaterThan
-            value: 0
-          - key: "{{ length(intersection(rwoPvcs, deploymentPvcs)) }}"
-            operator: GreaterThan
-            value: 0
-      mutate:
-        patchStrategicMerge:
-          spec:
-            template:
-              spec:
-                tolerations:
-                  - key: node.kubernetes.io/unreachable
-                    operator: Exists
-                    effect: NoExecute
-                    tolerationSeconds: 30
-                  - key: node.kubernetes.io/not-ready
-                    operator: Exists
-                    effect: NoExecute
-                    tolerationSeconds: 30
-
-    - name: set-recreate-strategy
-      match:
-        any:
-          - resources:
-              kinds:
-                - Deployment
-              operations:
-                - CREATE
-                - UPDATE
-      context:
-        - name: rwoPvcs
-          apiCall:
-            urlPath: "/api/v1/namespaces/{{ request.namespace }}/persistentvolumeclaims"
-            jmesPath: "items[?spec.storageClassName=='longhorn' && contains(spec.accessModes, 'ReadWriteOnce')].metadata.name"
-        - name: deploymentPvcs
-          variable:
-            jmesPath: "request.object.spec.template.spec.volumes[?persistentVolumeClaim != null].persistentVolumeClaim.claimName || `[]`"
-      preconditions:
-        all:
-          - key: "{{ length(deploymentPvcs) }}"
-            operator: GreaterThan
-            value: 0
-          - key: "{{ length(intersection(rwoPvcs, deploymentPvcs)) }}"
-            operator: GreaterThan
-            value: 0
-      mutate:
-        patchesJson6902: |-
-          - op: replace
-            path: /spec/strategy
-            value:
-              type: Recreate
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        resources: ["deployments"]
+        operations: ["CREATE", "UPDATE"]
+  variables:
+    - name: rwoPvcs
+      expression: >-
+        resource.List("v1", "persistentvolumeclaims", object.metadata.namespace).items
+          .filter(p, p.spec.storageClassName == "longhorn" && "ReadWriteOnce" in p.spec.accessModes)
+          .map(p, p.metadata.name)
+    - name: deploymentPvcs
+      expression: >-
+        has(object.spec.template.spec.volumes) ?
+          object.spec.template.spec.volumes
+            .filter(v, has(v.persistentVolumeClaim))
+            .map(v, v.persistentVolumeClaim.claimName)
+          : []
+  matchConditions:
+    - name: deployment-uses-longhorn-rwo
+      expression: variables.deploymentPvcs.exists(p, p in variables.rwoPvcs)
+  mutations:
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: |
+          Object{
+            spec: Object.spec{
+              strategy: Object.spec.strategy{
+                type: "Recreate"
+              },
+              template: Object.spec.template{
+                spec: Object.spec.template.spec{
+                  tolerations: [
+                    Object.spec.template.spec.tolerations.item{
+                      key: "node.kubernetes.io/unreachable",
+                      operator: "Exists",
+                      effect: "NoExecute",
+                      tolerationSeconds: 30
+                    },
+                    Object.spec.template.spec.tolerations.item{
+                      key: "node.kubernetes.io/not-ready",
+                      operator: "Exists",
+                      effect: "NoExecute",
+                      tolerationSeconds: 30
+                    }
+                  ]
+                }
+              }
+            }
+          }

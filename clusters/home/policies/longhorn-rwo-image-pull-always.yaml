@@ -1,5 +1,5 @@
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
   name: longhorn-rwo-image-pull-always
   annotations:
@@ -16,37 +16,42 @@ metadata:
       cache corruption on the new scheduling node. Trade-off: extra registry
       round-trip per pod start (cheap; stays cached at registry layer).
 spec:
-  background: false
-  rules:
-    - name: set-image-pull-always
-      match:
-        any:
-          - resources:
-              kinds:
-                - Deployment
-              operations:
-                - CREATE
-                - UPDATE
-      context:
-        - name: rwoPvcs
-          apiCall:
-            urlPath: "/api/v1/namespaces/{{ request.namespace }}/persistentvolumeclaims"
-            jmesPath: "items[?spec.storageClassName=='longhorn' && contains(spec.accessModes, 'ReadWriteOnce')].metadata.name"
-        - name: deploymentPvcs
-          variable:
-            jmesPath: "request.object.spec.template.spec.volumes[?persistentVolumeClaim != null].persistentVolumeClaim.claimName || `[]`"
-      preconditions:
-        all:
-          - key: "{{ length(deploymentPvcs) }}"
-            operator: GreaterThan
-            value: 0
-          - key: "{{ length(intersection(rwoPvcs, deploymentPvcs)) }}"
-            operator: GreaterThan
-            value: 0
-      mutate:
-        foreach:
-          - list: "request.object.spec.template.spec.containers"
-            patchesJson6902: |-
-              - op: replace
-                path: /spec/template/spec/containers/{{ elementIndex }}/imagePullPolicy
-                value: Always
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        resources: ["deployments"]
+        operations: ["CREATE", "UPDATE"]
+  variables:
+    - name: rwoPvcs
+      expression: >-
+        resource.List("v1", "persistentvolumeclaims", object.metadata.namespace).items
+          .filter(p, p.spec.storageClassName == "longhorn" && "ReadWriteOnce" in p.spec.accessModes)
+          .map(p, p.metadata.name)
+    - name: deploymentPvcs
+      expression: >-
+        has(object.spec.template.spec.volumes) ?
+          object.spec.template.spec.volumes
+            .filter(v, has(v.persistentVolumeClaim))
+            .map(v, v.persistentVolumeClaim.claimName)
+          : []
+  matchConditions:
+    - name: deployment-uses-longhorn-rwo
+      expression: variables.deploymentPvcs.exists(p, p in variables.rwoPvcs)
+  mutations:
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: |
+          Object{
+            spec: Object.spec{
+              template: Object.spec.template{
+                spec: Object.spec.template.spec{
+                  containers: object.spec.template.spec.containers.map(c,
+                    Object.spec.template.spec.containers.item{
+                      name: c.name,
+                      imagePullPolicy: "Always"
+                    })
+                }
+              }
+            }
+          }
