@@ -15,6 +15,15 @@ spec:
         values:
           - "true"
   serviceAccountName: system-upgrade
+  tolerations:
+    - key: k3s-controlplane
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+    - key: role
+      operator: Equal
+      value: "master"
+      effect: NoSchedule
   upgrade:
     image: rancher/k3s-upgrade
   channel: https://update.k3s.io/v1-release/channels/v1.33
