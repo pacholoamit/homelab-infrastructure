@@ -20,3 +20,10 @@ patches:
               operator: Equal
               value: "true"
               effect: NoSchedule
+          - op: add
+            path: /spec/template/spec/tolerations/-
+            value:
+              key: role
+              operator: Equal
+              value: "master"
+              effect: NoSchedule
