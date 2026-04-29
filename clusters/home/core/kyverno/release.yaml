@@ -8,10 +8,15 @@ spec:
   chart:
     spec:
       chart: kyverno
-      # Bumped to 3.7.2 (Kyverno v1.17.2) after k3s 1.29 -> 1.34 upgrade
-      # refreshed every node's containerd image cache (resolves the prior
-      # post-NIC-incident image-blob corruption that forced a pin to 3.7.1).
-      version: "3.7.2"
+      # Bumped to 3.8.0-rc.1 (Kyverno v1.18.0-rc.1) for the MutatingPolicy
+      # CEL compiler fixes — specifically #15669 ("use extended compiler for
+      # mpol variables and conditions"), #15453 ("handle mutating policy
+      # variable compile errors"), and #15625 ("inject namespaceObject into
+      # MutatingPolicy CEL context"). v1.17.x panics with nil pointer
+      # dereference whenever a MutatingPolicy variable calls resource.List()
+      # which makes auto-detection-style policies (e.g. longhorn-rwo-failover)
+      # silently no-op. RC version; revisit once 3.8.x stable lands.
+      version: "3.8.0-rc.1"
       sourceRef:
         kind: HelmRepository
         name: kyverno
