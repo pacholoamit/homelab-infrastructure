@@ -36,8 +36,12 @@ spec:
     - name: no-priority-class-set
       expression: >-
         !has(object.spec.priorityClassName) || object.spec.priorityClassName == ""
+    - name: pod-has-pvcs
+      expression: variables.podPvcs.size() > 0
+    - name: namespace-has-rwo-pvcs
+      expression: variables.rwoPvcs.size() > 0
     - name: pod-uses-longhorn-rwo
-      expression: variables.podPvcs.exists(p, p in variables.rwoPvcs)
+      expression: variables.podPvcs.filter(p, p in variables.rwoPvcs).size() > 0
   mutations:
     - patchType: ApplyConfiguration
       applyConfiguration:

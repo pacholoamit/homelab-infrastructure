@@ -36,8 +36,12 @@ spec:
             .map(v, v.persistentVolumeClaim.claimName)
           : []
   matchConditions:
+    - name: deployment-has-pvcs
+      expression: variables.deploymentPvcs.size() > 0
+    - name: namespace-has-rwo-pvcs
+      expression: variables.rwoPvcs.size() > 0
     - name: deployment-uses-longhorn-rwo
-      expression: variables.deploymentPvcs.exists(p, p in variables.rwoPvcs)
+      expression: variables.deploymentPvcs.filter(p, p in variables.rwoPvcs).size() > 0
   mutations:
     - patchType: ApplyConfiguration
       applyConfiguration:
