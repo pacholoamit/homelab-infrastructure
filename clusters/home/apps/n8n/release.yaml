@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: n8n
-      version: "0.x.x"
+      version: "2.x.x"
       sourceRef:
         kind: HelmRepository
         name: n8n
@@ -28,40 +28,11 @@ spec:
       repository: n8nio/n8n
       tag: 1.119.2
       pullPolicy: IfNotPresent
-    replicaCount: 1
-    service:
-      type: LoadBalancer
-    # extraEnvSecrets:
-    #   DB_POSTGRESDB_PASSWORD:
-    #     name: postgresql
-    #     key: password
-    config:
-      generic:
-        timezone: Asia/Manila
-      host: n8n.pacholoamit.com
-      protocol: https
-      port: 443
-      database:
-        type: sqlite
-        # postgresdb:
-        #   host: postgresql.default.svc.cluster.local
-        #   port: 5432
-        #   database: postgresql
-        #   user: pacholoamit
 
-    persistence:
-      enabled: true
-      type: existing
-      existingClaim: pvc-13c2362e-68a6-4532-ae4e-fc2-7f1d8185 # TODO: When rebuilding cluster, set this to n8n pvc
-    
-    extraEnv:
-      WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
-      WEBHOOK_URL: https://n8n.pacholoamit.com
-      N8N_EDITOR_BASE_URL: https://n8n.pacholoamit.com
     ingress:
       enabled: true
+      className: nginx
       annotations:
-        kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/proxy-body-size: 999m
         gethomepage.dev/enabled: "true"
         gethomepage.dev/description: Open source workflow automation tool
@@ -72,4 +43,45 @@ spec:
       hosts:
         - host: n8n.pacholoamit.com
           paths:
-            - /
+            - path: /
+              pathType: Prefix
+
+    main:
+      replicaCount: 1
+
+      service:
+        type: LoadBalancer
+        port: 80
+
+      # YAML keys are recursively upper-cased and joined with `_` to form n8n env vars
+      # (chart 2.x replaces 0.x's JSON config file with env-var-based config)
+      config:
+        n8n:
+          host: n8n.pacholoamit.com
+          protocol: https
+          port: 443
+        generic:
+          timezone: Asia/Manila
+        db:
+          type: sqlite
+        executions:
+          data:
+            prune: "true"
+            max_age: 3760
+
+      extraEnv:
+        WEBHOOK_TUNNEL_URL: https://n8n.pacholoamit.com
+        WEBHOOK_URL: https://n8n.pacholoamit.com
+        N8N_EDITOR_BASE_URL: https://n8n.pacholoamit.com
+
+      persistence:
+        enabled: true
+        type: existing
+        existingClaim: pvc-13c2362e-68a6-4532-ae4e-fc2-7f1d8185
+
+    worker:
+      enabled: false
+    webhook:
+      enabled: false
+    valkey:
+      enabled: false
