@@ -6,7 +6,7 @@ metadata:
 spec:
   image:
     repository: ghcr.io/paperclipinc/paperclip
-    tag: "2026.0403"
+    tag: "2026.0420"
     autoUpdate:
       enabled: true
       interval: "1h"
@@ -30,7 +30,7 @@ spec:
 
   initContainers:
     - name: install-claude
-      image: ghcr.io/paperclipinc/paperclip:2026.0403
+      image: ghcr.io/paperclipinc/paperclip:2026.0420
       imagePullPolicy: IfNotPresent
       command: ["sh", "-c"]
       args:
