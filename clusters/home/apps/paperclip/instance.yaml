@@ -55,6 +55,24 @@ spec:
       enabled: false
     rbac:
       create: true
+    # The upstream Paperclip image's entrypoint starts as root and `gosu node`-
+    # drops to UID 1000. The operator's restricted-PSS default (runAsNonRoot,
+    # drop ALL caps, no privilege escalation) makes gosu fail with EPERM:
+    #   "error: failed switching to \"node\": operation not permitted"
+    # Override to permit a root-start; the actual Node.js server still runs as
+    # UID 1000 inside the container after gosu drops privileges.
+    podSecurityContext:
+      fsGroup: 1000
+      runAsNonRoot: false
+    containerSecurityContext:
+      runAsUser: 0
+      runAsNonRoot: false
+      allowPrivilegeEscalation: true
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop: [ALL]
+        add: [CHOWN, SETUID, SETGID, DAC_OVERRIDE, FOWNER]
 
   networking:
     service:
