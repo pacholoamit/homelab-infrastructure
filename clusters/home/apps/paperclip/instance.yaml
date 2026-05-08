@@ -46,14 +46,15 @@ spec:
       imagePullPolicy: IfNotPresent
       command: ["sh", "-c"]
       args:
-        # Pin to claude-code 1.0.128 — last v1 release; pure-Node `bin: cli.js`.
-        # v2.1+ ships a Bun-compiled native binary that requires AVX/SSE4.2,
-        # which the cluster's Proxmox "Common KVM processor" VMs don't expose
-        # (CPU flags = sse sse2 only). The v2 binary crashes with
-        # "Illegal instruction" on these nodes; v1.0.128 runs on plain Node 18+.
+        # Image tag 2026.0403 doesn't ship @anthropic-ai/claude-code; install
+        # it ourselves into a Longhorn-backed PVC so it persists across pod
+        # restarts. Pinned to a specific version for reproducibility — bump
+        # this string to upgrade. v2.1+ uses a Bun-compiled native binary
+        # that needs AVX/SSE4.2; cluster VMs use Proxmox "host" CPU type
+        # (May 2026) so those flags are exposed and the v2 binary runs fine.
         - |
           set -eu
-          WANT="1.0.128"
+          WANT="2.1.136"
           PKG="/opt/claude/lib/node_modules/@anthropic-ai/claude-code/package.json"
           INSTALLED=""
           if [ -f "$PKG" ]; then
