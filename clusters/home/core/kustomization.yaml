@@ -11,5 +11,6 @@ resources:
   - kured
   - image-gc
   - priority-classes
+  - gateway-api-crds
   - paperclip-operator
   # - mariadb

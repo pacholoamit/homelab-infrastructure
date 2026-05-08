@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Standard-channel CRDs only (Gateway, GatewayClass, HTTPRoute, ReferenceGrant, GRPCRoute).
+# Installed because paperclip-operator's controller hard-imports
+# sigs.k8s.io/gateway-api/apis/v1 and sets up an unconditional Owns(HTTPRoute)
+# watch in SetupWithManager — without the CRD the controller-runtime source
+# never starts and Instance reconciliation is blocked.
+#
+# Pinned to v1.2.1 (CRDs only, no ValidatingAdmissionPolicy). v1.3+ adds a VAP
+# with failurePolicy=Fail; this cluster avoids cluster-wide admission gates with
+# Fail policy after the Apr 2026 Kyverno cold-boot deadlock incident.
+resources:
+  - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
