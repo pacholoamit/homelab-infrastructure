@@ -7,5 +7,6 @@ resources:
   - weaveworks-dashboard
   - hoarder
   - openclaw
+  - paperclip
   # - hatchet
   # - uptime-kuma

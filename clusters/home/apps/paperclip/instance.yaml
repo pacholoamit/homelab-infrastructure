@@ -1,0 +1,84 @@
+apiVersion: paperclip.inc/v1alpha1
+kind: Instance
+metadata:
+  name: paperclip
+  namespace: paperclip
+spec:
+  image:
+    repository: ghcr.io/paperclipinc/paperclip
+    tag: "2026.0403"
+    autoUpdate:
+      enabled: true
+      interval: "1h"
+
+  deployment:
+    mode: authenticated
+    exposure: public
+    publicURL: https://paperclip.pacholoamit.com
+    allowedHostnames:
+      - paperclip.pacholoamit.com
+
+  database:
+    mode: managed
+    managed:
+      storageSize: 10Gi
+      storageClass: longhorn
+
+  auth:
+    secretRef:
+      name: paperclip-auth
+      key: BETTER_AUTH_SECRET
+
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: longhorn
+
+  adapters:
+    apiKeysSecretRef:
+      name: paperclip-api-keys
+
+  heartbeat:
+    enabled: true
+    intervalMS: 60000
+
+  security:
+    networkPolicy:
+      enabled: false
+    rbac:
+      create: true
+
+  networking:
+    service:
+      type: ClusterIP
+      port: 3100
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - paperclip.pacholoamit.com
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: AI agent orchestration platform
+        gethomepage.dev/group: Apps/Services
+        gethomepage.dev/name: Paperclip
+
+  observability:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: false
+    logging:
+      level: info
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: "2"
+      memory: 2Gi
