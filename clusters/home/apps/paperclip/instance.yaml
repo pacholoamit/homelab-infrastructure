@@ -27,6 +27,18 @@ spec:
     # so the install persists across pod restarts.
     - name: PATH
       value: "/opt/claude/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    # paperclip-operator >=0.10.1 unconditionally injects
+    #   NODE_OPTIONS=--import ./server/dist/instrumentation.js
+    # for OTEL instrumentation (statefulset.go, no gating). The relative path
+    # resolves against the server's own cwd, but when the claude_local adapter
+    # spawns /opt/claude/bin/claude with cwd=<workspace>, the child inherits
+    # NODE_OPTIONS and Node fails with ERR_MODULE_NOT_FOUND because
+    # ./server/dist/instrumentation.js doesn't exist in the workspace. The
+    # operator appends spec.env last (last-wins), so this override clears it.
+    # Cluster has no OTEL collector deployed, so the OTEL hook was a no-op
+    # anyway; nothing of value is lost.
+    - name: NODE_OPTIONS
+      value: ""
 
   initContainers:
     - name: install-claude
