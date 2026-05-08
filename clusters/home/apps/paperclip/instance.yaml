@@ -34,15 +34,26 @@ spec:
       imagePullPolicy: IfNotPresent
       command: ["sh", "-c"]
       args:
+        # Pin to claude-code 1.0.128 — last v1 release; pure-Node `bin: cli.js`.
+        # v2.1+ ships a Bun-compiled native binary that requires AVX/SSE4.2,
+        # which the cluster's Proxmox "Common KVM processor" VMs don't expose
+        # (CPU flags = sse sse2 only). The v2 binary crashes with
+        # "Illegal instruction" on these nodes; v1.0.128 runs on plain Node 18+.
         - |
           set -eu
-          if [ -x /opt/claude/bin/claude ]; then
-            echo "claude already installed at /opt/claude/bin/claude:"
-            /opt/claude/bin/claude --version || true
+          WANT="1.0.128"
+          PKG="/opt/claude/lib/node_modules/@anthropic-ai/claude-code/package.json"
+          INSTALLED=""
+          if [ -f "$PKG" ]; then
+            INSTALLED=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$PKG" | head -1)
+          fi
+          if [ "$INSTALLED" = "$WANT" ] && [ -x /opt/claude/bin/claude ]; then
+            echo "claude-code $WANT already installed; skipping"
             exit 0
           fi
-          echo "installing @anthropic-ai/claude-code into /opt/claude ..."
-          NPM_CONFIG_PREFIX=/opt/claude npm install -g --omit=dev @anthropic-ai/claude-code@latest
+          echo "installing @anthropic-ai/claude-code@$WANT (was: ${INSTALLED:-none})"
+          rm -rf /opt/claude/lib /opt/claude/bin /opt/claude/share /opt/claude/etc 2>/dev/null || true
+          NPM_CONFIG_PREFIX=/opt/claude npm install -g --omit=dev "@anthropic-ai/claude-code@$WANT"
           test -x /opt/claude/bin/claude
           /opt/claude/bin/claude --version
       volumeMounts:
@@ -95,6 +106,15 @@ spec:
   # and ANTHROPIC_API_KEY would override CLAUDE_CODE_OAUTH_TOKEN per Claude
   # Code's auth precedence (https://code.claude.com/docs/en/authentication).
   # Re-enable this if you ever need OPENAI_API_KEY or want metered API auth.
+
+  # Third-party OAuth providers (GitHub, Slack, etc.) for the Paperclip
+  # connections system. The secret holds a JSON map keyed by provider id;
+  # the operator injects it into the pod as the env var PAPERCLIP_OAUTH_CREDENTIALS.
+  # OAuth callback URL to register with each provider:
+  #   https://paperclip.pacholoamit.com/api/connections/callback
+  connections:
+    credentialsSecretRef:
+      name: paperclip-oauth-credentials
 
   heartbeat:
     enabled: true
