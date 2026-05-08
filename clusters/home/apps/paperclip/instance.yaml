@@ -11,6 +11,54 @@ spec:
       enabled: true
       interval: "1h"
 
+  # Use Claude Code subscription auth (Pro/Max) via a long-lived OAuth token
+  # generated locally with `claude setup-token`. ANTHROPIC_API_KEY would take
+  # precedence and force metered API-key auth, so we explicitly do NOT set it
+  # (apiKeysSecretRef removed below).
+  env:
+    - name: CLAUDE_CODE_OAUTH_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: paperclip-claude-oauth
+          key: CLAUDE_CODE_OAUTH_TOKEN
+    # Prepend our self-installed claude binary so the Claude (local) adapter
+    # finds it. Image tag 2026.0403 doesn't ship @anthropic-ai/claude-code;
+    # we install it via the init container below into a Longhorn-backed PVC
+    # so the install persists across pod restarts.
+    - name: PATH
+      value: "/opt/claude/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+  initContainers:
+    - name: install-claude
+      image: ghcr.io/paperclipinc/paperclip:2026.0403
+      imagePullPolicy: IfNotPresent
+      command: ["sh", "-c"]
+      args:
+        - |
+          set -eu
+          if [ -x /opt/claude/bin/claude ]; then
+            echo "claude already installed at /opt/claude/bin/claude:"
+            /opt/claude/bin/claude --version || true
+            exit 0
+          fi
+          echo "installing @anthropic-ai/claude-code into /opt/claude ..."
+          NPM_CONFIG_PREFIX=/opt/claude npm install -g --omit=dev @anthropic-ai/claude-code@latest
+          test -x /opt/claude/bin/claude
+          /opt/claude/bin/claude --version
+      volumeMounts:
+        - name: claude-bin
+          mountPath: /opt/claude
+
+  extraVolumes:
+    - name: claude-bin
+      persistentVolumeClaim:
+        claimName: paperclip-claude-bin
+
+  extraVolumeMounts:
+    - name: claude-bin
+      mountPath: /opt/claude
+      readOnly: true
+
   deployment:
     mode: authenticated
     exposure: public
@@ -42,9 +90,11 @@ spec:
       size: 10Gi
       storageClass: longhorn
 
-  adapters:
-    apiKeysSecretRef:
-      name: paperclip-api-keys
+  # adapters.apiKeysSecretRef intentionally omitted — its sole effect is to
+  # inject ANTHROPIC_API_KEY / OPENAI_API_KEY env vars from the named Secret,
+  # and ANTHROPIC_API_KEY would override CLAUDE_CODE_OAUTH_TOKEN per Claude
+  # Code's auth precedence (https://code.claude.com/docs/en/authentication).
+  # Re-enable this if you ever need OPENAI_API_KEY or want metered API auth.
 
   heartbeat:
     enabled: true
