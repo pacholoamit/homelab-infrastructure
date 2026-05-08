@@ -1,0 +1,106 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openclaw
+  namespace: openclaw
+spec:
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: openclaw
+      version: "1.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: openclaw
+        namespace: flux-system
+      interval: 1m
+  values:
+    app-template:
+      controllers:
+        main:
+          containers:
+            main:
+              envFrom:
+                - secretRef:
+                    name: openclaw-env-secret
+
+      persistence:
+        data:
+          enabled: true
+          type: persistentVolumeClaim
+          accessMode: ReadWriteOnce
+          size: 5Gi
+          storageClass: longhorn
+
+      configMaps:
+        config:
+          enabled: true
+          data:
+            bash_aliases: |
+              alias openclaw='node /app/dist/index.js'
+            openclaw.json: |
+              {
+                "gateway": {
+                  "port": 18789,
+                  "mode": "local",
+                  "trustedProxies": []
+                },
+                "browser": {
+                  "enabled": true,
+                  "defaultProfile": "default",
+                  "profiles": {
+                    "default": {
+                      "cdpUrl": "http://localhost:9222",
+                      "color": "#4285F4"
+                    }
+                  }
+                },
+                "agents": {
+                  "defaults": {
+                    "workspace": "/home/node/.openclaw/workspace",
+                    "model": {
+                      "primary": "openrouter/auto"
+                    },
+                    "userTimezone": "Asia/Manila",
+                    "timeoutSeconds": 600,
+                    "maxConcurrent": 1
+                  },
+                  "list": [
+                    {
+                      "id": "main",
+                      "default": true,
+                      "identity": {
+                        "name": "OpenClaw",
+                        "emoji": "🦞"
+                      }
+                    }
+                  ]
+                },
+                "session": {
+                  "scope": "per-sender",
+                  "store": "/home/node/.openclaw/sessions",
+                  "reset": {
+                    "mode": "idle",
+                    "idleMinutes": 60
+                  }
+                },
+                "logging": {
+                  "level": "info",
+                  "consoleLevel": "info",
+                  "consoleStyle": "compact",
+                  "redactSensitive": "tools"
+                },
+                "tools": {
+                  "profile": "full",
+                  "web": {
+                    "search": { "enabled": false },
+                    "fetch": { "enabled": true }
+                  }
+                }
+              }

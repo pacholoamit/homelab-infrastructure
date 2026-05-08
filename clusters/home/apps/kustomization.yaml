@@ -6,5 +6,6 @@ resources:
   - vaultwarden
   - weaveworks-dashboard
   - hoarder
+  - openclaw
   # - hatchet
   # - uptime-kuma
