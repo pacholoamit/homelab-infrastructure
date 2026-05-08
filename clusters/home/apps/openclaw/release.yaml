@@ -29,6 +29,15 @@ spec:
               envFrom:
                 - secretRef:
                     name: openclaw-env-secret
+              env:
+                PATH: /home/node/.openclaw/bin:/home/node/.openclaw/npm/bin:/home/node/.openclaw/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+                XDG_CONFIG_HOME: /home/node/.openclaw/config
+                NPM_CONFIG_PREFIX: /home/node/.openclaw/npm
+                GOROOT: /home/node/.openclaw/go
+                GOPATH: /home/node/.openclaw/gopath
+                GOBIN: /home/node/.openclaw/bin
+                UV_TOOL_BIN_DIR: /home/node/.openclaw/bin
+                UV_TOOL_DIR: /home/node/.openclaw/uv-tools
 
       persistence:
         data:
@@ -102,5 +111,196 @@ spec:
                     "search": { "enabled": false },
                     "fetch": { "enabled": true }
                   }
+                },
+                "skills": {
+                  "entries": {
+                    "coding-agent": { "enabled": true }
+                  }
+                },
+                "plugins": {
+                  "entries": {
+                    "voice-call": { "enabled": true }
+                  }
                 }
               }
+
+        scripts:
+          enabled: true
+          data:
+            init-skills.sh: |
+              log() { echo "[$(date -Iseconds)] [init-skills] $*"; }
+              log "Starting skills initialization"
+
+              mkdir -p /home/node/.openclaw/bin /home/node/.openclaw/npm \
+                       /home/node/.openclaw/uv-tools /home/node/.openclaw/gopath
+
+              # ============================================================
+              # Group A — direct binary releases (linux/amd64)
+              # latest/download/<file> does NOT resolve filenames containing
+              # version numbers, so URLs pin a specific tag.
+              # ============================================================
+              install_release_bin() {
+                # install_release_bin <name> <url> <tarball-member>
+                name="$1"; url="$2"; member="$3"
+                dest="/home/node/.openclaw/bin/$name"
+                if [ -x "$dest" ]; then log "$name already installed"; return 0; fi
+                log "Installing $name from $url"
+                tmp="/tmp/$name.tgz"
+                if curl -fsSL "$url" -o "$tmp"; then
+                  tar -xzf "$tmp" -C "$(dirname "$dest")" "$member" 2>/dev/null || true
+                  if [ ! -f "$dest" ]; then
+                    # fallback: extract whole tarball and find the binary
+                    work="/tmp/${name}_extract"; rm -rf "$work"; mkdir -p "$work"
+                    tar -xzf "$tmp" -C "$work" 2>/dev/null || true
+                    found="$(find "$work" -maxdepth 4 -name "$name" -type f 2>/dev/null | head -1)"
+                    [ -n "$found" ] && cp "$found" "$dest"
+                    rm -rf "$work"
+                  fi
+                  rm -f "$tmp"
+                  if [ -f "$dest" ]; then
+                    chmod +x "$dest"
+                    log "$name installed"
+                  else
+                    log "WARNING: $name binary not found in tarball"
+                  fi
+                else
+                  log "WARNING: failed to download $name"
+                fi
+              }
+
+              install_release_bin gog \
+                "https://github.com/openclaw/gogcli/releases/download/v0.15.0/gogcli_0.15.0_linux_amd64.tar.gz" \
+                gog
+              install_release_bin blogwatcher \
+                "https://github.com/Hyaxia/blogwatcher/releases/download/v0.0.3/blogwatcher_0.0.3_linux_amd64.tar.gz" \
+                blogwatcher
+              install_release_bin camsnap \
+                "https://github.com/steipete/camsnap/releases/download/v0.2.0/camsnap_0.2.0_linux_amd64.tar.gz" \
+                camsnap
+              install_release_bin goplaces \
+                "https://github.com/steipete/goplaces/releases/download/v0.4.0/goplaces_0.4.0_linux_amd64.tar.gz" \
+                goplaces
+
+              # gh tarball nests under gh_<ver>_linux_amd64/bin/gh
+              if [ ! -x /home/node/.openclaw/bin/gh ]; then
+                log "Installing gh (cli/cli v2.92.0)"
+                if curl -fsSL "https://github.com/cli/cli/releases/download/v2.92.0/gh_2.92.0_linux_amd64.tar.gz" -o /tmp/gh.tar.gz; then
+                  tar -xzf /tmp/gh.tar.gz -C /tmp/
+                  cp /tmp/gh_2.92.0_linux_amd64/bin/gh /home/node/.openclaw/bin/gh
+                  chmod +x /home/node/.openclaw/bin/gh
+                  rm -rf /tmp/gh.tar.gz /tmp/gh_2.92.0_linux_amd64
+                  log "gh installed"
+                else
+                  log "WARNING: gh download failed"
+                fi
+              else
+                log "gh already installed"
+              fi
+
+              # tmux is a single static binary, not a tarball
+              if [ ! -x /home/node/.openclaw/bin/tmux ]; then
+                log "Installing tmux (pythops/tmux-linux-binary v3.6a)"
+                if curl -fsSL "https://github.com/pythops/tmux-linux-binary/releases/download/v3.6a/tmux-linux-x86_64" \
+                     -o /home/node/.openclaw/bin/tmux; then
+                  chmod +x /home/node/.openclaw/bin/tmux
+                  log "tmux installed"
+                else
+                  log "WARNING: tmux download failed"
+                fi
+              else
+                log "tmux already installed"
+              fi
+
+              # ============================================================
+              # Group B — npm packages (NPM_CONFIG_PREFIX redirects to PVC)
+              # ============================================================
+              export NPM_CONFIG_PREFIX=/home/node/.openclaw/npm
+              install_npm_pkg() {
+                pkg="$1"; bin="$2"
+                if [ -x "/home/node/.openclaw/npm/bin/$bin" ]; then
+                  log "$bin (npm $pkg) already installed"; return 0
+                fi
+                log "Installing $pkg via npm"
+                npm install -g "$pkg" 2>&1 | tail -3 | sed 's/^/  [npm] /'
+                if [ -x "/home/node/.openclaw/npm/bin/$bin" ]; then
+                  log "$bin installed via npm"
+                else
+                  log "WARNING: $bin missing after npm install $pkg"
+                fi
+              }
+              install_npm_pkg clawhub clawhub
+              install_npm_pkg @google/gemini-cli gemini
+              install_npm_pkg mcporter mcporter
+              install_npm_pkg @steipete/summarize summarize
+
+              # ============================================================
+              # Group C — uv + uv tool install nano-pdf
+              # ============================================================
+              if [ ! -x /home/node/.openclaw/bin/uv ]; then
+                log "Installing uv (Python package manager)"
+                curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/home/node/.openclaw/bin sh 2>&1 \
+                  | tail -3 | sed 's/^/  [uv-install] /'
+              fi
+              if [ -x /home/node/.openclaw/bin/uv ] && [ ! -x /home/node/.openclaw/bin/nano-pdf ]; then
+                log "Installing nano-pdf via uv tool"
+                UV_TOOL_BIN_DIR=/home/node/.openclaw/bin UV_TOOL_DIR=/home/node/.openclaw/uv-tools \
+                  /home/node/.openclaw/bin/uv tool install nano-pdf 2>&1 | tail -3 | sed 's/^/  [uv-tool] /'
+              fi
+
+              # ============================================================
+              # Group D — Go toolchain + go install gifgrep (no prebuilt linux binary)
+              # ============================================================
+              if [ ! -x /home/node/.openclaw/go/bin/go ]; then
+                log "Installing Go 1.26.3 toolchain (~150MB) for gifgrep"
+                if curl -fsSL "https://go.dev/dl/go1.26.3.linux-amd64.tar.gz" -o /tmp/go.tar.gz; then
+                  tar -xzf /tmp/go.tar.gz -C /home/node/.openclaw/
+                  rm -f /tmp/go.tar.gz
+                  log "Go installed: $(/home/node/.openclaw/go/bin/go version 2>&1)"
+                else
+                  log "WARNING: Go download failed; gifgrep will stay blocked"
+                fi
+              fi
+              if [ -x /home/node/.openclaw/go/bin/go ] && [ ! -x /home/node/.openclaw/bin/gifgrep ]; then
+                log "Installing gifgrep via go install (compiles from source — first run is slow)"
+                GOROOT=/home/node/.openclaw/go GOPATH=/home/node/.openclaw/gopath GOBIN=/home/node/.openclaw/bin \
+                  /home/node/.openclaw/go/bin/go install github.com/steipete/gifgrep/cmd/gifgrep@latest 2>&1 \
+                  | tail -3 | sed 's/^/  [go] /'
+              fi
+
+              # ============================================================
+              # ClawHub skill bootstrap (preserved from chart default)
+              # ============================================================
+              mkdir -p /home/node/.openclaw/workspace/skills
+              cd /home/node/.openclaw/workspace
+              install_skill() {
+                skill="$1"
+                SKILL_NAME="$(basename "$skill")"
+                if [ -z "$skill" ]; then
+                  return 0
+                fi
+                if [ -d "skills/$SKILL_NAME" ]; then
+                  log "Skill already installed: $skill"
+                  return 0
+                fi
+                log "Installing skill: $skill"
+                attempts=6
+                delay=5
+                for i in $(seq 1 "$attempts"); do
+                  if npx -y clawhub install "$skill" --no-input; then
+                    log "Installed skill: $skill"
+                    return 0
+                  fi
+                  jitter=$((RANDOM % 5))
+                  if [ "$i" -lt "$attempts" ]; then
+                    log "WARNING: Failed to install skill: $skill (attempt $i/$attempts). Retrying in $((delay + jitter))s..."
+                    sleep $((delay + jitter))
+                    delay=$((delay * 2))
+                  fi
+                done
+                log "WARNING: Failed to install skill after $attempts attempts: $skill"
+                return 1
+              }
+              for skill in $SKILLS_TO_INSTALL; do
+                install_skill "$skill" || true
+              done
+              log "Skills initialization complete"
