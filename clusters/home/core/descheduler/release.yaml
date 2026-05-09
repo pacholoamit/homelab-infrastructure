@@ -70,6 +70,7 @@ spec:
                 - RemoveDuplicates
                 - RemovePodsViolatingTopologySpreadConstraint
                 - LowNodeUtilization
+                - HighNodeUtilization
             deschedule:
               enabled:
                 - RemovePodsHavingTooManyRestarts
