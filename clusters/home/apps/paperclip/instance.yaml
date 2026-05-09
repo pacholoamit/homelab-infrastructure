@@ -39,6 +39,20 @@ spec:
     # anyway; nothing of value is lost.
     - name: NODE_OPTIONS
       value: ""
+    # GitHub PAT for the coder agent's heartbeat. `gh` reads GH_TOKEN; git's
+    # HTTPS credential helper reads GITHUB_TOKEN — set both so `git push` and
+    # `gh pr create` work without an extra credential helper. See:
+    # docs.paperclip.ing/#/how-to/connect-agent-to-github/connect-an-agent-to-a-github-repo-and-have-it-open-prs
+    - name: GH_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: paperclip-github-pat
+          key: GH_TOKEN
+    - name: GITHUB_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: paperclip-github-pat
+          key: GITHUB_TOKEN
 
   initContainers:
     - name: install-claude
@@ -46,14 +60,16 @@ spec:
       imagePullPolicy: IfNotPresent
       command: ["sh", "-c"]
       args:
-        # Image tag 2026.0403 doesn't ship @anthropic-ai/claude-code; install
-        # it ourselves into a Longhorn-backed PVC so it persists across pod
-        # restarts. Pinned to a specific version for reproducibility — bump
-        # this string to upgrade. v2.1+ uses a Bun-compiled native binary
-        # that needs AVX/SSE4.2; cluster VMs use Proxmox "host" CPU type
-        # (May 2026) so those flags are exposed and the v2 binary runs fine.
+        # Installs both claude-code (npm) and gh CLI (release tarball) into the
+        # Longhorn-backed /opt/claude PVC so they persist across restarts.
+        # Image tag 2026.0403 ships neither. Pinned for reproducibility — bump
+        # WANT / GH_WANT and re-roll to upgrade. v2.1+ claude-code is a
+        # Bun-compiled native binary that needs AVX/SSE4.2; cluster VMs use
+        # Proxmox "host" CPU type (May 2026) so those flags are exposed.
         - |
           set -eu
+
+          # --- claude-code ---
           WANT="2.1.136"
           PKG="/opt/claude/lib/node_modules/@anthropic-ai/claude-code/package.json"
           INSTALLED=""
@@ -62,13 +78,35 @@ spec:
           fi
           if [ "$INSTALLED" = "$WANT" ] && [ -x /opt/claude/bin/claude ]; then
             echo "claude-code $WANT already installed; skipping"
-            exit 0
+          else
+            echo "installing @anthropic-ai/claude-code@$WANT (was: ${INSTALLED:-none})"
+            # Narrow the bin wipe to /opt/claude/bin/claude so a re-run that
+            # only bumps WANT doesn't blow away gh installed below.
+            rm -rf /opt/claude/lib /opt/claude/bin/claude /opt/claude/share /opt/claude/etc 2>/dev/null || true
+            NPM_CONFIG_PREFIX=/opt/claude npm install -g --omit=dev "@anthropic-ai/claude-code@$WANT"
+            test -x /opt/claude/bin/claude
+            /opt/claude/bin/claude --version
           fi
-          echo "installing @anthropic-ai/claude-code@$WANT (was: ${INSTALLED:-none})"
-          rm -rf /opt/claude/lib /opt/claude/bin /opt/claude/share /opt/claude/etc 2>/dev/null || true
-          NPM_CONFIG_PREFIX=/opt/claude npm install -g --omit=dev "@anthropic-ai/claude-code@$WANT"
-          test -x /opt/claude/bin/claude
-          /opt/claude/bin/claude --version
+
+          # --- gh CLI (for the agent's `git push` + `gh pr create` flow) ---
+          GH_WANT="2.65.0"
+          GH_BIN="/opt/claude/bin/gh"
+          GH_INSTALLED=""
+          if [ -x "$GH_BIN" ]; then
+            GH_INSTALLED=$("$GH_BIN" --version 2>/dev/null | head -1 | awk '{print $3}')
+          fi
+          if [ "$GH_INSTALLED" = "$GH_WANT" ]; then
+            echo "gh $GH_WANT already installed; skipping"
+          else
+            echo "installing gh $GH_WANT (was: ${GH_INSTALLED:-none})"
+            mkdir -p /opt/claude/bin
+            TMP=$(mktemp -d)
+            curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_WANT}/gh_${GH_WANT}_linux_amd64.tar.gz" \
+              | tar -xz -C "$TMP" --strip-components=1
+            install -m 0755 "$TMP/bin/gh" "$GH_BIN"
+            rm -rf "$TMP"
+            "$GH_BIN" --version
+          fi
       volumeMounts:
         - name: claude-bin
           mountPath: /opt/claude
