@@ -15,13 +15,18 @@ spec:
   selector:
     matchLabels:
       app: cloudflared
-  replicas: 2
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   template:
     metadata:
       labels:
         app: cloudflared
     spec:
-      # Affinity ensures that the two replicas of cloudflared are scheduled on different nodes.
+      # Affinity ensures each cloudflared replica is scheduled on a different node.
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -34,7 +39,7 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: cloudflared
-          image: cloudflare/cloudflared:2025.7.0
+          image: cloudflare/cloudflared:2026.3.0
           imagePullPolicy: IfNotPresent
           args:
             - tunnel
@@ -81,3 +86,13 @@ data:
 
     ingress:
     - service: https://ingress-nginx-controller.ingress-nginx.svc.cluster.local:443
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cloudflared
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: cloudflared
