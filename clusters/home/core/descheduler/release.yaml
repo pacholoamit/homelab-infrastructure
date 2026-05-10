@@ -19,7 +19,7 @@ spec:
     schedule: "0 */3 * * *" # Run every 3 hours
     deschedulerPolicy:
       profiles:
-        - name: default
+        - name: spread
           pluginConfig:
             - name: DefaultEvictor
               args:
@@ -70,7 +70,6 @@ spec:
                 - RemoveDuplicates
                 - RemovePodsViolatingTopologySpreadConstraint
                 - LowNodeUtilization
-                - HighNodeUtilization
             deschedule:
               enabled:
                 - RemovePodsHavingTooManyRestarts
@@ -78,3 +77,29 @@ spec:
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingInterPodAntiAffinity
                 - RemoveFailedPods
+        - name: consolidate
+          pluginConfig:
+            - name: DefaultEvictor
+              args:
+                evictLocalStoragePods: false
+                evictSystemCriticalPods: false
+                evictDaemonSetPods: false
+                ignorePvcPods: true
+            - name: HighNodeUtilization
+              args:
+                thresholds:
+                  cpu: 20
+                  memory: 20
+                  pods: 20
+                numberOfNodes: 1
+                evictableNamespaces:
+                  exclude:
+                    - kube-system
+                    - longhorn-system
+                    - flux-system
+                evictionModes:
+                  - OnlyThresholdingResources
+          plugins:
+            balance:
+              enabled:
+                - HighNodeUtilization
