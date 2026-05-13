@@ -40,6 +40,8 @@ spec:
         gethomepage.dev/icon: n8n.png
         gethomepage.dev/name: n8n
         gethomepage.dev/weight: "2"
+        glance/name: "n8n"
+        glance/icon: "si:n8n"
       hosts:
         - host: n8n.pacholoamit.com
           paths:

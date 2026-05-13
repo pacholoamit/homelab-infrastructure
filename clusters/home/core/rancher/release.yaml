@@ -40,6 +40,8 @@ spec:
         gethomepage.dev/icon: rancher
         gethomepage.dev/name: Rancher
         gethomepage.dev/weight: "1"
+        glance/name: "Rancher"
+        glance/icon: "si:rancher"
         
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2

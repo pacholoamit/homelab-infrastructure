@@ -14,6 +14,8 @@ metadata:
     gethomepage.dev/name: Hoarder
     gethomepage.dev/pod-selector: app=hoarder-web
     gethomepage.dev/weight: "1"
+    glance/name: "Hoarder"
+    glance/icon: "di:karakeep"
 
 spec:
   rules:

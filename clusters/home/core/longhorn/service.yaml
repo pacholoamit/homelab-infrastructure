@@ -39,6 +39,8 @@ metadata:
     gethomepage.dev/name: Longhorn
     gethomepage.dev/pod-selector: app=longhorn-ui
     gethomepage.dev/weight: "2"
+    glance/name: "Longhorn"
+    glance/icon: "di:longhorn"
 spec:
   rules:
     - host: longhorn.pacholoamit.com

@@ -50,6 +50,8 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "nginx"
+          glance/name: "Homepage"
+          glance/icon: "di:homepage"
         hosts:
           - host: homelab.pacholoamit.com
             paths:

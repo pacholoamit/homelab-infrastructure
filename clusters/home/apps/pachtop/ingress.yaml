@@ -25,6 +25,8 @@ metadata:
       gethomepage.dev/group: Apps/Services
       gethomepage.dev/icon: https://github.com/pacholoamit/pachtop/blob/master/public/logo-only.png?raw=true
       gethomepage.dev/name: Pachtop Landing Page
+      glance/name: "Pachtop"
+      glance/icon: "https://raw.githubusercontent.com/pacholoamit/pachtop/master/public/logo-only.png"
       nginx.ingress.kubernetes.io/rewrite-target: /
   labels:
     name: pachtop-landing-page

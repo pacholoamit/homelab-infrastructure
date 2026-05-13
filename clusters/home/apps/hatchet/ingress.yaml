@@ -11,6 +11,8 @@ metadata:
     gethomepage.dev/icon: hatchet
     gethomepage.dev/name: Hatchet
     gethomepage.dev/weight: "3"
+    glance/name: "Hatchet"
+    glance/icon: "https://raw.githubusercontent.com/hatchet-dev/hatchet/main/frontend/app/public/favicon.svg"
 spec:
   rules:
   - host: hatchet.pacholoamit.com

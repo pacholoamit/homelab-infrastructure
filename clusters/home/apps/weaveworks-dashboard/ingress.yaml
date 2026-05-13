@@ -12,6 +12,8 @@ metadata:
     gethomepage.dev/name: Weaveworks Dashboard
     gethomepage.dev/pod-selector: app.kubernetes.io/instance=ww-gitops
     gethomepage.dev/weight: "2"
+    glance/name: "Weave GitOps"
+    glance/icon: "di:weave-gitops"
 spec:
   rules:
     - host: weave.pacholoamit.com

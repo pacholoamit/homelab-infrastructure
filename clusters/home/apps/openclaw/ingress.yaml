@@ -13,6 +13,8 @@ metadata:
     gethomepage.dev/description: OpenClaw agent gateway
     gethomepage.dev/group: Apps/Services
     gethomepage.dev/name: OpenClaw
+    glance/name: "OpenClaw"
+    glance/icon: "https://avatars.githubusercontent.com/u/252820863?v=4"
 spec:
   ingressClassName: nginx
   rules:

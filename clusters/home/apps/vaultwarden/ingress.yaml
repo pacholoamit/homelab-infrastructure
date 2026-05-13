@@ -13,6 +13,8 @@ metadata:
     gethomepage.dev/icon: vaultwarden
     gethomepage.dev/name: Vaultwarden
     gethomepage.dev/weight: "2"
+    glance/name: "Vaultwarden"
+    glance/icon: "si:vaultwarden"
 spec:
   rules:
   - host: vaultwarden.pacholoamit.com

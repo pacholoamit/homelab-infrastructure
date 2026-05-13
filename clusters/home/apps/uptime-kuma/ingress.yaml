@@ -25,6 +25,8 @@ metadata:
     gethomepage.dev/name: uptime-kuma
     gethomepage.dev/pod-selector: app=uptime-kuma
     gethomepage.dev/weight: "1"
+    glance/name: "Uptime Kuma"
+    glance/icon: "si:uptimekuma"
 spec:
   rules:
   - host: uptime-kuma.pacholoamit.com
