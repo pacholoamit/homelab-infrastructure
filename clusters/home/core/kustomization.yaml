@@ -12,6 +12,6 @@ resources:
   - image-gc
   - priority-classes
   - gateway-api-crds
-  - paperclip-operator
-  - netdata
+  # - paperclip-operator
+  # - netdata
   # - mariadb
