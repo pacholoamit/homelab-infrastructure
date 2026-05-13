@@ -5,6 +5,8 @@ metadata:
   namespace: beszel
   labels:
     app: beszel-agent
+  annotations:
+    secret.reloader.stakater.com/reload: beszel-agent
 spec:
   selector:
     matchLabels:
@@ -23,12 +25,10 @@ spec:
       hostPID: true
       dnsPolicy: ClusterFirstWithHostNet
       tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
+        - operator: Exists
           effect: NoSchedule
-        - key: node-role.kubernetes.io/master
-          operator: Exists
-          effect: NoSchedule
+        - operator: Exists
+          effect: NoExecute
       terminationGracePeriodSeconds: 10
       containers:
         - name: beszel-agent
