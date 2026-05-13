@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: netdata
+  namespace: netdata
+spec:
+  interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: netdata
+      version: "3.x.x"
+      sourceRef:
+        kind: HelmRepository
+        name: netdata
+        namespace: flux-system
+      interval: 1m
+  valuesFrom:
+    - kind: Secret
+      name: netdata-claiming
+  values:
+    image:
+      tag: stable
+    parent:
+      claiming:
+        enabled: true
+      database:
+        storageclass: longhorn
+        volumesize: 8Gi
+      alarms:
+        storageclass: longhorn
+        volumesize: 2Gi
+    child:
+      claiming:
+        enabled: true

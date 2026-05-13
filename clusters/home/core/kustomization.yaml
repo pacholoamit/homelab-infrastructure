@@ -13,4 +13,5 @@ resources:
   - priority-classes
   - gateway-api-crds
   - paperclip-operator
+  - netdata
   # - mariadb
