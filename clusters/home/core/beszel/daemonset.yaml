@@ -29,7 +29,7 @@ spec:
           effect: NoSchedule
         - operator: Exists
           effect: NoExecute
-      terminationGracePeriodSeconds: 10
+      terminationGracePeriodSeconds: 11
       containers:
         - name: beszel-agent
           image: henrygd/beszel-agent:0.18.7
