@@ -13,6 +13,7 @@ resources:
   - priority-classes
   - gateway-api-crds
   - beszel
+  - netdata
   # - paperclip-operator
-  # - netdata
+
   # - mariadb
