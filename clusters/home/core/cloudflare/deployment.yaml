@@ -11,6 +11,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudflared
+  annotations:
+    glance/hide: "true"
 spec:
   selector:
     matchLabels:

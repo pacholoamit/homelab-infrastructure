@@ -92,3 +92,17 @@ spec:
       enabled: false
     valkey:
       enabled: false
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: n8n
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: n8n
+                annotations:
+                  glance/name: n8n
+                  glance/icon: di:n8n

@@ -58,4 +58,18 @@ spec:
               - path: /
                 pathType: Prefix
 
-    
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: homepage
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: homepage
+                annotations:
+                  glance/name: Homepage
+                  glance/icon: di:homepage
+

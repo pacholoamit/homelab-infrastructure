@@ -20,3 +20,17 @@ spec:
       create: true
       passwordHash: $2a$10$zcPdpLbmlKz/BgZKTqSWXeQbgu8dekiwI1VROxSfo5GeMK7/iW7oa
       username: admin
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: ww-gitops-weave-gitops
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: ww-gitops-weave-gitops
+                annotations:
+                  glance/name: Weave GitOps
+                  glance/icon: di:flux

@@ -39,3 +39,37 @@ spec:
     child:
       claiming:
         enabled: true
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: netdata-k8s-state
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: netdata-k8s-state
+                annotations:
+                  glance/hide: "true"
+          - target:
+              kind: DaemonSet
+              name: netdata-child
+            patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: netdata-child
+                annotations:
+                  glance/hide: "true"
+          - target:
+              kind: Deployment
+              name: netdata-parent
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: netdata-parent
+                annotations:
+                  glance/name: Netdata
+                  glance/icon: di:netdata

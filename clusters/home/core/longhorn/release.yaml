@@ -40,3 +40,57 @@ spec:
       disableSchedulingOnCordonedNode: true
       defaultDataLocality: best-effort
       systemManagedComponentsNodeSelector: ""
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: DaemonSet
+              name: longhorn-iscsi-installation
+            patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: longhorn-iscsi-installation
+                annotations:
+                  glance/hide: "true"
+          - target:
+              kind: DaemonSet
+              name: longhorn-nfs-installation
+            patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: longhorn-nfs-installation
+                annotations:
+                  glance/hide: "true"
+          - target:
+              kind: DaemonSet
+              name: longhorn-nvme-cli-installation
+            patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: longhorn-nvme-cli-installation
+                annotations:
+                  glance/hide: "true"
+          - target:
+              kind: DaemonSet
+              name: longhorn-spdk-setup
+            patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: longhorn-spdk-setup
+                annotations:
+                  glance/hide: "true"
+          - target:
+              kind: Deployment
+              name: longhorn-ui
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: longhorn-ui
+                annotations:
+                  glance/name: Longhorn
+                  glance/icon: di:longhorn

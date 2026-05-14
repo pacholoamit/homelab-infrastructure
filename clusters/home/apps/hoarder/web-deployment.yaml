@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hoarder-web
+  annotations:
+    glance/name: Hoarder
+    glance/icon: di:hoarder
 spec:
   replicas: 1
   selector:

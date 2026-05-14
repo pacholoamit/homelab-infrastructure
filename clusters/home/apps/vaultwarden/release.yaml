@@ -36,4 +36,18 @@ spec:
         keepPvc: true
         accessMode: "ReadWriteOnce"
     domain: https://vaultwarden.pacholoamit.com
-    
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: vaultwarden
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: vaultwarden
+                annotations:
+                  glance/name: Vaultwarden
+                  glance/icon: di:vaultwarden
+
