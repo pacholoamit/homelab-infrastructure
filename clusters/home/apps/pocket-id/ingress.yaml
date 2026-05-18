@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pocket-id
+  namespace: default
+  labels:
+    name: pocket-id
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Self-hosted passkey-only OIDC provider
+    gethomepage.dev/group: Apps/Services
+    gethomepage.dev/icon: openid-connect
+    gethomepage.dev/name: Pocket ID
+    gethomepage.dev/weight: "2"
+    glance/name: "Pocket ID"
+    glance/icon: "si:openid"
+spec:
+  rules:
+    - host: pocketid.pacholoamit.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: pocket-id
+                port:
+                  number: 1411
