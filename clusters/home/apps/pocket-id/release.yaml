@@ -21,9 +21,9 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    # Top-level appUrl: chart prepends https:// itself, expects bare hostname.
+    appUrl: "pocketid.pacholoamit.com"
     config:
-      appUrl: "https://pocketid.pacholoamit.com"
-      trustProxy: "true"
       smtpHost: "smtp.resend.com"
       smtpPort: "587"
       smtpFrom: "noreply@pacholoamit.com"
