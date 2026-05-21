@@ -8,6 +8,6 @@ resources:
   - hoarder
   - pocket-id
   # - openclaw
-  # - paperclip
+  - paperclip
   # - hatchet
   # - uptime-kuma
