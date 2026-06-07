@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: termix-guacd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: termix-guacd
+  template:
+    metadata:
+      labels:
+        app: termix-guacd
+    spec:
+      containers:
+        - name: guacd
+          image: guacamole/guacd:1.6.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: guacd
+              containerPort: 4822
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: termix-guacd
+spec:
+  selector:
+    app: termix-guacd
+  ports:
+    - port: 4822
+      targetPort: 4822

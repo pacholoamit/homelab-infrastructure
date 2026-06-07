@@ -7,6 +7,7 @@ resources:
   - weaveworks-dashboard
   - hoarder
   - pocket-id
+  - termix
   # - paperclip
   # - openclaw
   # - hatchet
