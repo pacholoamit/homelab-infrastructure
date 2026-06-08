@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: checkmate-mongo-data
+  namespace: checkmate
+spec:
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkmate-mongo
+  namespace: checkmate
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: checkmate-mongo
+  template:
+    metadata:
+      labels:
+        app: checkmate-mongo
+    spec:
+      containers:
+        - name: mongo
+          image: ghcr.io/bluewave-labs/checkmate-mongo:v3.8.1
+          imagePullPolicy: IfNotPresent
+          args: ["mongod", "--quiet", "--bind_ip_all"]
+          ports:
+            - name: mongo
+              containerPort: 27017
+          volumeMounts:
+            - name: data
+              mountPath: /data/db
+          readinessProbe:
+            exec:
+              command:
+                - mongosh
+                - --quiet
+                - --eval
+                - db.adminCommand('ping')
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - mongosh
+                - --quiet
+                - --eval
+                - db.adminCommand('ping')
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: checkmate-mongo-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkmate-mongo
+  namespace: checkmate
+spec:
+  selector:
+    app: checkmate-mongo
+  ports:
+    - port: 27017
+      targetPort: 27017

@@ -1,0 +1,28 @@
+# Checkmate "Capture" infrastructure agent — runs on the TrueNAS Docker host, NOT in Kubernetes.
+# This file is reference/documentation only: it is intentionally NOT listed in kustomization.yaml,
+# so Flux ignores it.
+#
+# The Checkmate server (in the cluster) POLLS this agent over HTTP using a bearer token, so the
+# agent must be reachable from the cluster nodes on port 59232 (it is on the same LAN as TrueNAS).
+#
+# Setup:
+#   1. Replace CHANGE_ME_STRONG_SECRET below with a strong value (e.g. `openssl rand -hex 24`).
+#   2. Run on TrueNAS: `docker compose up -d`  (or add as a Custom App in TrueNAS SCALE).
+#   3. In Checkmate UI -> Infrastructure monitor, add the agent at:
+#        http://<TRUENAS_LAN_IP>:59232          (use the LAN IP, NOT truenas.local — pods can't resolve mDNS)
+#      and paste the same API_SECRET.
+services:
+  capture:
+    image: ghcr.io/bluewave-labs/capture:latest
+    container_name: checkmate-capture
+    restart: unless-stopped
+    ports:
+      - "59232:59232"
+    environment:
+      - API_SECRET=CHANGE_ME_STRONG_SECRET
+      - GIN_MODE=release
+    volumes:
+      - /etc/os-release:/etc/os-release:ro
+      # Mounted because you chose "Hardware + Docker containers": gives per-container metrics.
+      # Note: this grants the agent root-equivalent access to the Docker socket.
+      - /var/run/docker.sock:/var/run/docker.sock:ro

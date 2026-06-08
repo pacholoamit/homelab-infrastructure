@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: checkmate
+  namespace: checkmate
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Uptime & infrastructure monitoring
+    gethomepage.dev/group: Apps/Services
+    gethomepage.dev/icon: checkmate
+    gethomepage.dev/name: Checkmate
+    gethomepage.dev/pod-selector: app=checkmate
+    gethomepage.dev/weight: "1"
+    glance/name: "Checkmate"
+    glance/icon: "di:checkmate"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: status.pacholoamit.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: checkmate
+                port:
+                  number: 52345

@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkmate
+  namespace: checkmate
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: checkmate
+  template:
+    metadata:
+      labels:
+        app: checkmate
+    spec:
+      containers:
+        - name: checkmate
+          image: ghcr.io/bluewave-labs/checkmate-backend-mono:v3.8.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 52345
+          env:
+            - name: DB_CONNECTION_STRING
+              value: mongodb://checkmate-mongo:27017/uptime_db
+            - name: CLIENT_HOST
+              value: https://status.pacholoamit.com
+            - name: UPTIME_APP_CLIENT_HOST
+              value: https://status.pacholoamit.com
+            - name: UPTIME_APP_API_BASE_URL
+              value: https://status.pacholoamit.com/api/v1
+            - name: NODE_ENV
+              value: production
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: checkmate-secrets
+                  key: JWT_SECRET
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 52345
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 52345
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 768Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkmate
+  namespace: checkmate
+spec:
+  selector:
+    app: checkmate
+  ports:
+    - port: 52345
+      targetPort: 52345
