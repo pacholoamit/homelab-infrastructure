@@ -24,7 +24,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: image-gc
-          image: alpine:3.20
+          image: alpine:3.24
           command: ["/bin/sh", "-c"]
           args:
             - |
