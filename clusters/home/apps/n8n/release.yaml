@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: n8nio/n8n
-      tag: 2.18.7
+      tag: 2.26.3
       pullPolicy: IfNotPresent
 
     ingress:
