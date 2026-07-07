@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: mongo
-          image: ghcr.io/bluewave-labs/checkmate-mongo:v3.8.1
+          image: ghcr.io/bluewave-labs/checkmate-mongo:v3.9.2
           imagePullPolicy: IfNotPresent
           args: ["mongod", "--quiet", "--bind_ip_all"]
           ports:
