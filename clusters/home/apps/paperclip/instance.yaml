@@ -6,7 +6,9 @@ metadata:
 spec:
   image:
     repository: ghcr.io/paperclipinc/paperclip
-    tag: "2026.0403"
+    # Upstream dropped date-style tags (2026.xxxx); main-<timestamp>-<sha> is
+    # now the self-host release stream (latest-cloud is the hosted variant)
+    tag: "main-20260809072442-99bffe2"
     autoUpdate:
       enabled: true
       interval: "1h"
@@ -22,7 +24,7 @@ spec:
           name: paperclip-claude-oauth
           key: CLAUDE_CODE_OAUTH_TOKEN
     # Prepend our self-installed claude binary so the Claude (local) adapter
-    # finds it. Image tag 2026.0403 doesn't ship @anthropic-ai/claude-code;
+    # finds it. The image doesn't ship @anthropic-ai/claude-code;
     # we install it via the init container below into a Longhorn-backed PVC
     # so the install persists across pod restarts.
     - name: PATH
@@ -56,13 +58,13 @@ spec:
 
   initContainers:
     - name: install-claude
-      image: ghcr.io/paperclipinc/paperclip:2026.0403
+      image: ghcr.io/paperclipinc/paperclip:main-20260809072442-99bffe2
       imagePullPolicy: IfNotPresent
       command: ["sh", "-c"]
       args:
         # Installs both claude-code (npm) and gh CLI (release tarball) into the
         # Longhorn-backed /opt/claude PVC so they persist across restarts.
-        # Image tag 2026.0403 ships neither. Pinned for reproducibility — bump
+        # The image ships neither. Pinned for reproducibility — bump
         # WANT / GH_WANT and re-roll to upgrade. v2.1+ claude-code is a
         # Bun-compiled native binary that needs AVX/SSE4.2; cluster VMs use
         # Proxmox "host" CPU type (May 2026) so those flags are exposed.

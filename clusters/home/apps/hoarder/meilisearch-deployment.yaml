@@ -16,9 +16,13 @@ spec:
     spec:
       containers:
         - name: meilisearch
-          image: getmeili/meilisearch:v1.11.3
+          image: getmeili/meilisearch:v1.52.0
           env:
             - name: MEILI_NO_ANALYTICS
+              value: "true"
+            # Required to open the v1.11-era data.ms with a newer engine
+            # without a manual dump/restore (supported since v1.12)
+            - name: MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE
               value: "true"
           volumeMounts:
             - mountPath: /meili_data
