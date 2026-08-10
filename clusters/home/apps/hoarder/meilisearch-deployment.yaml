@@ -20,7 +20,7 @@ spec:
           # upgrade path (MEILI_UPGRADE_DB) only supports source DBs from v1.12
           # on, so it could never have worked from 1.11.3 whatever the flag was
           # called. Future major jumps need the same dump/restore treatment.
-          image: getmeili/meilisearch:v1.52.0
+          image: getmeili/meilisearch:v1.52.3
           env:
             - name: MEILI_NO_ANALYTICS
               value: "true"
