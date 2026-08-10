@@ -34,7 +34,11 @@ spec:
       nodeDrainPolicy: block-for-eviction-if-contains-last-replica
       autoSalvage: true
       replicaSoftAntiAffinity: false
-      replicaZoneSoftAntiAffinity: false
+      # Nodes carry no topology.kubernetes.io/zone label, and Longhorn treats
+      # unlabelled nodes as a single zone. Keeping this false made strict zone
+      # anti-affinity cap every volume at one replica, so nothing could rebuild.
+      # Node-level anti-affinity above still enforces one replica per node.
+      replicaZoneSoftAntiAffinity: true
       concurrentReplicaRebuildPerNodeLimit: 5
       concurrentVolumeBackupRestorePerNodeLimit: 5
       disableSchedulingOnCordonedNode: true

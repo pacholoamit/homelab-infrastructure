@@ -60,6 +60,16 @@
   ],
   "packageRules": [
     {
+      "description": "Pinned to v1.11.3 to match the on-disk data.ms format. Upgrading needs a one-way DB migration via MEILI_UPGRADE_DB (which replaced MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE) or a dump/restore. Re-enable once migrated.",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "getmeili/meilisearch"
+      ],
+      "enabled": false
+    },
+    {
       "matchDatasources": [
         "helm"
       ],
