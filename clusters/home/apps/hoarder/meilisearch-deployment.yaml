@@ -16,12 +16,11 @@ spec:
     spec:
       containers:
         - name: meilisearch
-          # Pinned to match the on-disk data.ms format (v1.11.3).
-          # v1.52.0 refused to start: the engine now wants MEILI_UPGRADE_DB,
-          # which replaced MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE, so the old flag
-          # silently stopped guarding the upgrade. Migrating is one-way, so it
-          # needs a deliberate run with a fresh backup rather than an image bump.
-          image: getmeili/meilisearch:v1.11.3
+          # Migrated from v1.11.3 via dump/restore on 2026-08-10. The dumpless
+          # upgrade path (MEILI_UPGRADE_DB) only supports source DBs from v1.12
+          # on, so it could never have worked from 1.11.3 whatever the flag was
+          # called. Future major jumps need the same dump/restore treatment.
+          image: getmeili/meilisearch:v1.52.0
           env:
             - name: MEILI_NO_ANALYTICS
               value: "true"

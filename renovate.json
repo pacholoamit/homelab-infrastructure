@@ -60,14 +60,18 @@
   ],
   "packageRules": [
     {
-      "description": "Pinned to v1.11.3 to match the on-disk data.ms format. Upgrading needs a one-way DB migration via MEILI_UPGRADE_DB (which replaced MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE) or a dump/restore. Re-enable once migrated.",
+      "description": "Meilisearch stores data in a version-specific on-disk format, and a major jump needs a dump/restore before the new engine will start. Major bumps are held back so that migration can be done deliberately; patches within a release line are safe.",
       "matchDatasources": [
         "docker"
       ],
       "matchPackageNames": [
         "getmeili/meilisearch"
       ],
-      "enabled": false
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "dependencyDashboardApproval": true
     },
     {
       "matchDatasources": [
