@@ -27,6 +27,14 @@ spec:
       smtpHost: "smtp.resend.com"
       smtpPort: "587"
       smtpFrom: "noreply@pacholoamit.com"
+      # Emit email_verified=true so Vaultwarden will bind an SSO identity to an
+      # existing local account. Vaultwarden 1.36.0 (CVE-2026-47164) started
+      # requiring that claim on this path, which pocket-id was never asserting.
+      # Safe here because allowUserSignups is disabled: accounts are created by
+      # an admin only, so nobody can self-register claiming someone's address.
+      # Preferred over Vaultwarden's SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION, which
+      # would disable that check globally rather than fixing the claim at source.
+      emailsVerified: "true"
     existingSecret: pocket-id-secrets
     persistence:
       enabled: true
