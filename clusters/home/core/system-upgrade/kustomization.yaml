@@ -2,11 +2,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-    - https://github.com/rancher/system-upgrade-controller.git?ref=v0.19.2
+    - https://github.com/rancher/system-upgrade-controller.git?ref=v0.20.1
     - https://github.com/rancher/system-upgrade-controller/releases/download/v0.19.2/crd.yaml
 images:
     - name: rancher/system-upgrade-controller
-      newTag: v0.19.2
+      newTag: v0.20.1
 patches:
     - target:
           kind: Deployment
