@@ -1,11 +1,11 @@
 name: zenos-runner-image
 
-# Builds images/zenos-runner and pushes ghcr.io/pacholoamit/zenos-runner, the
-# image of the ARC runner scale set in clusters/home/apps/zenos-runners. Tags:
-# the actions/runner version from the Dockerfile's FROM (moves with every
-# rebuild of that version) and sha-<commit>. The scale set pins the digest, so
-# a push here changes nothing in the cluster until release.yaml takes the new
-# digest from this run's summary.
+# Builds images/zenos-runner, the TrueNAS runners' image, and pushes
+# ghcr.io/pacholoamit/zenos-runner for the zenos-runner StatefulSet in
+# clusters/home/apps/zenos-runners. Tags: the Dockerfile's RUNNER_VERSION
+# (moves with every rebuild of that version) and sha-<commit>. The StatefulSet
+# pins the digest, so a push here changes nothing in the cluster until
+# statefulset.yaml takes the new digest from this run's summary.
 on:
   workflow_dispatch:
   push:
@@ -40,9 +40,9 @@ jobs:
       - name: Runner version
         id: runner
         run: |
-          VERSION=$(sed -n 's|^FROM ghcr.io/actions/actions-runner:\([0-9.]*\)@.*|\1|p' images/zenos-runner/Dockerfile)
+          VERSION=$(sed -n 's|^ARG RUNNER_VERSION=\([0-9.]*\)$|\1|p' images/zenos-runner/Dockerfile)
           if [ -z "$VERSION" ]; then
-            echo "::error::No 'FROM ghcr.io/actions/actions-runner:<version>@<digest>' line in images/zenos-runner/Dockerfile."
+            echo "::error::No 'ARG RUNNER_VERSION=<version>' line in images/zenos-runner/Dockerfile."
             exit 1
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
@@ -56,7 +56,7 @@ jobs:
             type=sha
           labels: |
             org.opencontainers.image.title=zenos-runner
-            org.opencontainers.image.description=GitHub Actions runner for ZenOS CI on the homelab ARC scale set
+            org.opencontainers.image.description=GitHub Actions runner for ZenOS CI (the TrueNAS runner image, for the homelab cluster)
 
       - uses: docker/setup-buildx-action@v4
 
@@ -91,7 +91,7 @@ jobs:
         run: |
           {
             echo '### zenos-runner'
-            echo 'Pin in clusters/home/apps/zenos-runners/release.yaml:'
+            echo 'Pin in clusters/home/apps/zenos-runners/statefulset.yaml:'
             echo '```'
             echo "${IMAGE}:${VERSION}@${DIGEST}"
             echo '```'
