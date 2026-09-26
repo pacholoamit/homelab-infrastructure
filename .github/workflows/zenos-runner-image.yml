@@ -32,9 +32,10 @@ jobs:
     env:
       IMAGE: ghcr.io/pacholoamit/zenos-runner
     steps:
+      # Credentials stay at the default (persisted): with persist-credentials
+      # false, checkout strips them at once through `git submodule foreach`,
+      # which fails on the k3s-ansible gitlink that has no .gitmodules entry.
       - uses: actions/checkout@v7
-        with:
-          persist-credentials: false
 
       - name: Runner version
         id: runner
