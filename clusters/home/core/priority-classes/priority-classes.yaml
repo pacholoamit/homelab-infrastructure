@@ -22,3 +22,17 @@ preemptionPolicy: PreemptLowerPriority
 description: >-
   Stateful application workloads (Longhorn-backed apps). Boot before stateless
   workloads so PVC mounts proceed before workloads that depend on them.
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: homelab-ci
+value: -100
+globalDefault: false
+preemptionPolicy: Never
+description: >-
+  CI runners (apps/zenos-runners). Below every other workload, including those
+  with no class (priority 0), so an app that cannot schedule preempts a runner.
+  Never preempts anything itself: a runner that does not fit stays Pending, and
+  the other runners take the queue. Priority does not steer the kernel OOM
+  killer; the runners' memory limits and placement do.

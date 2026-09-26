@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - secret.yaml
+  - storageclass.yaml
+  - statefulset.yaml

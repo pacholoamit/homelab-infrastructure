@@ -1,0 +1,162 @@
+# GitHub Actions runners for ZenOS (pacholoamit/ZenOS): the TrueNAS runners'
+# design (zentech-github-runner) on the cluster. Runbook: README.md here.
+#
+#   1. Persistent runners k8s-zenos-<ordinal>, labels zenos-ci,zenos-k8s,
+#      registered once with a one-hour registration token (secret.yaml). Each
+#      keeps its identity on its `state` volume, so restarts need no token.
+#   2. The NAS image with tini and RUNNER_NAME (images/zenos-runner), built by
+#      .github/workflows/zenos-runner-image.yml and pinned by digest.
+#   3. Capped so CI cannot starve the homelab: 3Gi requested and 6Gi at most
+#      per runner, one runner per worker, never on the control plane or on
+#      k3s-node-1, and the lowest priority class. See README.md, "Capacity".
+#   4. OnDelete updates: a change applies to a runner when its pod is deleted,
+#      which is safe only while that runner is idle (README.md, "Redeploy").
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zenos-runner
+  namespace: github-runners
+  annotations:
+    glance/name: GitHub runners (ZenOS)
+    glance/icon: si:githubactions
+spec:
+  replicas: 2
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: OnDelete
+  # Deleting or scaling down the StatefulSet keeps the volumes, so a runner
+  # that comes back still has its identity.
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  selector:
+    matchLabels:
+      app: zenos-runner
+  template:
+    metadata:
+      labels:
+        app: zenos-runner
+    spec:
+      priorityClassName: homelab-ci
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        # The image's runner user is uid/gid 950. fsGroup hands it the
+        # volumes; OnRootMismatch skips re-owning full caches on every start.
+        runAsNonRoot: true
+        runAsUser: 950
+        fsGroup: 950
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: DoesNotExist
+                  # k3s-node-1 carries the stateful apps and has ~4.8 GiB
+                  # free, less than one job's 6Gi. By requests it looks the
+                  # emptiest worker, so the scheduler would pick it first.
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - k3s-node-1
+        # One runner per worker: none of them has room for two 6Gi jobs.
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: zenos-runner
+      containers:
+        - name: runner
+          image: ghcr.io/pacholoamit/zenos-runner:2.337.0@sha256:2bd6878f57051b9b8ae46f858f58be1d3f3baf6c1eb631774aa1cb6c40c2ed32
+          env:
+            - name: POD_INDEX
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
+            - name: RUNNER_NAME
+              value: k8s-zenos-$(POD_INDEX)
+            - name: RUNNER_URL
+              value: https://github.com/pacholoamit/ZenOS
+            - name: RUNNER_LABELS
+              value: zenos-ci,zenos-k8s
+            # Read only while the state volume is empty (a first registration).
+            - name: RUNNER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: zenos-runner-registration
+                  key: RUNNER_TOKEN
+                  optional: true
+          # No CPU limit: a job bursts into idle cores, and the request keeps
+          # its fair share when the node is busy.
+          resources:
+            requests:
+              cpu: "1"
+              memory: 3Gi
+              ephemeral-storage: 2Gi
+            limits:
+              memory: 6Gi
+              ephemeral-storage: 10Gi
+          # sudo (Playwright's --with-deps) needs privilege escalation and the
+          # default capabilities, so the hardening stops at non-root, the
+          # runtime seccomp profile and no raw sockets.
+          securityContext:
+            allowPrivilegeEscalation: true
+            capabilities:
+              drop:
+                - NET_RAW
+          volumeMounts:
+            - name: state
+              mountPath: /runner-state
+            - name: work
+              mountPath: /home/runner/_work
+            - name: bun
+              mountPath: /home/runner/.bun
+            - name: npm
+              mountPath: /home/runner/.npm
+            - name: dshm
+              mountPath: /dev/shm
+      volumes:
+        # Chromium (e2e) crashes on the container runtime's 64 MB /dev/shm.
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: state
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 1Gi
+    - metadata:
+        name: work
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn-runner-cache
+        resources:
+          requests:
+            storage: 15Gi
+    - metadata:
+        name: bun
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn-runner-cache
+        resources:
+          requests:
+            storage: 8Gi
+    - metadata:
+        name: npm
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn-runner-cache
+        resources:
+          requests:
+            storage: 2Gi
