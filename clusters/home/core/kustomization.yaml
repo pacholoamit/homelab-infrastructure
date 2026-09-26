@@ -15,6 +15,5 @@ resources:
   - beszel
   - netdata
   - paperclip-operator
-  - arc-controller
 
   # - mariadb
