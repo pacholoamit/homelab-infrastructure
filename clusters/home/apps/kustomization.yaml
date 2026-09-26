@@ -8,6 +8,7 @@ resources:
   - hoarder
   - pocket-id
   - termix
+  - zenos-runners
   # - checkmate
   # - paperclip
   # - openclaw
