@@ -1,8 +1,9 @@
 # Longhorn with a single replica, kept on the runner's node, for the ZenOS
-# runners' work, bun and npm volumes. Everything on them rebuilds itself (a
-# checkout and two package caches), so more replicas would only cost disk and
-# write speed. At 3 replicas the two runners' 25Gi each would claim ~50Gi of
-# Longhorn's schedulable space on every node, and each node has ~40Gi left.
+# runners' work and npm volumes. Everything on them rebuilds itself (a
+# checkout, bun's and npm's package caches), so replicas would only cost write
+# speed and disk: on a 40k-file benchmark one replica took 49.5 s, like
+# local-path, and three took 88.8 s. Three replicas of the two runners' 17Gi
+# would also claim ~34Gi of the ~40Gi Longhorn can still schedule per node.
 # The runner identity (state) stays on the replicated `longhorn` class.
 apiVersion: storage.k8s.io/v1
 kind: StorageClass

@@ -21,8 +21,11 @@ and those minutes are billed.
 | `namespace.yaml` | `github-runners`, with baseline pod security. |
 | `images/zenos-runner/` (repository root) | `Dockerfile`, `entrypoint.sh` (registers or restores, then runs), `job-started.sh` (the per-job hook): the NAS image plus tini and `RUNNER_NAME`. Built by `.github/workflows/zenos-runner-image.yml`. |
 | PVC `state-zenos-runner-<n>` (1Gi, `longhorn`, 3 replicas) | The runner's identity: `.runner*` and `.credentials*`. Never delete this casually; see Re-register. |
-| PVC `work-zenos-runner-<n>` (15Gi) | `_work`: the workspace and the tool cache. |
-| PVC `bun-zenos-runner-<n>` (8Gi), `npm-zenos-runner-<n>` (2Gi) | The bun and npm/npx caches. |
+| PVC `work-zenos-runner-<n>` (15Gi) | `_work`: the workspace, the tool cache and bun's package cache (`_work/.bun-install-cache`). |
+| PVC `npm-zenos-runner-<n>` (2Gi) | The npm/npx cache. |
+
+bun's cache sits on the work volume, not on a volume of its own as on the NAS: on the same filesystem as the checkout,
+`bun install` hardlinks node_modules instead of copying it, which takes 27 s here instead of 72 s.
 
 Runner `k8s-zenos-<n>` is pod `zenos-runner-<n>`.
 
@@ -114,7 +117,7 @@ While the runner is idle, delete its rebuildable volumes, then its pod; the Stat
 touch `state-*`.
 
 ```sh
-kubectl -n github-runners delete pvc work-zenos-runner-<n> bun-zenos-runner-<n> npm-zenos-runner-<n> --wait=false
+kubectl -n github-runners delete pvc work-zenos-runner-<n> npm-zenos-runner-<n> --wait=false
 kubectl -n github-runners delete pod zenos-runner-<n>
 ```
 

@@ -11,6 +11,9 @@
 #      k3s-node-1, and the lowest priority class. See README.md, "Capacity".
 #   4. OnDelete updates: a change applies to a runner when its pod is deleted,
 #      which is safe only while that runner is idle (README.md, "Redeploy").
+#   5. bun's package cache lives on the work volume, next to the checkout, so
+#      `bun install` hardlinks node_modules from it instead of copying across
+#      volumes: 27 s against 72 s here (the NAS's NVMe copies in ~13 s).
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -85,6 +88,8 @@ spec:
               value: https://github.com/pacholoamit/ZenOS
             - name: RUNNER_LABELS
               value: zenos-ci,zenos-k8s
+            - name: BUN_INSTALL_CACHE_DIR
+              value: /home/runner/_work/.bun-install-cache
             # Read only while the state volume is empty (a first registration).
             - name: RUNNER_TOKEN
               valueFrom:
@@ -115,8 +120,6 @@ spec:
               mountPath: /runner-state
             - name: work
               mountPath: /home/runner/_work
-            - name: bun
-              mountPath: /home/runner/.bun
             - name: npm
               mountPath: /home/runner/.npm
             - name: dshm
@@ -144,14 +147,6 @@ spec:
         resources:
           requests:
             storage: 15Gi
-    - metadata:
-        name: bun
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: longhorn-runner-cache
-        resources:
-          requests:
-            storage: 8Gi
     - metadata:
         name: npm
       spec:
