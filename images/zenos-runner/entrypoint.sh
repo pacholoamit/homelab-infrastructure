@@ -14,12 +14,14 @@ if [ -s /runner-state/.runner ]; then
 else
   if [ -z "${RUNNER_TOKEN:-}" ]; then
     echo "zenos-runner: /runner-state is empty and RUNNER_TOKEN is not set." >&2
-    echo "zenos-runner: see README.md, \"Re-register\", then redeploy the app." >&2
+    echo "zenos-runner: see README.md, \"Re-register\"." >&2
     exit 1
   fi
+  # RUNNER_NAME is k8s-zenos-<ordinal> in the StatefulSet; on the NAS the
+  # container's hostname names the runner.
   ./config.sh --unattended --replace \
     --url "${RUNNER_URL:?}" --token "$RUNNER_TOKEN" \
-    --name "$(hostname)" --labels "${RUNNER_LABELS:?}" --work _work
+    --name "${RUNNER_NAME:-$(hostname)}" --labels "${RUNNER_LABELS:?}" --work _work
   for f in .runner* .credentials*; do
     install -m 600 "$f" "/runner-state/$f"
   done

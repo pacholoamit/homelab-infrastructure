@@ -1,6 +1,10 @@
-# zentech-github-runner:local — GitHub's runner image plus what ubuntu-latest
-# gives the ZenOS jobs and this image lacks. Built by compose (runner-1,
-# pull_policy: build); the versions come from ../.env.
+# ghcr.io/pacholoamit/zenos-runner — the TrueNAS runners' image
+# (zentech-github-runner:local, /mnt/nvme/tenants/zentech/github-runner/image on
+# the NAS) for the zenos-runner StatefulSet in clusters/home/apps/zenos-runners:
+# GitHub's runner image plus what ubuntu-latest gives the ZenOS jobs and this
+# image lacks. Built by .github/workflows/zenos-runner-image.yml; the versions
+# are the ARG defaults, which match the NAS's .env. Kubernetes changes against
+# the NAS copy: tini as PID 1, and the runner name from RUNNER_NAME.
 #   - Node 22 (hosted ships 22.x): `npx convex | eas-cli | @better-auth/cli`,
 #     the explicit `node` calls in check-types and postinstall scripts, and it
 #     keeps tsc/vitest/next/playwright on Node rather than bun's node shim.
@@ -21,14 +25,16 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
  && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
  && apt-get update \
- && apt-get install -y --no-install-recommends zstd \
+ && apt-get install -y --no-install-recommends zstd tini \
  && PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npx -y "playwright@${PLAYWRIGHT_VERSION}" install-deps chromium \
  && rm -rf /var/lib/apt/lists/* /root/.npm /root/.cache \
- && node --version && npm --version && zstd --version
+ && node --version && npm --version && zstd --version && tini --version
 # The runner user takes truenas_admin's uid/gid, so what it writes on the
 # dataset stays manageable from the host without sudo.
 RUN groupmod -g 950 runner && usermod -u 950 runner
 COPY --chmod=755 entrypoint.sh /usr/local/bin/zenos-runner
 COPY --chmod=755 job-started.sh /usr/local/bin/zenos-job-started.sh
 USER runner
-ENTRYPOINT ["/usr/local/bin/zenos-runner"]
+# tini is PID 1 in the pod, as Docker's `init: true` is on the NAS: it passes
+# the kubelet's SIGTERM on to the runner and reaps what finished jobs orphan.
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/zenos-runner"]
