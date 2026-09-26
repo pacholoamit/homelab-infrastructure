@@ -28,3 +28,4 @@ resources:
   - openclaw
   - paperclipinc
   - pocket-id
+  - actions-runner-controller

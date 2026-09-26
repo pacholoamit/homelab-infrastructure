@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: arc-controller
+  namespace: arc-systems
+spec:
+  interval: 5m
+  # Helm never upgrades CRDs on its own, and each ARC release changes them.
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: gha-runner-scale-set-controller
+      # Pinned exactly: the controller and every gha-runner-scale-set release
+      # must run the same ARC version (apps/zenos-runners), so they move together.
+      version: "0.14.2"
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller
+        namespace: flux-system
+      interval: 1m
+  values:
+    flags:
+      logLevel: info
+      # A scale set change waits for running jobs to finish instead of starting
+      # a second set of runners beside them; the workers have no room for both.
+      updateStrategy: eventual
+      healthProbeBindAddress: ":8081"
+    resources:
+      requests:
+        cpu: 20m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+    podSecurityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
