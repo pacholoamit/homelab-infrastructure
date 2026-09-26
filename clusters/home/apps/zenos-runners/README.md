@@ -86,6 +86,20 @@ Hence:
 
 Add a replica, and drop the `NotIn` for k3s-node-1, only after that node has at least 7 GiB available.
 
+### k3s-node-3's CPU
+
+k3s-node-3's VM runs QEMU's generic `kvm64` CPU ("Common KVM processor": no SSE4.2, POPCNT, AVX or AVX2), while
+k3s-node-1 and k3s-node-2 pass their host CPUs through. bun needs at least SSE4.2 and POPCNT: on k3s-node-3 it dies
+with `Illegal instruction` (SIGILL) in some jobs, as `help-center:check` did in the proof run. So the `NotIn` list also
+holds k3s-node-3, and `zenos-runner-0` (`k8s-zenos-0`) stays Pending and shows offline in GitHub. To bring it back:
+
+1. In Proxmox, set that VM's processor type to `host` (`qm set <vmid> --cpu host`), then shut it down and start it
+   (a reboot keeps the old CPU). Check with `grep -m1 "model name" /proc/cpuinfo` on the node.
+2. Remove `k3s-node-3` from the `NotIn` list in `statefulset.yaml` and push. The pod schedules there with its saved
+   identity.
+
+GitHub deletes a runner that has been offline for 14 days. After that, re-register it (below) before step 2.
+
 ## Re-register
 
 GitHub deletes a self-hosted runner that has been offline for more than 14 days, and a runner removed in the UI is

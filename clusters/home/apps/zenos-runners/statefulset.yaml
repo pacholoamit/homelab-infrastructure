@@ -9,6 +9,7 @@
 #   3. Capped so CI cannot starve the homelab: 3Gi requested and 6Gi at most
 #      per runner, one runner per worker, never on the control plane or on
 #      k3s-node-1, and the lowest priority class. See README.md, "Capacity".
+#      k3s-node-3 is excluded too until its VM gets a real CPU type (below).
 #   4. OnDelete updates: a change applies to a runner when its pod is deleted,
 #      which is safe only while that runner is idle (README.md, "Redeploy").
 #   5. bun's package cache lives on the work volume, next to the checkout, so
@@ -63,10 +64,15 @@ spec:
                   # k3s-node-1 carries the stateful apps and has ~4.8 GiB
                   # free, less than one job's 6Gi. By requests it looks the
                   # emptiest worker, so the scheduler would pick it first.
+                  # k3s-node-3's VM has the generic kvm64 CPU ("Common KVM
+                  # processor": no SSE4.2, POPCNT or AVX), on which bun dies
+                  # with SIGILL; drop it from this list once that VM's CPU
+                  # type is `host`. Until then zenos-runner-0 stays Pending.
                   - key: kubernetes.io/hostname
                     operator: NotIn
                     values:
                       - k3s-node-1
+                      - k3s-node-3
         # One runner per worker: none of them has room for two 6Gi jobs.
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
