@@ -12,7 +12,7 @@
 # The base already has git, jq, unzip, curl, python3 and passwordless sudo for
 # `runner`, so Playwright's `install --with-deps` can apt-get its libraries at
 # run time. Every runner pod is ephemeral, so nothing a job installs carries over.
-FROM node:22.23.3-bookworm-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c AS node
+FROM node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 AS node
 
 FROM ghcr.io/actions/actions-runner:2.337.0@sha256:e5496277be5d09bc968b3d64911b74e219ac4a3f2edce956a3ecf9271bea1ef4
 USER root
