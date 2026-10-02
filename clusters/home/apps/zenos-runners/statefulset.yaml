@@ -6,10 +6,11 @@
 #      keeps its identity on its `state` volume, so restarts need no token.
 #   2. The NAS image with tini and RUNNER_NAME (images/zenos-runner), built by
 #      .github/workflows/zenos-runner-image.yml and pinned by digest.
-#   3. Capped so CI cannot starve the homelab: 3Gi requested and 6Gi at most
-#      per runner, one runner per worker, never on the control plane or on
-#      k3s-node-1, and the lowest priority class. See README.md, "Capacity".
-#      k3s-node-3 is excluded too until its VM gets a real CPU type (below).
+#   3. Capped so CI cannot starve the homelab: 4Gi requested (a job's
+#      measured peak) and 6Gi at most per runner, never on the control plane
+#      or on k3s-node-1, and the lowest priority class. Three runners, placed
+#      by the scheduler; the request keeps it from stacking two on an 8 GiB
+#      worker. See README.md, "Capacity".
 #   4. OnDelete updates: a change applies to a runner when its pod is deleted,
 #      which is safe only while that runner is idle (README.md, "Redeploy").
 #   5. bun's package cache lives on the work volume, next to the checkout, so
@@ -24,7 +25,7 @@ metadata:
     glance/name: GitHub runners (ZenOS)
     glance/icon: si:githubactions
 spec:
-  replicas: 2
+  replicas: 3
   podManagementPolicy: Parallel
   updateStrategy:
     type: OnDelete
@@ -61,25 +62,22 @@ spec:
               - matchExpressions:
                   - key: node-role.kubernetes.io/control-plane
                     operator: DoesNotExist
-                  # k3s-node-1 carries the stateful apps and has ~4.8 GiB
+                  # k3s-node-1 carries the stateful apps and has ~3 GiB
                   # free, less than one job's 6Gi. By requests it looks the
                   # emptiest worker, so the scheduler would pick it first.
-                  # k3s-node-3's VM has the generic kvm64 CPU ("Common KVM
-                  # processor": no SSE4.2, POPCNT or AVX), on which bun dies
-                  # with SIGILL; drop it from this list once that VM's CPU
-                  # type is `host`. Until then zenos-runner-0 stays Pending.
                   - key: kubernetes.io/hostname
                     operator: NotIn
                     values:
                       - k3s-node-1
-                      - k3s-node-3
-        # One runner per worker: none of them has room for two 6Gi jobs.
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchLabels:
-                  app: zenos-runner
+      # The scheduler places the runners, spreading them over the workers
+      # when it can. Their memory request decides how many fit on one.
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: zenos-runner
       containers:
         - name: runner
           image: ghcr.io/pacholoamit/zenos-runner:2.337.0@sha256:2bd6878f57051b9b8ae46f858f58be1d3f3baf6c1eb631774aa1cb6c40c2ed32
@@ -104,11 +102,13 @@ spec:
                   key: RUNNER_TOKEN
                   optional: true
           # No CPU limit: a job bursts into idle cores, and the request keeps
-          # its fair share when the node is busy.
+          # its fair share when the node is busy. The memory request is a
+          # job's measured peak (3.3-4.0 GiB), so by requests k3s-node-2
+          # (8 GiB) holds one runner and k3s-node-3 (16 GiB) two.
           resources:
             requests:
               cpu: "1"
-              memory: 3Gi
+              memory: 4Gi
               ephemeral-storage: 2Gi
             limits:
               memory: 6Gi
