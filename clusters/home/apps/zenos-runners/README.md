@@ -17,7 +17,7 @@ and those minutes are billed.
 |---|---|
 | `statefulset.yaml` | The three runners. The image is pinned by digest. |
 | `secret.yaml` (SOPS) | `RUNNER_TOKEN`, blank except during a registration. |
-| `storageclass.yaml` | `longhorn-runner-cache`: Longhorn with one replica on the runner's node, for the rebuildable volumes. |
+| `storageclass.yaml` | `longhorn-runner-cache`: Longhorn with one replica on the runner's node, for the rebuildable volumes, never snapshotted or backed up (see Backups). |
 | `namespace.yaml` | `github-runners`, with baseline pod security. |
 | `images/zenos-runner/` (repository root) | `Dockerfile`, `entrypoint.sh` (registers or restores, then runs), `job-started.sh` (the per-job hook): the NAS image plus tini and `RUNNER_NAME`. Built by `.github/workflows/zenos-runner-image.yml`. |
 | PVC `state-zenos-runner-<n>` (1Gi, `longhorn`, 3 replicas) | The runner's identity: `.runner*` and `.credentials*`. Never delete this casually; see Re-register. |
@@ -120,6 +120,31 @@ gone too. Its pod then exits at start with a session or registration error. To r
 
 3. Blank the token again (`sops set clusters/home/apps/zenos-runners/secret.yaml '["stringData"]["RUNNER_TOKEN"]' '""'`),
    push, and once the runner is idle delete its pod once more, so that no process keeps the token.
+
+## Backups
+
+Only `state-*` is backed up, by Longhorn's `daily-backup` (group `default`). The work and npm volumes rebuild
+themselves, so they belong to the group `zenos-runner-cache`, which no recurring job uses: the StorageClass's
+`recurringJobSelector` puts every new cache volume there. Without it Longhorn puts a volume with no recurring-job label
+in `default`, and the daily snapshots that came with it doubled the cache volumes on k3s-node-3's disk until the
+kubelet's disk eviction (`nodefs.available` 5%) killed Longhorn's instance-manager there. The runners' volumes then
+threw I/O errors and went read-only (2026-10-03 to 2026-10-13).
+
+If a runner fails on disk again, compare a cache volume's actual size with its size and read its labels:
+
+```sh
+kubectl -n longhorn-system get volumes.longhorn.io <pv-name> \
+  -o jsonpath='{.status.actualSize} {.spec.size} {.metadata.labels}{"\n"}'
+```
+
+To take a cache volume out of `default`, relabel it, then delete its `daily-ba-*` snapshots (Longhorn UI) and its
+backup volume (`kubectl -n longhorn-system delete backupvolumes.longhorn.io <name>`, which also deletes its backups
+from S3):
+
+```sh
+kubectl -n longhorn-system label volumes.longhorn.io <pv-name> \
+  recurring-job-group.longhorn.io/default- recurring-job-group.longhorn.io/zenos-runner-cache=enabled
+```
 
 ## Clean caches
 

@@ -5,10 +5,22 @@
 # local-path, and three took 88.8 s. Three replicas of the two runners' 17Gi
 # would also claim ~34Gi of the ~40Gi Longhorn can still schedule per node.
 # The runner identity (state) stays on the replicated `longhorn` class.
+#
+# No backups or snapshots: Longhorn puts a volume with no recurring-job label in
+# the `default` group, whose `daily-backup` (retain 50) snapshotted these
+# volumes and sent them to S3. The snapshots doubled them on k3s-node-3's disk
+# until the kubelet's disk eviction killed Longhorn's instance-manager there
+# and the runners' volumes went read-only (2026-10-03 to 2026-10-13). So new
+# volumes join `zenos-runner-cache`, a group no recurring job uses.
+#
+# StorageClass parameters are immutable: the force annotation lets Flux
+# recreate this class when they change (existing volumes are untouched).
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: longhorn-runner-cache
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 reclaimPolicy: Delete
@@ -19,3 +31,4 @@ parameters:
   staleReplicaTimeout: "30"
   fsType: ext4
   dataEngine: v1
+  recurringJobSelector: '[{"name":"zenos-runner-cache","isGroup":true}]'
