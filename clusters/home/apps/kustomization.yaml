@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - homepage
   - n8n
+  - gotenberg
   - vaultwarden
   - weaveworks-dashboard
   - hoarder

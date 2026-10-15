@@ -1,0 +1,52 @@
+# HTML -> PDF (Chromium) for the n8n "Eaze reports" workflows. Internal only: no ingress;
+# n8n calls http://gotenberg.default.svc.cluster.local:3000/forms/chromium/convert/html
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotenberg
+  labels:
+    app: gotenberg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gotenberg
+  template:
+    metadata:
+      labels:
+        app: gotenberg
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+      containers:
+        - name: gotenberg
+          image: gotenberg/gotenberg:8.37.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - gotenberg
+            - --api-timeout=60s
+          ports:
+            - name: http
+              containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
