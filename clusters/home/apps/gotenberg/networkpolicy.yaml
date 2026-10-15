@@ -1,0 +1,13 @@
+# Gotenberg needs no outbound network: deny all egress so a crafted document
+# cannot make the cluster fetch internal or external URLs (SSRF).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: gotenberg-deny-egress
+spec:
+  podSelector:
+    matchLabels:
+      app: gotenberg
+  policyTypes:
+    - Egress
+  egress: []
