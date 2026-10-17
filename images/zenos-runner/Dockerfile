@@ -11,7 +11,7 @@
 #   - Playwright's Chromium system packages, so e2e's `--with-deps` is a no-op.
 #   - zstd, so actions/cache compresses (and keys caches) like hosted runners.
 #   - LANG=C.UTF-8 as on hosted; TZ stays unset (UTC), which unit tests assume.
-ARG RUNNER_VERSION=2.337.0
+ARG RUNNER_VERSION=2.338.0
 ARG NODE_MAJOR=22
 FROM node:${NODE_MAJOR}-bookworm-slim AS node
 
