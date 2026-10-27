@@ -22,7 +22,7 @@ spec:
         runAsGroup: 1001
       containers:
         - name: gotenberg
-          image: gotenberg/gotenberg:8.37.0
+          image: gotenberg/gotenberg:8.39.0
           imagePullPolicy: IfNotPresent
           args:
             - gotenberg
