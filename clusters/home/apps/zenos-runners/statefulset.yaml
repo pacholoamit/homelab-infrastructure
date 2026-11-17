@@ -10,7 +10,8 @@
 #      measured peak) and 6Gi at most per runner, never on the control plane
 #      or on k3s-node-1, and the lowest priority class. Three runners, placed
 #      by the scheduler; the request keeps it from stacking two on an 8 GiB
-#      worker. See README.md, "Capacity".
+#      worker, and the spread from stacking three on k3s-node-3. See
+#      README.md, "Capacity".
 #   4. OnDelete updates: a change applies to a runner when its pod is deleted,
 #      which is safe only while that runner is idle (README.md, "Redeploy").
 #   5. bun's package cache lives on the work volume, next to the checkout, so
@@ -69,12 +70,16 @@ spec:
                     operator: NotIn
                     values:
                       - k3s-node-1
-      # The scheduler places the runners, spreading them over the workers
-      # when it can. Their memory request decides how many fit on one.
+      # The scheduler places the runners, at most one more on a worker than
+      # on the other. The memory request keeps k3s-node-2 at one runner, but
+      # k3s-node-3 fits three by requests (13.6 GiB allocatable), and three
+      # there are 18 GiB of limits and a third 15Gi cache on its disk. So
+      # the spread is a rule, not a preference: while a worker is drained
+      # its runners wait for it instead of stacking on the other one.
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway
+          whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
               app: zenos-runner
@@ -104,7 +109,8 @@ spec:
           # No CPU limit: a job bursts into idle cores, and the request keeps
           # its fair share when the node is busy. The memory request is a
           # job's measured peak (3.3-4.0 GiB), so by requests k3s-node-2
-          # (8 GiB) holds one runner and k3s-node-3 (16 GiB) two.
+          # (8 GiB) holds one runner. k3s-node-3 (16 GiB) would hold three:
+          # the topology spread below keeps it at two.
           resources:
             requests:
               cpu: "1"

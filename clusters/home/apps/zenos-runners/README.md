@@ -78,9 +78,13 @@ with a busy runner, k3s-node-3 2.6 of 13.6 GiB. The kubelets have no memory evic
 only disk signals), so an overcommitted node goes straight to the kernel OOM killer, and that killer can pick a homelab
 app before a runner. Hence:
 
-- Three replicas, placed by the scheduler (owner, 2026-10-03) with a soft spread over the workers. The 4Gi request is
-  what keeps that placement safe: by requests k3s-node-2 (8 GiB, which also runs ingress-nginx, CoreDNS and Longhorn's
-  managers) holds one runner and k3s-node-3 (16 GiB) two. A runner that fits nowhere stays Pending.
+- Three replicas, placed by the scheduler (owner, 2026-10-03), at most one more on a worker than on the other
+  (`maxSkew: 1`, `DoNotSchedule`; owner, 2026-11-17). By requests k3s-node-2 (8 GiB, which also runs ingress-nginx,
+  CoreDNS and Longhorn's managers) holds one runner. k3s-node-3 (16 GiB, 13.6 GiB allocatable) fits three by requests,
+  so the spread is what keeps it at two: three there have 18 GiB of limits and put a third 15Gi cache on its disk.
+  A runner that fits nowhere stays Pending.
+- While a worker is drained its runners stay Pending until it is back; they no longer move to the other worker. If
+  k3s-node-2 cannot take its runner for a long time, k3s-node-3 holds one runner, not two, once its own are restarted.
 - No runner on a control-plane node or on k3s-node-1, which carries the stateful apps and has less room than one
   job. By requests it looks the emptiest worker, so without the rule the scheduler would pick it first.
 - Priority class `homelab-ci` (-100, never preempts): an app that cannot schedule preempts a runner. Priority does not
