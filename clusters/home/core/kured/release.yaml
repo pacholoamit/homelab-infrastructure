@@ -29,6 +29,12 @@ spec:
         - sa
         - su
       logLevel: info
+      # Without a timeout a drain that cannot finish keeps the node cordoned
+      # and holds kured's lock, so no node reboots: k3s-node-3 stayed out for
+      # four days on a Longhorn disruption budget (2026-11-13 to 2026-11-17).
+      # On a timeout kured releases the lock, uncordons the node and tries
+      # again on its next 5-minute tick inside the window.
+      drainTimeout: 30m
     tolerations:
       - effect: NoSchedule
         operator: Exists

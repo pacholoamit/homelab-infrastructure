@@ -1,0 +1,41 @@
+# Keeps the runners' work and npm volumes at their own size on the node's disk.
+#
+# Longhorn takes a system snapshot every time it rebuilds a replica, and with
+# `dataLocality: best-effort` it rebuilds a cache volume's only replica each
+# time its runner lands on another node (kured's nightly drains, an eviction).
+# The snapshot stays, marked removed, as the parent of the live data, and the
+# volume then grows past its size as jobs rewrite it: two 15Gi work volumes
+# took 27 and 29 GB of k3s-node-3's root disk, which ran at 84%, and both
+# faulted there with their npm volumes on 2026-11-08.
+#
+# Neither job creates a snapshot or a backup. The cleanup purges system
+# snapshots; the trim hands the blocks that deleted files held back to the
+# disk. Longhorn's CronJobs run on the control plane's clock, Asia/Manila; the
+# trim follows kured's 02:00-05:00 reboot window.
+apiVersion: longhorn.io/v1beta2
+kind: RecurringJob
+metadata:
+  name: zenos-runner-cache-cleanup
+  namespace: longhorn-system
+spec:
+  name: zenos-runner-cache-cleanup
+  task: snapshot-cleanup
+  cron: "20 * * * *"
+  groups:
+    - zenos-runner-cache
+  retain: 0
+  concurrency: 3
+---
+apiVersion: longhorn.io/v1beta2
+kind: RecurringJob
+metadata:
+  name: zenos-runner-cache-trim
+  namespace: longhorn-system
+spec:
+  name: zenos-runner-cache-trim
+  task: filesystem-trim
+  cron: "40 5 * * *"
+  groups:
+    - zenos-runner-cache
+  retain: 0
+  concurrency: 3

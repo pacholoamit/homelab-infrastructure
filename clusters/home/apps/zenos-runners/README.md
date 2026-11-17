@@ -18,6 +18,7 @@ and those minutes are billed.
 | `statefulset.yaml` | The three runners. The image is pinned by digest. |
 | `secret.yaml` (SOPS) | `RUNNER_TOKEN`, blank except during a registration. |
 | `storageclass.yaml` | `longhorn-runner-cache`: Longhorn with one replica on the runner's node, for the rebuildable volumes, never snapshotted or backed up (see Backups). |
+| `recurringjobs.yaml` | Two Longhorn jobs for the group `zenos-runner-cache`: an hourly purge of system snapshots and a daily trim (see Backups). |
 | `namespace.yaml` | `github-runners`, with baseline pod security. |
 | `images/zenos-runner/` (repository root) | `Dockerfile`, `entrypoint.sh` (registers or restores, then runs), `job-started.sh` (the per-job hook): the NAS image plus tini and `RUNNER_NAME`. Built by `.github/workflows/zenos-runner-image.yml`. |
 | PVC `state-zenos-runner-<n>` (1Gi, `longhorn`, 3 replicas) | The runner's identity: `.runner*` and `.credentials*`. Never delete this casually; see Re-register. |
@@ -124,11 +125,17 @@ gone too. Its pod then exits at start with a session or registration error. To r
 ## Backups
 
 Only `state-*` is backed up, by Longhorn's `daily-backup` (group `default`). The work and npm volumes rebuild
-themselves, so they belong to the group `zenos-runner-cache`, which no recurring job uses: the StorageClass's
+themselves, so they belong to the group `zenos-runner-cache`, which no backup or snapshot job uses: the StorageClass's
 `recurringJobSelector` puts every new cache volume there. Without it Longhorn puts a volume with no recurring-job label
 in `default`, and the daily snapshots that came with it doubled the cache volumes on k3s-node-3's disk until the
 kubelet's disk eviction (`nodefs.available` 5%) killed Longhorn's instance-manager there. The runners' volumes then
 threw I/O errors and went read-only (2026-10-03 to 2026-10-13).
+
+Longhorn itself snapshots a volume at every replica rebuild, and it rebuilds a cache volume's only replica whenever its
+runner lands on another node. Left alone, that snapshot let each 15Gi work volume take 27 to 29 GB of k3s-node-3's disk,
+which ran at 84%. The four cache volumes of runners 1 and 2 faulted there (2026-11-08), and kured's drain of k3s-node-3
+then waited four days on replicas that could no longer be moved (2026-11-13 to 2026-11-17). `recurringjobs.yaml` purges those
+snapshots every hour and trims the volumes every day at 05:40, after kured's reboot window.
 
 If a runner fails on disk again, compare a cache volume's actual size with its size and read its labels:
 
