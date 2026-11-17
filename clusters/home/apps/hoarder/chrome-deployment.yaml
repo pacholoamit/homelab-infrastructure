@@ -16,7 +16,9 @@ spec:
     spec:
       containers:
         - name: chrome
-          image: gcr.io/zenika-hub/alpine-chrome:124
+          # Zenika's image from Docker Hub: gcr.io/zenika-hub answers 403 to
+          # pulls, which left this pod in ImagePullBackOff from 2026-11-13.
+          image: zenika/alpine-chrome:124
           command:
             - chromium-browser
             - --headless
