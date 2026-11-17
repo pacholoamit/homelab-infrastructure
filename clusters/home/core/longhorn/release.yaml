@@ -31,7 +31,17 @@ spec:
       restoreVolumeRecurringJobs: true
       replicaAutoBalance: best-effort
       replicaReplenishmentWaitInterval: "0"
-      nodeDrainPolicy: block-for-eviction-if-contains-last-replica
+      # A drain may go on once the node's last-copy replicas are stopped,
+      # which they are as soon as the drain has evicted their pods. The
+      # runners' one-replica cache volumes are the only ones this concerns:
+      # every other volume has replicas on other nodes. Under
+      # block-for-eviction-if-contains-last-replica Longhorn first copied
+      # each 15Gi cache to another node, a rebuild that left a system
+      # snapshot behind every time, and it waited for good on a replica
+      # that had failed (k3s-node-3, 2026-11-13 to 2026-11-17). A one-replica
+      # volume attached from another node still holds the drain until its
+      # pod stops; kured's drainTimeout then lets the node go.
+      nodeDrainPolicy: allow-if-replica-is-stopped
       autoSalvage: true
       replicaSoftAntiAffinity: false
       # Nodes carry no topology.kubernetes.io/zone label, and Longhorn treats
