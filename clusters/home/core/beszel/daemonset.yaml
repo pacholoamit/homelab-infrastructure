@@ -32,7 +32,7 @@ spec:
       terminationGracePeriodSeconds: 11
       containers:
         - name: beszel-agent
-          image: henrygd/beszel-agent:0.18.7
+          image: henrygd/beszel-agent:0.18.8
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
