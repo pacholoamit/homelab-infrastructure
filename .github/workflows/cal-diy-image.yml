@@ -1,0 +1,181 @@
+name: cal-diy-image
+
+# Builds cal.diy (github.com/calcom/cal.diy, MIT) at the commit pinned in
+# images/cal-diy/UPSTREAM_REF and pushes ghcr.io/pacholoamit/cal-diy for the
+# TrueNAS app zentech-cal (https://cal.zentech.ph). Upstream publishes no
+# image, so this builds its Dockerfile unchanged, the way its own
+# docker-build-and-test action does: the build needs a reachable Postgres, so
+# a throwaway one runs beside it and BuildKit shares its network. The compose
+# file on the box pins the digest, so a push here changes nothing there until
+# that file takes the new digest from this run's summary.
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - images/cal-diy/**
+      - .github/workflows/cal-diy-image.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cal-diy-image
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/pacholoamit/cal-diy
+      # Baked into the build, so the container rewrites nothing at start.
+      WEBAPP_URL: https://cal.zentech.ph
+      # The throwaway database the build and the smoke test use. Not a secret:
+      # it lives for this job only and holds nothing.
+      BUILD_DATABASE_URL: postgresql://calbuild:calbuild@localhost:5432/calendso
+    steps:
+      # Credentials stay at the default (persisted): with persist-credentials
+      # false, checkout strips them at once through `git submodule foreach`,
+      # which fails on the k3s-ansible gitlink that has no .gitmodules entry.
+      - uses: actions/checkout@v7
+
+      - name: Upstream commit
+        id: upstream
+        run: |
+          REF=$(tr -d '[:space:]' < images/cal-diy/UPSTREAM_REF)
+          if ! printf '%s' "$REF" | grep -Eq '^[0-9a-f]{40}$'; then
+            echo "::error::images/cal-diy/UPSTREAM_REF must hold one full commit sha of calcom/cal.diy."
+            exit 1
+          fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          echo "tag=${REF:0:12}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+        with:
+          repository: calcom/cal.diy
+          ref: ${{ steps.upstream.outputs.ref }}
+          path: cal.diy
+          persist-credentials: false
+
+      # The image is about 7 GB unpacked and its build keeps a second copy of
+      # the dependencies; the runner's tool caches are not needed here.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          docker system prune -af > /dev/null
+          df -h /
+
+      - name: Throwaway Postgres
+        run: |
+          docker run -d --name database \
+            -e POSTGRES_USER=calbuild -e POSTGRES_PASSWORD=calbuild -e POSTGRES_DB=calendso \
+            postgres:17
+          for i in $(seq 1 30); do
+            docker exec database pg_isready -U calbuild -d calendso && exit 0
+            sleep 2
+          done
+          echo "::error::The throwaway Postgres did not come up."
+          exit 1
+
+      # BuildKit joins the database's network, so the build reaches it at
+      # localhost:5432 (upstream's own arrangement).
+      - uses: docker/setup-buildx-action@v4
+        with:
+          driver-opts: |
+            network=container:database
+          buildkitd-flags: |
+            --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
+
+      - name: Build
+        uses: docker/build-push-action@v7
+        with:
+          context: cal.diy
+          file: cal.diy/Dockerfile
+          platforms: linux/amd64
+          load: true
+          push: false
+          provenance: false
+          tags: ${{ env.IMAGE }}:${{ steps.upstream.outputs.tag }}
+          labels: |
+            org.opencontainers.image.title=cal-diy
+            org.opencontainers.image.description=cal.diy built from calcom/cal.diy at ${{ steps.upstream.outputs.ref }} for cal.zentech.ph
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ steps.upstream.outputs.ref }}
+            org.opencontainers.image.licenses=MIT
+          build-args: |
+            NEXT_PUBLIC_WEBAPP_URL=${{ env.WEBAPP_URL }}
+            NEXT_PUBLIC_LICENSE_CONSENT=agree
+            CALCOM_TELEMETRY_DISABLED=1
+            DATABASE_URL=${{ env.BUILD_DATABASE_URL }}
+
+      # The image must start on an empty database: its start script applies the
+      # migrations, seeds the app store and serves. /api/version answers
+      # without calling the public address, which does not exist in this job.
+      - name: Smoke test
+        env:
+          TAG: ${{ steps.upstream.outputs.tag }}
+        run: |
+          docker run -d --name cal-smoke --network container:database \
+            -e DATABASE_URL="$BUILD_DATABASE_URL" \
+            -e DATABASE_DIRECT_URL="$BUILD_DATABASE_URL" \
+            -e DATABASE_HOST=localhost:5432 \
+            -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \
+            -e CALENDSO_ENCRYPTION_KEY="$(openssl rand -base64 24)" \
+            -e NEXT_PUBLIC_WEBAPP_URL="$WEBAPP_URL" \
+            -e NEXTAUTH_URL="$WEBAPP_URL" \
+            "$IMAGE:$TAG"
+          for i in $(seq 1 90); do
+            CODE=$(docker exec cal-smoke wget -q -O /dev/null --server-response http://localhost:3000/api/version 2>&1 | awk '/HTTP\//{print $2}' | tail -1 || true)
+            echo "attempt $i: /api/version answered ${CODE:-nothing}"
+            if [ "$CODE" = "200" ]; then
+              docker exec cal-smoke wget -q -O - http://localhost:3000/api/version
+              exit 0
+            fi
+            if [ "$(docker inspect -f '{{.State.Running}}' cal-smoke)" != "true" ]; then
+              echo "::error::The container stopped."
+              docker logs --tail 200 cal-smoke
+              exit 1
+            fi
+            sleep 5
+          done
+          echo "::error::/api/version never answered 200."
+          docker logs --tail 200 cal-smoke
+          exit 1
+
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push
+        id: push
+        env:
+          TAG: ${{ steps.upstream.outputs.tag }}
+        run: |
+          docker push "$IMAGE:$TAG" | tee push.log
+          DIGEST=$(sed -n 's/.*digest: \(sha256:[0-9a-f]\{64\}\).*/\1/p' push.log | tail -1)
+          if [ -z "$DIGEST" ]; then
+            echo "::error::The push printed no digest."
+            exit 1
+          fi
+          echo "digest=$DIGEST" >> "$GITHUB_OUTPUT"
+
+      - name: Summary
+        env:
+          TAG: ${{ steps.upstream.outputs.tag }}
+          REF: ${{ steps.upstream.outputs.ref }}
+          DIGEST: ${{ steps.push.outputs.digest }}
+        run: |
+          {
+            echo '### cal-diy'
+            echo "Built from calcom/cal.diy at \`${REF}\`."
+            echo 'Pin in /mnt/nvme/tenants/zentech/cal/compose.yml on the box:'
+            echo '```'
+            echo "${IMAGE}:${TAG}@${DIGEST}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
